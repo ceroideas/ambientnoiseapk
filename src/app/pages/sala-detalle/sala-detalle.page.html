@@ -1,0 +1,38 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3>Sala</h3>
+
+	<br>
+
+	<div>
+
+		<div class="profile-pic" [ngStyle]="{'background-image': 'url(assets/faces/'+data[0]+')'}">
+		</div>
+		<h5 style="position: relative; text-align: center;">{{data[1]}} <br> <small style="color: #a365b8">{{data[2]}}</small></h5>
+
+	</div>
+
+	<ion-row>
+		<ion-col size="6" style="display: flex; height: 120px">
+			<input type="radio" name="like" id="like">
+			<label for="like"></label>
+		</ion-col>
+		<ion-col size="6" style="display: flex; height: 120px">
+			<input type="radio" name="like" id="dislike">
+			<label for="dislike"></label>
+		</ion-col>
+	</ion-row>
+
+</ion-content>

@@ -1,0 +1,112 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon [routerLink]="['/login']" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+		<ion-button class="an-button" [routerLink]="['/local/locales/nuevo']" routerDirection="root">Nuevo Local</ion-button>
+
+	</h4>
+
+	<h3>Mis Locales</h3>
+
+	<br>
+
+	<div>
+		
+		<div class="local">
+			<ion-row>
+				<ion-col size="3">
+					<div class="rest-pic" style="background-image: url('../assets/fondo-restaurante-01.jpg')">
+						
+					</div>
+				</ion-col>
+				<ion-col size="9">
+					<div class="rest-info">
+						<label class="title">Brooklyn River Bar</label>
+
+						<small>Marbella, Málaga</small>
+
+						<div class="opciones">
+							<img src="assets/locales/borrar.svg" alt="">
+							<img src="assets/locales/editar.svg" alt="">
+							<img src="assets/locales/fuego.svg" alt="" (click)="presentModal()">
+							<img src="assets/locales/moda.svg" alt="" [routerLink]="['/local/locales/ropero']">
+							<img src="assets/locales/silla.svg" alt="">
+						</div>
+
+						<!-- <label class="label-1">4.3</label>
+
+						<ion-icon name="heart-outline"></ion-icon> -->
+					</div>
+				</ion-col>
+			</ion-row>
+		</div>
+
+		<div class="local">
+			<ion-row>
+				<ion-col size="3">
+					<div class="rest-pic" style="background-image: url('../assets/fondo-restaurante-01.jpg')">
+						
+					</div>
+				</ion-col>
+				<ion-col size="9">
+					<div class="rest-info">
+						<label class="title">Brooklyn River Bar</label>
+
+						<small>Marbella, Málaga</small>
+
+						<div class="opciones">
+							<img src="assets/locales/borrar.svg" alt="">
+							<img src="assets/locales/editar.svg" alt="">
+							<img src="assets/locales/fuego.svg" alt="" (click)="presentModal()">
+							<img src="assets/locales/moda.svg" alt="" [routerLink]="['/local/locales/ropero']">
+							<img src="assets/locales/silla.svg" alt="">
+						</div>
+
+						<!-- <label class="label-1">4.3</label>
+
+						<ion-icon name="heart-outline"></ion-icon> -->
+					</div>
+				</ion-col>
+			</ion-row>
+		</div>
+
+		<div class="local">
+			<ion-row>
+				<ion-col size="3">
+					<div class="rest-pic" style="background-image: url('../assets/fondo-restaurante-01.jpg')">
+						
+					</div>
+				</ion-col>
+				<ion-col size="9">
+					<div class="rest-info">
+						<label class="title">Brooklyn River Bar</label>
+
+						<small>Marbella, Málaga</small>
+
+						<div class="opciones">
+							<img src="assets/locales/borrar.svg" alt="">
+							<img src="assets/locales/editar.svg" alt="">
+							<img src="assets/locales/fuego.svg" alt="" (click)="presentModal()">
+							<img src="assets/locales/moda.svg" alt="" [routerLink]="['/local/locales/ropero']">
+							<img src="assets/locales/silla.svg" alt="">
+						</div>
+
+						<!-- <label class="label-1">4.3</label>
+
+						<ion-icon name="heart-outline"></ion-icon> -->
+					</div>
+				</ion-col>
+			</ion-row>
+		</div>
+
+	</div>
+
+</ion-content>

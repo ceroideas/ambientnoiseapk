@@ -1,0 +1,167 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3>Nuevo Local</h3>
+
+	<!-- <br *ngIf="step < 4"> -->
+
+	<div class="central-block">
+		<ion-list *ngIf="step == 1">
+
+			<ion-item class="ion-no-padding">
+				<ion-label position="floating">NOMBRE DEL LOCAL</ion-label>
+				<ion-input [(ngModel)]="todo.name" type="text" ></ion-input>
+
+				<span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span>
+			</ion-item>
+
+			<ion-item class="ion-no-padding">
+				<ion-label position="floating">DIRECCIÓN</ion-label>
+				<ion-input [(ngModel)]="todo.address" type="text" ></ion-input>
+
+				<span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span>
+			</ion-item>
+
+			<ion-item class="ion-no-padding" style="margin: none;">
+				<ion-label position="floating">DESCRIPCIÓN</ion-label>
+				<ion-textarea [(ngModel)]="todo.description" placeholder="Escriba una descripción del local" rows="8" ></ion-textarea>
+
+				<span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span>
+			</ion-item>
+
+			<div>
+				<span style="font-size: 12px; color:#b3b3b3; display: block; float: right">0 / 500 caracteres</span>
+			</div>
+
+
+		</ion-list>
+
+		<ion-list *ngIf="step == 2">
+
+			<ion-item class="ion-no-padding">
+				<ion-label position="floating">AMBIENTE</ion-label>
+				<ion-select>
+					<ion-select-option>Ambiente 1</ion-select-option>
+					<ion-select-option>Ambiente 2</ion-select-option>
+					<ion-select-option>Ambiente 3</ion-select-option>
+				</ion-select>
+
+				<span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span>
+			</ion-item>
+
+			<ion-item class="ion-no-padding">
+				<ion-label position="floating">TIPO DE MÚSICA</ion-label>
+				<ion-select multiple>
+					<ion-select-option>Ambiente 1</ion-select-option>
+					<ion-select-option>Ambiente 2</ion-select-option>
+					<ion-select-option>Ambiente 3</ion-select-option>
+				</ion-select>
+
+				<span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span>
+			</ion-item>
+
+			<ion-item class="ion-no-padding">
+				<ion-label position="floating">COMPRA MÍNIMA (€)</ion-label>
+				<ion-input type="number" ></ion-input>
+
+				<span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span>
+			</ion-item>
+
+			<ion-item class="ion-no-padding">
+				<ion-label position="floating">TIEMPO PROMEDIO (MINUTOS)</ion-label>
+				<ion-input type="number" ></ion-input>
+
+				<span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span>
+			</ion-item>
+
+			<ion-item class="ion-no-padding">
+				<ion-label position="floating">CAPACIDAD</ion-label>
+				<ion-input type="number" ></ion-input>
+
+				<span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span>
+			</ion-item>
+
+
+		</ion-list>
+
+		<ion-list *ngIf="step == 3">
+
+			<ion-item class="ion-no-padding">
+				<ion-label position="stacked">HORARIO</ion-label>
+				
+
+
+				<span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span>
+			</ion-item>
+
+		</ion-list>
+
+		<ion-list *ngIf="step == 4">
+
+			<ion-item class="ion-no-padding" lines="none">
+				<ion-label position="stacked">LOGOTIPO</ion-label>
+				
+				<span class="adicional-info">Carga el logotipo de tu local haciendo clic en el icono</span>
+
+				<div class="logotipo">
+					
+				</div>
+
+				<!-- <span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span> -->
+			</ion-item>
+
+			<ion-item class="ion-no-padding" lines="none">
+				<ion-label position="stacked">LOGOTIPO</ion-label>
+				
+				<span class="adicional-info">Carga la imagen principal de tu local haciendo clic en la imagen de ejemplo. <br> La imagen quedara genial si eliges una fotografia en formato vertical!!</span>
+
+				<div class="principal">
+					
+				</div>
+
+				<!-- <span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span> -->
+			</ion-item>
+
+		</ion-list>
+	</div>
+
+	<ion-button (click)="nextStep()" class="an-button" routerDirection="root">
+		<span *ngIf="step < 4">Siguiente</span>
+		<span *ngIf="step == 4">Terminar</span>
+	</ion-button>
+
+
+</ion-content>

@@ -1,0 +1,81 @@
+ion-content {
+	--background: url(../../../assets/fondo-01.png) 0 0/100% 100% no-repeat;
+	--background-size: cover;
+	--background-position: center;
+}
+
+h3 {
+	color: #767070;
+	font-weight: 700;
+	font-size: 32px;
+	margin-top: 35px;
+	
+}
+
+h4 {
+	color: #fff;
+	margin-top: 30px;
+	margin-bottom: 0px;
+	font-size: 24px;
+}
+
+
+#bottom-part {
+	position: absolute;
+	width: 100%;
+	padding: 0 16px;
+	bottom: 32px;
+	text-align: center;
+}
+small {
+	color: #b3b3b3;
+	font-size: 14px;
+	display: block;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.an-button {
+	display: block;
+	--border-radius: 22px;
+	font-size: 10px;
+	width: 50%;
+	float: right;
+	height: 50px;
+	margin-right: 18px;
+}
+
+.alt-btn {
+	width: 100%;
+	float: none;
+	margin: 12px auto;
+	height: 40px;
+}
+
+.card-disclaimer {
+	--border-radius: 20px;
+	background-color: #373333;
+	ion-list{
+		background: transparent !important;
+	}
+	ion-item {
+		font-size: 13px;
+		--background: transparent !important;
+		color: #b3b3b3;
+		label {
+			padding-top: 24px;
+			padding-bottom: 24px;
+		}
+		span {
+			font-size: 20px;
+		}
+		[name="checkbox"] {
+			color: lightgreen;
+		}
+	}
+}
+
+.card-content-md {
+	padding-bottom: 0 !important;
+	padding-top: 0 !important;
+}

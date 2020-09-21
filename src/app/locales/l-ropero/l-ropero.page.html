@@ -1,0 +1,220 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3>Ropero Digital</h3>
+
+	<!-- <br *ngIf="step < 4"> -->
+
+	<span class="topsite">Todos</span> | <span class="topsite">Por asignar</span> | <span class="topsite pink">En uso</span> | <span class="topsite">Entregados</span>
+
+	<br>
+	<br>
+
+	<div >
+		<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
+			
+		  <ion-card-content>
+		    <!-- Add card content here! -->
+		    <ion-list class="ion-no-padding">
+		    	<ion-item lines="none">
+		    		<label class="no-p-b">
+			    		<span class="menu-type" (click)="collapse(1)">Nombre de usuario 1 <br> <span>19/09/2020 - 23:45</span> <small> <ion-icon name="arrow-down"></ion-icon> </small></span>
+			    		<div class="menu-items" id="items-1">
+			    			<div class="menu-item">
+
+			    				<!-- // -->
+
+			    				<ion-row>
+			    					<ion-col size="8" class="ion-no-padding">
+			    						
+			    						<ion-list class="ion-no-padding">
+			    							<ion-item class="item ion-no-padding">
+			    								1 Prenda
+			    							</ion-item>
+			    							<ion-item class="total ion-no-padding">
+			    								<b>Total</b>
+
+			    								<span slot="end">16.00€</span>
+			    							</ion-item>
+			    						</ion-list>
+
+			    					</ion-col>
+			    					<ion-col size="4">
+			    						<!-- <img src="assets/qr.svg" alt="" style="width: 90%; margin: auto; display: block; margin-top: 4px;"> -->
+			    						<div class="an-button">Marcar <br> como <br> entregado</div>
+			    					</ion-col>
+
+			    					<ion-col size="12" class="ion-no-padding">
+
+	    								<span class="white">Estado del pedido</span>
+	    								<small class="pink">La prenda está en el ropero Nº: <b style="color: #fff"> 123456</b></small> <br>
+
+	    								<span class="gray">19/09/2020 - 23:55</span>
+			    					</ion-col>
+
+			    					<!-- <ion-col size="4" class="ion-no-padding">
+			    						<ion-icon name="happy-outline"></ion-icon>
+			    					</ion-col> -->
+			    				</ion-row>
+
+			    			</div>
+			    		</div>
+		    		</label>
+		    	</ion-item>
+
+		    	<ion-item lines="none">
+		    		<label class="no-p-b">
+			    		<span class="menu-type" (click)="collapse(2)">Nombre de usuario 2 <br> <span>19/09/2020 - 23:45</span> <small> <ion-icon name="arrow-down"></ion-icon> </small></span>
+			    		<div class="menu-items" id="items-2">
+			    			<div class="menu-item">
+
+			    				<!-- // -->
+
+			    				<ion-row>
+			    					<ion-col size="8" class="ion-no-padding">
+			    						
+			    						<ion-list class="ion-no-padding">
+			    							<ion-item class="item ion-no-padding">
+			    								1 Prenda
+			    							</ion-item>
+			    							<ion-item class="total ion-no-padding">
+			    								<b>Total</b>
+
+			    								<span slot="end">16.00€</span>
+			    							</ion-item>
+			    						</ion-list>
+
+			    					</ion-col>
+			    					<ion-col size="4">
+			    						<!-- <img src="assets/qr.svg" alt="" style="width: 90%; margin: auto; display: block; margin-top: 4px;"> -->
+			    						<div class="an-button">Marcar <br> como <br> entregado</div>
+			    					</ion-col>
+
+			    					<ion-col size="12" class="ion-no-padding">
+
+	    								<span class="white">Estado del pedido</span>
+	    								<small class="pink">La prenda está en el ropero Nº: <b style="color: #fff"> 123456</b></small> <br>
+
+	    								<span class="gray">19/09/2020 - 23:55</span>
+			    					</ion-col>
+
+			    					<!-- <ion-col size="4" class="ion-no-padding">
+			    						<ion-icon name="happy-outline"></ion-icon>
+			    					</ion-col> -->
+			    				</ion-row>
+
+			    			</div>
+			    		</div>
+		    		</label>
+		    	</ion-item>
+
+		    	<ion-item lines="none">
+		    		<label class="no-p-b">
+			    		<span class="menu-type" (click)="collapse(3)">Nombre de usuario 3 <br> <span>19/09/2020 - 23:45</span> <small> <ion-icon name="arrow-down"></ion-icon> </small></span>
+			    		<div class="menu-items" id="items-3">
+			    			<div class="menu-item">
+
+			    				<!-- // -->
+
+			    				<ion-row>
+			    					<ion-col size="8" class="ion-no-padding">
+			    						
+			    						<ion-list class="ion-no-padding">
+			    							<ion-item class="item ion-no-padding">
+			    								1 Prenda
+			    							</ion-item>
+			    							<ion-item class="total ion-no-padding">
+			    								<b>Total</b>
+
+			    								<span slot="end">16.00€</span>
+			    							</ion-item>
+			    						</ion-list>
+
+			    					</ion-col>
+			    					<ion-col size="4">
+			    						<!-- <img src="assets/qr.svg" alt="" style="width: 90%; margin: auto; display: block; margin-top: 4px;"> -->
+			    						<div class="an-button">Marcar <br> como <br> entregado</div>
+			    					</ion-col>
+
+			    					<ion-col size="12" class="ion-no-padding">
+
+	    								<span class="white">Estado del pedido</span>
+	    								<small class="pink">La prenda está en el ropero Nº: <b style="color: #fff"> 123456</b></small> <br>
+
+	    								<span class="gray">19/09/2020 - 23:55</span>
+			    					</ion-col>
+
+			    					<!-- <ion-col size="4" class="ion-no-padding">
+			    						<ion-icon name="happy-outline"></ion-icon>
+			    					</ion-col> -->
+			    				</ion-row>
+
+			    			</div>
+			    		</div>
+		    		</label>
+		    	</ion-item>
+
+		    	<ion-item lines="none">
+		    		<label class="no-p-b">
+			    		<span class="menu-type" (click)="collapse(4)">Nombre de usuario 4 <br> <span>19/09/2020 - 23:45</span> <small> <ion-icon name="arrow-down"></ion-icon> </small></span>
+			    		<div class="menu-items" id="items-4">
+			    			<div class="menu-item">
+
+			    				<!-- // -->
+
+			    				<ion-row>
+			    					<ion-col size="8" class="ion-no-padding">
+			    						
+			    						<ion-list class="ion-no-padding">
+			    							<ion-item class="item ion-no-padding">
+			    								1 Prenda
+			    							</ion-item>
+			    							<ion-item class="total ion-no-padding">
+			    								<b>Total</b>
+
+			    								<span slot="end">16.00€</span>
+			    							</ion-item>
+			    						</ion-list>
+
+			    					</ion-col>
+			    					<ion-col size="4">
+			    						<!-- <img src="assets/qr.svg" alt="" style="width: 90%; margin: auto; display: block; margin-top: 4px;"> -->
+			    						<div class="an-button">Marcar <br> como <br> entregado</div>
+			    					</ion-col>
+
+			    					<ion-col size="12" class="ion-no-padding">
+
+	    								<span class="white">Estado del pedido</span>
+	    								<small class="pink">La prenda está en el ropero Nº: <b style="color: #fff"> 123456</b></small> <br>
+
+	    								<span class="gray">19/09/2020 - 23:55</span>
+			    					</ion-col>
+
+			    					<!-- <ion-col size="4" class="ion-no-padding">
+			    						<ion-icon name="happy-outline"></ion-icon>
+			    					</ion-col> -->
+			    				</ion-row>
+
+			    			</div>
+			    		</div>
+		    		</label>
+		    	</ion-item>
+		    </ion-list>
+		  </ion-card-content>
+			
+		</ion-card>
+	</div>
+
+
+</ion-content>

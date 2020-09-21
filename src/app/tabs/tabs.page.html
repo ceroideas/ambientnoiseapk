@@ -1,0 +1,358 @@
+<ion-tabs>
+
+  <div style="height: 100vh; background-color: transparent; position: absolute; width: 100vw;" *ngIf="tutorial < 14">
+  </div>
+
+  <ion-tab-bar slot="bottom" id="tabs-tutorial" *ngIf="tutorial < 14" style="z-index: 9999">
+    <ion-tab-button>
+      <div [ngStyle]="{'opacity':(tutorial == 1 ? 1 : 0)}" (click)="nextTutorial(1+1)">
+        <span class="img-tab home pink"></span>
+        <ion-label>HOME</ion-label>
+      </div>
+    </ion-tab-button>
+
+    <ion-tab-button>
+      <div [ngStyle]="{'opacity':(tutorial == 9 ? 1 : 0)}" (click)="nextTutorial(9+1)">
+        <span class="img-tab offers pink"></span>
+        <ion-label>OFERTAS</ion-label>
+      </div>
+    </ion-tab-button>
+
+    <ion-tab-button>
+      <div [ngStyle]="{'opacity':(tutorial == 10 ? 1 : 0)}" (click)="nextTutorial(10+1)">
+        <span class="img-tab events pink"></span>
+        <ion-label>EVENTOS</ion-label>
+      </div>
+    </ion-tab-button>
+
+    <ion-tab-button>
+      <div [ngStyle]="{'opacity':(tutorial == 11 ? 1 : 0)}" (click)="nextTutorial(11+1)">
+        <span class="img-tab favorites pink"></span>
+        <ion-label>FAVORITOS</ion-label>
+      </div>
+    </ion-tab-button>
+
+    <ion-tab-button>
+      <div [ngStyle]="{'opacity':(tutorial == 12 ? 1 : 0)}" (click)="nextTutorial(12+1)">
+        <span class="img-tab chat pink"></span>
+        <ion-label>CHAT</ion-label>
+      </div>
+    </ion-tab-button>
+    
+    <ion-tab-button>
+      <div [ngStyle]="{'opacity':(tutorial == 13 ? 1 : 0)}" (click)="nextTutorial(13+1)">
+        <span class="img-tab profile pink"></span>
+        <ion-label>PERFIL</ion-label>
+      </div>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+
+  <div style="position: absolute; background-color: transparent; height: 56px; width: 100%; bottom: 0; z-index: 99;" *ngIf="tutorial < 14">
+    
+  </div>
+
+<div *ngIf="tutorial == 1" class="myTutorial">
+  <p style="left: 20px;">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  <svg width="360" height="360" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; z-index: 9998;">
+    <circle cx="90" cy="250" fill="none" r="150" stroke="#a365b8" stroke-width="8">
+      <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="90" cy="250" fill="#383a36cc" r="150">
+      <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+    </circle>
+  </svg>
+</div>
+
+<div *ngIf="tutorial == 2" class="myTutorial">
+  <p style="
+    display: block;
+    top: 250px;
+    bottom: unset;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+  ">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+
+  <div style="text-align: center; position: absolute; top: 330px; z-index: 10000; left: 0; right: 0;">
+    <ion-icon (click)="nextTutorial(2+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
+  </div>
+
+  <svg width="100%" height="500" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 30px; z-index: 9998;">
+    <circle cx="50%" cy="250" fill="none" r="150" stroke="#a365b8" stroke-width="8">
+      <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="50%" cy="250" fill="#383a36ee" r="150">
+      <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+    </circle>
+  </svg>
+</div>
+
+<div *ngIf="tutorial == 3" class="myTutorial">
+  <p style="
+    display: block;
+    bottom: 470px;
+    /*bottom: unset;*/
+    left: 20px;
+    /*right: 50%;*/
+    margin: auto;
+    text-align: left;
+  ">Reserva la mesa que mas te guste</p>
+
+  <div style="text-align: center; position: absolute; bottom: 390px; z-index: 10000; left: 0; right: 50%;">
+    <ion-icon (click)="nextTutorial(3+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
+  </div>
+
+  <svg width="100%" height="500" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 200px; z-index: 9998;">
+    <circle cx="25%" cy="250" fill="none" r="150" stroke="#a365b8" stroke-width="8">
+      <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="25%" cy="250" fill="#383a36ee" r="150">
+      <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+    </circle>
+  </svg>
+</div>
+
+<div *ngIf="tutorial == 4" class="myTutorial">
+  <p style="
+    display: block;
+    bottom: 470px;
+    /*bottom: unset;*/
+    /*left: 50%;*/
+    right: 20px;
+    margin: auto;
+    text-align: right;
+  ">Apuntate a las listas privadas del local</p>
+
+  <div style="text-align: center; position: absolute; bottom: 390px; z-index: 10000; left: 50%; right: 0;">
+    <ion-icon (click)="nextTutorial(4+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
+  </div>
+
+  <svg width="100%" height="500" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 200px; z-index: 9998;">
+    <circle cx="75%" cy="250" fill="none" r="150" stroke="#a365b8" stroke-width="8">
+      <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="75%" cy="250" fill="#383a36ee" r="150">
+      <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+    </circle>
+  </svg>
+</div>
+
+<div *ngIf="tutorial == 5" class="myTutorial">
+  <p style="
+    display: block;
+    bottom: 380px;
+    left: 20px;
+    /*right: 50%;*/
+    margin: auto;
+    text-align: left;
+  ">Reserva Online el reservado que mas te guste</p>
+
+  <div style="text-align: center; position: absolute; bottom: 300px; z-index: 10000; left: 0; right: 50%;">
+    <ion-icon (click)="nextTutorial(5+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
+  </div>
+
+  <svg width="100%" height="500" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 130px; z-index: 9998;">
+    <circle cx="25%" cy="250" fill="none" r="150" stroke="#a365b8" stroke-width="8">
+      <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="25%" cy="250" fill="#383a36ee" r="150">
+      <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+    </circle>
+  </svg>
+</div>
+
+<div *ngIf="tutorial == 6" class="myTutorial">
+  <p style="
+    display: block;
+    bottom: 380px;
+    /*left: 50%;*/
+    right: 20px;
+    margin: auto;
+    text-align: right;
+  ">Mira las fotos de los participantes de las salas</p>
+
+  <div style="text-align: center; position: absolute; bottom: 300px; z-index: 10000; left: 50%; right: 0;">
+    <ion-icon (click)="nextTutorial(6+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
+  </div>
+
+  <svg width="100%" height="500" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 130px; z-index: 9998;">
+    <circle cx="75%" cy="250" fill="none" r="150" stroke="#a365b8" stroke-width="8">
+      <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="75%" cy="250" fill="#383a36ee" r="150">
+      <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+    </circle>
+  </svg>
+</div>
+
+<div *ngIf="tutorial == 7" class="myTutorial">
+  <p style="
+    display: block;
+    bottom: 310px;
+    left: 20px;
+    /*right: 50%;*/
+    margin: auto;
+    text-align: left;
+  ">Grandes ofertas personificadas solo para ti</p>
+
+  <div style="text-align: center; position: absolute; bottom: 230px; z-index: 10000; left: 0; right: 50%;">
+    <ion-icon (click)="nextTutorial(7+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
+  </div>
+
+  <svg width="100%" height="500" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 50px; z-index: 9998;">
+    <circle cx="25%" cy="250" fill="none" r="150" stroke="#a365b8" stroke-width="8">
+      <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="25%" cy="250" fill="#383a36ee" r="150">
+      <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+    </circle>
+  </svg>
+</div>
+
+<div *ngIf="tutorial == 8" class="myTutorial">
+  <p style="
+    display: block;
+    bottom: 310px;
+    /*left: 50%;*/
+    right: 20px;
+    margin: auto;
+    text-align: right;
+  ">Enterate de los eventos mas divertidos</p>
+
+  <div style="text-align: center; position: absolute; bottom: 230px; z-index: 10000; left: 50%; right: 0;">
+    <ion-icon (click)="nextTutorial(8+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
+  </div>
+
+  <svg width="100%" height="500" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 50px; z-index: 9998;">
+    <circle cx="75%" cy="250" fill="none" r="150" stroke="#a365b8" stroke-width="8">
+      <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="75%" cy="250" fill="#383a36ee" r="150">
+      <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+    </circle>
+  </svg>
+</div>
+
+<div *ngIf="tutorial == 9" class="myTutorial">
+  <p style="left: 30px;">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  <svg width="360" height="360" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; z-index: 9998;">
+      <circle cx="100" cy="250" fill="none" r="10" stroke="#a365b8" stroke-width="8">
+        <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="100" cy="250" fill="#383a36cc" r="150">
+        <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+      </circle>
+  </svg>
+</div>
+
+<div *ngIf="tutorial == 10" class="myTutorial">
+  <p style="left: 15vw;">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  <svg width="100%" height="360" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; z-index: 9998;left:0; right: 0; margin: auto;">
+      <circle cx="40%" cy="250" fill="none" r="10" stroke="#a365b8" stroke-width="8">
+        <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="40%" cy="250" fill="#383a36cc" r="150">
+        <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+      </circle>
+  </svg>
+</div>
+
+<div *ngIf="tutorial == 11" class="myTutorial">
+  <p style="right: 40px; text-align: right;">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  <svg width="100%" height="360" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; z-index: 9998;left:0; right: 0; margin: auto;">
+      <circle cx="60%" cy="250" fill="none" r="10" stroke="#a365b8" stroke-width="8">
+        <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="60%" cy="250" fill="#383a36cc" r="150">
+        <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+      </circle>
+  </svg>
+</div>
+
+<div *ngIf="tutorial == 12" class="myTutorial">
+  <p style="right: 30px; text-align: right;">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  <svg width="360" height="360" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; z-index: 9998; right: 0">
+      <circle cx="260" cy="250" fill="none" r="10" stroke="#a365b8" stroke-width="8">
+        <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="260" cy="250" fill="#383a36cc" r="150">
+        <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+      </circle>
+  </svg>
+</div>
+
+<div *ngIf="tutorial == 13" class="myTutorial">
+  <p style="right: 20px; text-align: right">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  <svg width="360" height="360" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; z-index: 9998; right: 0">
+      <circle cx="280" cy="250" fill="none" r="10" stroke="#a365b8" stroke-width="8">
+        <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" from="1" to="0" dur="1s" begin="0s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="280" cy="250" fill="#383a36cc" r="150">
+        <animate attributeName="r" from="100" to="150" dur=".1s" begin="0s" repeatCount="1"/>
+      </circle>
+  </svg>
+</div>
+
+
+<!-- /*Explicaciones*/ -->
+
+  <ion-tab-bar slot="bottom" style="z-index: 98">
+    <ion-tab-button tab="home">
+      <!-- <ion-icon name="home"></ion-icon> -->
+      <span class="img-tab home"></span>
+      <ion-label>HOME</ion-label>
+      <!-- <ion-badge>6</ion-badge> -->
+    </ion-tab-button>
+
+    <ion-tab-button tab="ofertas">
+      <!-- <ion-icon name="pricetags"></ion-icon> -->
+      <span class="img-tab offers"></span>
+      <ion-label>OFERTAS</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="eventos">
+      <!-- <ion-icon name="pricetags"></ion-icon> -->
+      <span class="img-tab events"></span>
+      <ion-label>EVENTOS</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="favoritos">
+      <!-- <ion-icon name="heart"></ion-icon> -->
+      <span class="img-tab favorites"></span>
+      <ion-label>FAVORITOS</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="chat">
+      <!-- <ion-icon name="chatbox-ellipses"></ion-icon> -->
+      <span class="img-tab chat"></span>
+      <ion-label>CHAT</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="perfil">
+      <!-- <ion-icon name="person"></ion-icon> -->
+      <span class="img-tab profile"></span>
+      <ion-label>PERFIL</ion-label>
+    </ion-tab-button>
+
+
+    <!-- <ion-tab-button tab="cesta">
+      <ion-icon name="basket"></ion-icon>
+      <ion-label>CESTA</ion-label>
+    </ion-tab-button> -->
+  </ion-tab-bar>
+</ion-tabs>

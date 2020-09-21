@@ -1,0 +1,97 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="back()" name="chevron-back"></ion-icon>
+
+	</h4>
+
+	<h3>Filtros</h3>
+
+	<ion-card class="ion-no-margin card-profile" style="border-radius: 18px;">
+	
+	  <!-- <ion-card-header>
+	    Card Header
+	  </ion-card-header> -->
+	
+	  <ion-card-content>
+	    <!-- Add card content here! -->
+	    <div>
+			<h5>Ambientes</h5>
+
+			<div [ngClass]="ambiente == a ? 'type actual' : 'type'" *ngFor="let a of ambientes" (click)="ambiente = a">{{a}}</div>
+
+			<br>
+
+			<div style="clear: both;"></div>
+		</div>
+
+		<br>
+
+		<div>
+			<h5>Tipo de música</h5>
+
+			<div [ngClass]="musica == m ? 'type actual' : 'type'" *ngFor="let m of tmusica" (click)="musica = m">{{m}}</div>
+
+			<br>
+
+			<div style="clear: both;"></div>
+		</div>
+
+		<br>
+
+		<div>
+			<h5>Distancia</h5>
+
+			<ion-item>
+			    <ion-range min="0" max="100" step="1" dual-knobs [(ngModel)]="range">
+			      <span slot="start">{{range.lower}}Km</span>
+			      <span slot="end">{{range.upper}}Km</span>
+			    </ion-range>
+			  </ion-item>
+
+			<br>
+		</div>
+
+		<br>
+
+		<div>
+			<h5>Ocupación</h5>
+
+			<div [ngClass]="ocupacion == o ? 'type-o actual-o' : 'type-o'" *ngFor="let o of locupacion" (click)="ocupacion = o">{{o}}</div>
+
+			<br>
+
+			<div style="clear: both;"></div>
+		</div>
+	  </ion-card-content>
+	
+	</ion-card>
+
+	<br>
+
+	<ion-row>
+		<ion-col size="5">
+			<ion-button class="an-button alt" (click)="clear()">
+
+				<ion-row>
+					<ion-col style="text-align: center;">
+						<ion-icon name="close"></ion-icon>
+					</ion-col>
+					<ion-col>
+						Borrar <br> Filtros
+					</ion-col>
+				</ion-row>
+
+				</ion-button>
+		</ion-col>
+		<ion-col size="7">
+			<ion-button class="an-button" (click)="back()">Aplicar</ion-button>
+		</ion-col>
+	</ion-row>
+
+</ion-content>

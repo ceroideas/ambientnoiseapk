@@ -1,0 +1,103 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+
+	<div class="ion-padding" style="background-image: url(assets/fondo-02.png); background-size: cover; background-position: center; height: fit-content; min-height: 100%;">
+		
+
+	<h4> <ion-icon (click)="nav.back()" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+		<!-- <img src="assets/pin.svg" alt="" [routerLink]="['/tabs/home/map']" style="height: 28px;"> -->
+
+	</h4>
+
+	<h3>{{name}}</h3>
+
+	<ion-list>
+
+		<ion-item class="ion-no-padding" lines="none">
+			<!-- <ion-label position="stacked">LOCALIDAD</ion-label> -->
+
+			<div class="search">
+				<span>
+					<ion-icon name="search"></ion-icon>
+				</span>
+
+				<input type="text" [(ngModel)]="query" placeholder="Buscar invitado">
+			</div>
+
+		</ion-item>
+
+
+	</ion-list>
+
+	<span style="background-image: url(assets/restaurant.jpg)" class="logo-restaurante"></span>
+
+	<ion-card class="list-card" *ngFor="let guest of list | search:query; let i = index">
+		
+		<ion-card-content>
+			<ion-row (click)="addGuest(i)">
+				<ion-col size="2" style="display: flex;">
+					<ion-icon name="checkbox-outline" [ngStyle]="{'color': ((guests | guests:i) ? 'lightgreen' : '#fff') }"></ion-icon>
+				</ion-col>
+				<ion-col size="8" style="display: flex">
+					<h5 style="margin: auto; vertical-align: middle;">{{guest.name}}</h5>
+
+					<!-- <h6>
+						La lista está al:
+						<span>80%</span>
+					</h6> -->
+				</ion-col>
+				<ion-col size="2" style="display: flex;">
+					<img src="assets/fire.svg" alt="">
+				</ion-col>
+			</ion-row>
+		</ion-card-content>
+
+	</ion-card>
+<!-- 
+	<ion-card class="list-card">
+		
+		<ion-card-content>
+			<ion-row (click)="addGuest(2)">
+				<ion-col size="2" style="display: flex;">
+					<ion-icon name="checkbox-outline" [ngStyle]="{'color': ((guests | guests:2) ? 'lightgreen' : '#fff') }"></ion-icon>
+				</ion-col>
+				<ion-col size="8" style="display: flex">
+					<h5 style="margin: auto; vertical-align: middle;">Nombre invitado 2</h5>
+				</ion-col>
+				<ion-col size="2" style="display: flex;">
+					<img src="assets/fire.svg" alt="">
+				</ion-col>
+			</ion-row>
+		</ion-card-content>
+
+	</ion-card>
+
+	<ion-card class="list-card">
+		
+		<ion-card-content>
+			<ion-row (click)="addGuest(3)">
+				<ion-col size="2" style="display: flex;">
+					<ion-icon name="checkbox-outline" [ngStyle]="{'color': ((guests | guests:3) ? 'lightgreen' : '#fff') }"></ion-icon>
+				</ion-col>
+				<ion-col size="8" style="display: flex">
+					<h5 style="margin: auto; vertical-align: middle;">Nombre invitado 3</h5>
+				</ion-col>
+				<ion-col size="2" style="display: flex;">
+					<img src="assets/fire.svg" alt="">
+				</ion-col>
+			</ion-row>
+		</ion-card-content>
+
+	</ion-card> -->
+	
+	</div>
+
+</ion-content>

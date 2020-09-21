@@ -1,0 +1,55 @@
+ion-content {
+	--background: url(../../../assets/fondo-02.png) 0 0/100% 100% no-repeat;
+}
+
+h3 {
+	color: #767070;
+	font-weight: 700;
+	font-size: 32px;
+	margin-top: 35px;
+	
+}
+
+h4 {
+	color: #fff;
+	margin-top: 30px;
+	margin-bottom: 0px;
+	font-size: 24px;
+}
+
+.profile-pic {
+	border-radius: 12px !important;
+	width: 90%;
+	min-height: 250px;
+	height: 35vh;
+	margin: auto;
+}
+
+[type="radio"] {
+	display: none;
+	&+label {
+		background-size: 50%;
+		background-repeat: no-repeat;
+		background-position: center;
+		width: 100%;
+	}
+}
+
+#like {
+	&+label {
+		background-image: url(../../../assets/like1.svg);
+	}
+	&:checked +label {
+		background-image: url(../../../assets/like2.svg);
+	}
+}
+#dislike {
+	&+label {
+		background-image: url(../../../assets/like1.svg);
+		transform: scale(-1);
+	}
+	&:checked +label {
+		background-image: url(../../../assets/like2.svg);
+		transform: scale(-1);
+	}
+}

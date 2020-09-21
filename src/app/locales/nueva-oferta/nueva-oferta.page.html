@@ -1,0 +1,144 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3>Nueva Oferta</h3>
+
+	<!-- <br *ngIf="step < 4"> -->
+
+	<div class="central-block">
+		<ion-list>
+
+			<ion-item class="ion-no-padding">
+				<ion-label position="floating">NOMBRE DE LA OFERTA</ion-label>
+				<ion-input [(ngModel)]="todo.name" type="text" ></ion-input>
+
+				<span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span>
+			</ion-item>
+
+			<ion-item class="ion-no-padding" lines="none">
+				<ion-label position="stacked">TIPO DE DESCUENTO</ion-label>
+
+				<label class="label">Por Porcentaje
+
+					<span slot="end">
+						<ion-icon *ngIf="type != 'percent'" name="square-outline"></ion-icon>
+						<ion-icon *ngIf="type == 'percent'" name="checkbox-outline"></ion-icon>
+					</span>
+
+					<input type="radio" [(ngModel)]="type" value="percent" style="display: none;">
+
+				</label>
+
+			</ion-item>
+
+			<ion-item *ngIf="type == 'percent'" class="ion-no-padding">
+				
+				<ion-label>Seleccione el porcentaje</ion-label>
+
+				<ion-select>
+					<ion-select-option>10%</ion-select-option>
+					<ion-select-option>20%</ion-select-option>
+					<ion-select-option>30%</ion-select-option>
+					<ion-select-option>40%</ion-select-option>
+					<ion-select-option>50%</ion-select-option>
+					<ion-select-option>60%</ion-select-option>
+					<ion-select-option>70%</ion-select-option>
+					<ion-select-option>80%</ion-select-option>
+				</ion-select>
+
+			</ion-item>
+
+
+			<ion-item class="ion-no-padding" lines="none">
+
+				<label class="label">Por Cantidad
+
+					<span slot="end">
+						<ion-icon *ngIf="type != 'quantity'" name="square-outline"></ion-icon>
+						<ion-icon *ngIf="type == 'quantity'" name="checkbox-outline"></ion-icon>
+					</span>
+
+					<input type="radio" [(ngModel)]="type" value="quantity" style="display: none;">
+
+				</label>
+
+
+			</ion-item>
+
+			<ion-item *ngIf="type == 'quantity'" class="ion-no-padding">
+				
+				<ion-label>Seleccione la cantidad</ion-label>
+
+				<ion-select>
+					<ion-select-option>2</ion-select-option>
+					<ion-select-option>3</ion-select-option>
+					<ion-select-option>4</ion-select-option>
+					<ion-select-option>5</ion-select-option>
+					<ion-select-option>6</ion-select-option>
+					<ion-select-option>7</ion-select-option>
+					<ion-select-option>8</ion-select-option>
+				</ion-select>
+
+			</ion-item>
+
+
+
+			<!-- - -->
+
+
+			<ion-item class="ion-no-padding" lines="none" style="margin: 0">
+				<ion-label style="margin-bottom: 0 !important">TIEMPO DE LA OFERTA</ion-label>
+			</ion-item>
+
+			<ion-item class="ion-no-padding" lines="none">
+				<ion-label position="floating">Desde</ion-label>
+				<ion-datetime
+				monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, oct, Nov, Dec"
+				displayFormat="D MMM, YYYY"></ion-datetime>
+
+			</ion-item>
+
+			<ion-item class="ion-no-padding" lines="none">
+				<ion-label position="floating">Hasta</ion-label>
+				<ion-datetime
+				monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, oct, Nov, Dec"
+				displayFormat="D MMM, YYYY"></ion-datetime>
+
+			</ion-item>
+
+			<ion-item class="ion-no-padding" lines="none">
+				<ion-label position="stacked">IMAGEN DE LA OFERTA</ion-label>
+				
+				<span class="adicional-info">Carga la imagen de la oferta haciendo clic en el icono</span>
+
+				<div class="logotipo">
+					
+				</div>
+
+				<!-- <span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span> -->
+			</ion-item>
+
+
+		</ion-list>
+
+	</div>
+
+	<ion-button (click)="nav.back()" class="an-button" routerDirection="root">Guardar</ion-button>
+
+
+</ion-content>

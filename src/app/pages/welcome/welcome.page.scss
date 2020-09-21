@@ -1,0 +1,49 @@
+ion-content {
+	--background: url(../../../assets/fondo-01.png) 0 0/100% 100% no-repeat;
+	--background-size: cover;
+	--background-position: center;
+}
+
+h2 {
+	color: #a365b8;
+	text-align: center;
+	font-weight: 100;
+	font-size: 32px;
+	margin-top: -20px;
+}
+
+
+#bottom-part {
+	position: absolute;
+	width: 100%;
+	padding: 16px;
+	bottom: 16px;
+	text-align: center;
+	h3 {
+		color: #767070;
+		font-weight: 700;
+		font-size: 32px;
+		
+	}
+	small {
+		color: #b3b3b3;
+		font-size: 14px;
+	}
+}
+
+.an-button {
+	display: block;
+	--border-radius: 22px;
+	font-size: 10px;
+	width: 50%;
+	float: right;
+	height: 50px;
+}
+
+.logo {
+	transition: all 200ms;
+}
+
+.mt-def {
+	margin-top: 50%;
+}

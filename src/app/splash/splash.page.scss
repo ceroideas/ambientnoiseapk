@@ -1,0 +1,18 @@
+ion-content {
+	--background: url(../../assets/fondo-01.png) 0 0/100% 100% no-repeat;
+	--background-size: cover;
+	--background-position: center;
+}
+
+img {
+	position: relative;
+	margin-top: 50%;
+}
+
+h2 {
+	color: #a365b8;
+	text-align: center;
+	font-weight: 100;
+	font-size: 32px;
+	margin-top: -20px;
+}

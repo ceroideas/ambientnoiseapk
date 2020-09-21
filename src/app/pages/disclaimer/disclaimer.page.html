@@ -1,0 +1,95 @@
+<!-- <ion-header>
+  <ion-toolbar>
+  	<ion-buttons slot="start">
+  		<ion-back-button text="hola"></ion-back-button>
+  	</ion-buttons>
+    <ion-title>disclaimer</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon [routerLink]="['/welcome']" routerDirection="back" name="chevron-back"></ion-icon> </h4>
+
+	<h3>Condiciones de uso</h3>
+
+	<div>
+		
+		<ion-card class="ion-no-margin card-disclaimer" style="border-radius: 18px;">
+		
+		  <!-- <ion-card-header>
+		    Card Header
+		  </ion-card-header> -->
+		
+		  <ion-card-content>
+		    <!-- Add card content here! -->
+		    <ion-list class="ion-no-padding">
+		    	<ion-item>
+		    		<label>
+			    		Ejemplo de condiciones de uso 01
+			    		<input type="checkbox" id="check1" [(ngModel)]="options[0]" style="display: none;">
+		    		</label>
+			    		<span slot="end">
+			    			<label for="check1">
+				    			<ion-icon *ngIf="!options[0]" name="square"></ion-icon>
+				    			<ion-icon *ngIf="options[0]" name="checkbox"></ion-icon>
+			    			</label>
+			    		</span>
+		    	</ion-item>
+
+		    	<ion-item>
+		    		<label>
+			    		Ejemplo de condiciones de uso 02
+			    		<input type="checkbox" id="check2" [(ngModel)]="options[1]" style="display: none;">
+		    		</label>
+			    		<span slot="end">
+			    			<label for="check2">
+				    			<ion-icon *ngIf="!options[1]" name="square"></ion-icon>
+				    			<ion-icon *ngIf="options[1]" name="checkbox"></ion-icon>
+				    		</label>
+			    		</span>
+		    	</ion-item>
+
+		    	<ion-item>
+		    		<label>
+			    		Ejemplo de condiciones de uso 03
+			    		<input type="checkbox" id="check3" [(ngModel)]="options[2]" style="display: none;">
+		    		</label>
+			    		<span slot="end">
+			    			<label for="check3">
+				    			<ion-icon *ngIf="!options[2]" name="square"></ion-icon>
+				    			<ion-icon *ngIf="options[2]" name="checkbox"></ion-icon>
+			    			</label>
+			    		</span>
+		    	</ion-item>
+
+		    	<ion-item lines="none">
+		    		<label>
+			    		Ejemplo de condiciones de uso 04
+			    		<input type="checkbox" id="check4" [(ngModel)]="options[3]" style="display: none;">
+		    		</label>
+			    		<span slot="end">
+			    			<label for="check4">
+				    			<ion-icon *ngIf="!options[3]" name="square"></ion-icon>
+				    			<ion-icon *ngIf="options[3]" name="checkbox"></ion-icon>
+				    		</label>
+			    		</span>
+		    	</ion-item>
+		    </ion-list>
+		  </ion-card-content>
+		
+		</ion-card>
+
+		<small>Acepta nuestras condiciones de uso <br>para poder usar la App</small>
+
+		<ion-button class="an-button alt-btn" (click)="acceptAll()">Aceptar todas las condiciones</ion-button>
+
+	</div>
+
+
+	<div id="bottom-part">
+		<ion-button class="an-button" [disabled]="!options[0] || !options[1] || !options[2] || !options[3]" [routerLink]="['/login']">Siguiente</ion-button>
+	</div>
+
+
+</ion-content>

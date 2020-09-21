@@ -1,0 +1,73 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="">
+
+	<div class="header-box ion-padding">
+		
+	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3>Ropero Digital</h3>
+
+	<div class="greetings-message">
+		
+		<h6><small>Nemo enim ipsam voluptatem <br> quia voluptas sit.</small></h6>
+		
+	</div>
+
+	</div>
+
+	<br>
+
+	<div class="ion-padding">
+
+		<ion-row style="margin-top: -16px;">
+			<ion-col size="4">
+				<span style="background-image: url(assets/restaurant.jpg)" class="logo-restaurante"></span>
+			</ion-col>
+			<ion-col size="8">
+				<h2 class="title-tactic">Brooklyn River Bar</h2>
+			</ion-col>
+		</ion-row>
+
+		<br>
+
+
+		<ion-row style="background-color: #373333; border-radius: 20px; padding: 10px;">
+			<ion-col size="4">
+				<div class="profile-pic" style="background-image: url(assets/clothes-hanger.svg)">
+					
+				</div>
+			</ion-col>
+			<ion-col size="8" class="info-ropero">
+				<label>Servicio Ropero</label>
+				<small>Selecciona el número de prendas</small>
+
+				<div style="margin-top: 16px;">
+					<ion-icon fix-top [ngClass]="quantity == 0 ? 'disabled' : '' " (click)="subQ()" name="remove-circle"></ion-icon>
+
+					<span style="margin: 0 10px; font-size: 16px; display: inline-block; width: 20px; text-align: center; position: relative; top: -1px;">
+						{{quantity}}
+					</span>
+
+					<ion-icon fix-top name="add-circle" (click)="addQ()"></ion-icon>
+
+					<span style="font-size: 18px;position: absolute;right: 6px;bottom: 6px; color: #a365b8">{{quantity*16.00}}€</span>
+				</div>
+			</ion-col>
+		</ion-row>
+
+		<ion-button class="an-button" (click)="nav.back()">
+    		Pagar
+    	</ion-button>
+
+	</div>
+
+</ion-content>

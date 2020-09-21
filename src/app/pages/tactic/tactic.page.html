@@ -1,0 +1,73 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+		
+	<h4> <ion-icon (click)="nav.back()" routerDirection="back" name="chevron-back"></ion-icon>
+
+		<!-- <img src="assets/pin.svg" alt="" [routerLink]="['/tabs/home/map']" style="height: 28px;"> -->
+
+	</h4>
+
+	<ion-row class="mt-20">
+		<ion-col size="4">
+			<span style="background-image: url(assets/restaurant.jpg)" class="logo-restaurante"></span>
+		</ion-col>
+		<ion-col size="8">
+			<h2 class="title-tactic">Brooklyn River Bar</h2>
+		</ion-col>
+	</ion-row>
+
+	<img src="../assets/logo.svg" alt="" class="mt-def" style="margin: auto; margin-top: -30px; margin-bottom: -20px; width: 90%; display: block;">
+
+	<div style="padding: 0 40px 10px">
+
+		<ion-row>
+			<ion-col size="6" class="ion-no-padding" [routerLink]="['/tabs/home/sala']">
+				<div class="tactic-icon">
+					<img src="assets/user-2.svg" alt="">
+				</div>
+			</ion-col>
+
+			<ion-col size="6" class="ion-no-padding">
+				<div class="tactic-icon" style="float: right">
+					<img src="assets/send.svg" alt="">
+				</div>
+			</ion-col>
+
+			<ion-col size="6" class="ion-no-padding">
+				<div class="tactic-icon" [routerLink]="['/tabs/home/t-ofertas']">
+					<img src="assets/price-tag.svg" alt="">
+				</div>
+			</ion-col>
+
+			<ion-col size="6" class="ion-no-padding">
+				<div class="tactic-icon" style="float: right" [routerLink]="['/tabs/home/ropero']">
+					<img src="assets/clothes-hanger.svg" alt="">
+				</div>
+			</ion-col>
+		</ion-row>
+
+		<div class="clip-path" (click)="openCart()">
+			
+			<ion-row>
+				<ion-col>
+					<div class="icon" style="float: right">
+						<img src="assets/alcoholic-drink.svg" alt="">
+					</div>
+				</ion-col>
+				<ion-col>
+					<div class="icon" style="float: left">
+						<img src="assets/fork.svg" alt="">
+					</div>
+				</ion-col>
+			</ion-row>
+
+		</div>
+
+	</div>
+
+</ion-content>

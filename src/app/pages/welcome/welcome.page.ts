@@ -1,0 +1,18 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-welcome',
+  templateUrl: './welcome.page.html',
+  styleUrls: ['./welcome.page.scss'],
+})
+export class WelcomePage implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  	setTimeout(()=>{
+  		(document.getElementsByClassName('logo')[0] as HTMLImageElement).classList.remove('mt-def');
+  	},100)
+  }
+
+}

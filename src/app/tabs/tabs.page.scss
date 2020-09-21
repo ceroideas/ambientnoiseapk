@@ -1,0 +1,46 @@
+ion-label {
+	font-size: 9px;
+	margin-top: 4px;
+	color: #767070 !important;
+}
+
+ion-tab-bar {
+	--background: #373634;
+}
+
+.img-tab {background-size: 25px 25px; background-position: center; height: 30px; display: block; width: 100%; background-repeat: no-repeat; }
+
+.home { background-image: url(../../assets/tabs/home.svg); }
+.offers { background-image: url(../../assets/tabs/offers.svg); }
+.events { background-image: url(../../assets/tabs/events.svg); }
+.favorites { background-image: url(../../assets/tabs/favorites.svg); }
+.chat { background-image: url(../../assets/tabs/chat.svg); }
+.profile { background-image: url(../../assets/tabs/profile.svg); }
+
+	.tab-selected .home, .home.pink { background-image: url(../../assets/tabs/home-s.svg) !important; }
+	.tab-selected .offers, .offers.pink { background-image: url(../../assets/tabs/offers-s.svg) !important; }
+	.tab-selected .events, .events.pink { background-image: url(../../assets/tabs/events-s.svg) !important; }
+	.tab-selected .favorites, .favorites.pink { background-image: url(../../assets/tabs/favorites-s.svg) !important; }
+	.tab-selected .chat, .chat.pink { background-image: url(../../assets/tabs/chat-s.svg) !important; }
+	.tab-selected .profile, .profile.pink { background-image: url(../../assets/tabs/profile-s.svg) !important; }
+
+#tabs-tutorial {
+	z-index: 9999;
+    --background: transparent;
+    position: absolute;
+    bottom: -.5px;
+    width: 100%;
+    border: none;
+}
+
+.myTutorial {
+	p {
+		position: absolute;
+		font-size: 12px;
+		background-color: transparent;
+		z-index: 10000;
+		bottom: 10%;
+		width: 200px;
+		color: #fff;
+	}
+}

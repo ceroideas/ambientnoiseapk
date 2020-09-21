@@ -1,0 +1,53 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3>Nueva Lista</h3>
+
+	<!-- <br *ngIf="step < 4"> -->
+
+	<div class="central-block">
+		<ion-list>
+
+			<ion-item class="ion-no-padding">
+				<ion-label position="floating">NOMBRE DE LA LISTA</ion-label>
+				<ion-input [(ngModel)]="todo.name" type="text" ></ion-input>
+
+				<span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span>
+			</ion-item>
+
+			<ion-item class="ion-no-padding" lines="none">
+				<ion-label position="stacked">IMAGEN DE LA LISTA</ion-label>
+				
+				<span class="adicional-info">Carga la imagen de la lista haciendo clic en el icono</span>
+
+				<div class="logotipo">
+					
+				</div>
+
+				<!-- <span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span> -->
+			</ion-item>
+
+
+		</ion-list>
+
+	</div>
+
+	<ion-button (click)="addGuests()" class="an-button" routerDirection="root">Añadir Invitados</ion-button>
+
+
+</ion-content>

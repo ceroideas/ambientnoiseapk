@@ -1,5 +1,7 @@
 {
   "name": "ambientnoise",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

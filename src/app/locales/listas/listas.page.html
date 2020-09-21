@@ -1,0 +1,106 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon [routerLink]="['/login']" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+		<ion-button class="an-button" [routerLink]="['/local/listas/nueva-lista']" routerDirection="root">Nueva Lista</ion-button>
+
+	</h4>
+
+	<h3>Mis Listas</h3>
+
+	<br>
+
+	<div>
+		
+		<div class="local">
+			<ion-row>
+				<ion-col size="3">
+					<div class="rest-pic" style="background-image: url('../assets/fondo-restaurante-01.jpg')">
+						
+					</div>
+				</ion-col>
+				<ion-col size="9">
+					<div class="rest-info">
+						<label class="title">Lista 1</label>
+
+						<small>Brooklyn River Bar</small>
+
+						<div class="opciones">
+							<img src="assets/locales/borrar.svg" alt="">
+							<img src="assets/locales/editar.svg" alt="">
+							<ion-icon name="checkbox-outline"></ion-icon>
+						</div>
+
+						<!-- <label class="label-1">4.3</label>
+
+						<ion-icon name="heart-outline"></ion-icon> -->
+					</div>
+				</ion-col>
+			</ion-row>
+		</div>
+
+		<div class="local">
+			<ion-row>
+				<ion-col size="3">
+					<div class="rest-pic" style="background-image: url('../assets/1.jpg')">
+						
+					</div>
+				</ion-col>
+				<ion-col size="9">
+					<div class="rest-info">
+						<label class="title">Lista 2</label>
+
+						<small>Brooklyn River Bar</small>
+
+						<div class="opciones">
+							<img src="assets/locales/borrar.svg" alt="">
+							<img src="assets/locales/editar.svg" alt="">
+							<ion-icon name="checkbox-outline"></ion-icon>
+						</div>
+
+						<!-- <label class="label-1">4.3</label>
+
+						<ion-icon name="heart-outline"></ion-icon> -->
+					</div>
+				</ion-col>
+			</ion-row>
+		</div>
+
+		<div class="local">
+			<ion-row>
+				<ion-col size="3">
+					<div class="rest-pic" style="background-image: url('../assets/2.jpg')">
+						
+					</div>
+				</ion-col>
+				<ion-col size="9">
+					<div class="rest-info">
+						<label class="title">Lista 3</label>
+
+						<small>Brooklyn River Bar</small>
+
+						<div class="opciones">
+							<img src="assets/locales/borrar.svg" alt="">
+							<img src="assets/locales/editar.svg" alt="">
+							<ion-icon name="checkbox-outline"></ion-icon>
+						</div>
+
+						<!-- <label class="label-1">4.3</label>
+
+						<ion-icon name="heart-outline"></ion-icon> -->
+					</div>
+				</ion-col>
+			</ion-row>
+		</div>
+
+	</div>
+
+</ion-content>

@@ -1,0 +1,124 @@
+ion-content {
+	// --background: url(../../../assets/fondo-01.png) 0 0/cover no-repeat;
+	// --background-size: cover;
+	// --background-position: center;
+}
+
+h2 {
+	color: #a365b8;
+	text-align: center;
+	font-weight: 100;
+	font-size: 32px;
+	margin-top: -20px;
+}
+
+h3 {
+	color: #767070;
+	font-weight: 700;
+	font-size: 32px;
+	margin-top: 35px;
+	
+}
+
+h4 {
+	color: #fff;
+	margin-top: 30px;
+	margin-bottom: 0px;
+	font-size: 24px;
+}
+
+h5 {
+	color: #f0f0f0;
+	margin-bottom: 4px;
+	position: relative;
+	text-align: center;
+	small {
+		// right: 0;
+		color: gray;
+		font-size: 12px;
+		// position: absolute;
+		// bottom: 0;
+	}
+}
+
+h6 {
+	color: #fff;
+	font-size: 18px;
+	line-height: 22px;
+	small {
+		line-height: 18px;
+		font-size: 14px;
+		display: block;
+		color: #767070;
+		margin-top: 10px;
+	}
+}
+
+.tactic-icon {
+	border-radius: 12px;
+	border: 1px solid #fff;
+	padding: 8px;
+	height: 90px;
+	display: flex;
+	width: 110px;
+	margin-bottom: 10px;
+	img {
+		margin: auto;
+		height: 70%;
+	}
+}
+
+.profile-pic {
+	background-repeat: no-repeat;
+	background-size: cover;
+	border: 1px solid #fff;
+	border-radius: 12px;
+}
+
+.info-ropero {
+	label {
+		font-size: 16px;
+		color: #ccc;
+		display: block;
+	}
+	small {
+		font-size: 12px;
+		color: #767070;
+		display: block;
+		margin-top: 8px;
+	}
+}
+
+.disabled {
+	opacity: .3;
+}
+
+[fix-top] {
+	position: relative;
+	top: 4px;
+	font-size: 24px;
+}
+
+.an-button {
+	display: block;
+	--border-radius: 18px;
+	font-size: 10px;
+	// width: 50%;
+	// float: right;
+	margin-top: 12px;
+	height: 50px;
+}
+
+#total {
+	margin: 12px 0;
+	float: right;
+	color: #767070;
+	b {
+		margin-left: 12px;
+		color: #a365b8;
+	}
+	&:after {
+		content: "";
+		clear: both;
+	}
+}

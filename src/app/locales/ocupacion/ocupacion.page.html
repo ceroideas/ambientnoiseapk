@@ -1,0 +1,45 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>ocupacion</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<div class="main-box">
+		<label><b>Ocupación</b></label> <br>
+
+		<span>Marca el nivel de ocupación del local. Se actualizará en tiempo real.</span>
+
+		<ion-list>
+		  <ion-item>
+		    <ion-range min="0" max="100" [(ngModel)]="ocupacion" color="primary" pin="true"></ion-range>
+		  </ion-item>
+		</ion-list>
+
+		<div class="prime-time">
+
+	    	<div class="text-info">
+	    		<!-- En PRIME TIME <br> -->
+	    		<div>
+	    			
+		    		Ocupación ahora: <br>
+		    		<span>{{ocupacion}}%</span>
+	    		
+	    		</div>
+	    	</div>
+
+	    	<div class="fire">
+	    		<img src="assets/fire.svg" alt="">
+	    	</div>
+	    	
+	    </div>
+
+
+		<ion-button (click)="modal.dismiss()" class="an-button" routerDirection="root">
+			Guardar
+		</ion-button>
+
+	</div>
+
+</ion-content>

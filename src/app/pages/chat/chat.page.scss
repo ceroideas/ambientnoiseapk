@@ -1,0 +1,39 @@
+ion-content {
+	--background: url(../../../assets/fondo-01.png) 0 0/100% 100% no-repeat;
+	--background-size: cover;
+	--background-position: center;
+}
+
+h3 {
+	color: #767070;
+	font-weight: 700;
+	font-size: 32px;
+	margin-top: 0;
+	
+}
+
+h4 {
+	color: #fff;
+	margin-top: 30px;
+	margin-bottom: 0px;
+	font-size: 24px;
+}
+
+.logo-restaurante {
+	display: block;
+	width: 100px;
+	height: 100px;
+	border-radius: 100px;
+	background-size: cover;
+	background-position: center;
+	border: 8px solid #a365b8;
+}
+
+.title-tactic {
+	text-align: left;
+	color: #fff;
+	margin: auto;
+	font-size: 24px;
+	font-weight: bold;
+	margin-top: 30px;
+}
