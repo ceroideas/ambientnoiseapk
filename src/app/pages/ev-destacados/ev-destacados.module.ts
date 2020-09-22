@@ -8,11 +8,14 @@ import { EvDestacadosPageRoutingModule } from './ev-destacados-routing.module';
 
 import { EvDestacadosPage } from './ev-destacados.page';
 
+import { ComponentModule } from '../../component.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentModule,
     EvDestacadosPageRoutingModule
   ],
   declarations: [EvDestacadosPage]

@@ -8,6 +8,8 @@ import { AlertController, LoadingController } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
 
+  tutorialValue = parseInt(localStorage.getItem('tutorial')) || 0;
+
   slideOpts = {
   	slidesPerView: 5.5
   }

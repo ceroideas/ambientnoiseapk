@@ -8,11 +8,14 @@ import { FavoritosPageRoutingModule } from './favoritos-routing.module';
 
 import { FavoritosPage } from './favoritos.page';
 
+import { ComponentModule } from '../../component.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentModule,
     FavoritosPageRoutingModule
   ],
   declarations: [FavoritosPage]

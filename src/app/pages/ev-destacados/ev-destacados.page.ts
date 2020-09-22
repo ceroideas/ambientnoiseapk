@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EvDestacadosPage implements OnInit {
 
+  tutorialValue = parseInt(localStorage.getItem('tutorial')) || 0;
+
   constructor() { }
 
   ngOnInit() {

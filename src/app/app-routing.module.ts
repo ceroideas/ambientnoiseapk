@@ -100,6 +100,10 @@ const routes: Routes = [
     loadChildren: () => import('./locales/l-ropero/l-ropero.module').then( m => m.LRoperoPageModule)
   },
   // {
+  //   path: 'home-tutorial',
+  //   loadChildren: () => import('./tutoriales/home-tutorial/home-tutorial.module').then( m => m.HomeTutorialPageModule)
+  // },
+  // {
   //   path: 'nuevo',
   //   loadChildren: () => import('./locales/nuevo/nuevo.module').then( m => m.NuevoPageModule)
   // },

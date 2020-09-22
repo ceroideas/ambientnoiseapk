@@ -1,0 +1,211 @@
+<div class="central-block">
+			
+	<!-- <ion-list>
+
+		<ion-item class="ion-no-padding" lines="none">
+			<ion-label position="stacked">LOCALIDAD</ion-label>
+
+			<div class="search">
+				<span>
+					<ion-icon name="search"></ion-icon>
+				</span>
+
+				<input type="text">
+			</div>
+
+		</ion-item>
+
+
+	</ion-list> -->
+
+
+	<h5>Ambientes</h5>
+
+	<ion-slides [options]="slideOpts" style="margin-bottom: 40px;">
+		
+		<ion-slide>
+			<div>
+				<img src="assets/cocktail.svg" alt="" class="img-ambient">
+
+				<label class="ambient-label">Cócteles</label>
+			</div>
+		</ion-slide>
+
+		<ion-slide>
+			<div>
+				<img src="assets/beer.svg" alt="" class="img-ambient">
+
+				<label class="ambient-label">Irlandés</label>
+			</div>
+		</ion-slide>
+
+		<ion-slide>
+			<div>
+				<img src="assets/microphone.svg" alt="" class="img-ambient">
+
+				<label class="ambient-label">Karaoke</label>
+			</div>
+		</ion-slide>
+
+		<ion-slide>
+			<div>
+				<img src="assets/diners-club.svg" alt="" class="img-ambient">
+
+				<label class="ambient-label">Discoteca</label>
+			</div>
+		</ion-slide>
+
+		<ion-slide>
+			<div>
+				<img src="assets/alcohol.svg" alt="" class="img-ambient">
+
+				<label class="ambient-label">Pub</label>
+			</div>
+		</ion-slide>
+
+		<ion-slide>
+			<div>
+				<img src="assets/cocktail.svg" alt="" class="img-ambient">
+
+				<label class="ambient-label">Cócteles</label>
+			</div>
+		</ion-slide>
+
+	</ion-slides>
+
+	<h5><span>Mejor Ahora</span> <ion-icon style="position: relative; top: 4px; margin-left: 4px;" name="arrow-down"></ion-icon> <small>VER TODOS</small></h5>
+
+	<ion-card class="card-restaurante ion-no-margin" style="background-image: url(assets/fondo-restaurante-01.jpg); background-size: cover; background-position: center;">
+	
+	  <ion-card-content>
+	    <label>Gusto Bistro <br> <small>Marbella, Málaga</small></label>
+	    <br>
+	    <div>
+		    <span>
+		    	4.3
+		    </span>
+
+		    <ion-icon name="star"></ion-icon>
+		    <ion-icon name="star"></ion-icon>
+		    <ion-icon name="star"></ion-icon>
+		    <ion-icon name="star-half"></ion-icon>
+		    <ion-icon name="star-outline"></ion-icon>
+	    </div>
+	  </ion-card-content>
+	
+	</ion-card>
+
+	<ion-card class="card-restaurante ion-no-margin" style="background-image: url(assets/bobby-logan.jpg); background-size: cover; background-position: center;">
+	
+	  <ion-card-content>
+	    <label>Bobby Logan <br> <small>Torre del mar, Málaga</small></label>
+	    <br>
+	    <div>
+		    <span>
+		    	4.3
+		    </span>
+
+		    <ion-icon name="star"></ion-icon>
+		    <ion-icon name="star"></ion-icon>
+		    <ion-icon name="star"></ion-icon>
+		    <ion-icon name="star-half"></ion-icon>
+		    <ion-icon name="star-outline"></ion-icon>
+	    </div>
+	  </ion-card-content>
+	
+	</ion-card>
+
+	<ion-card class="card-restaurante ion-no-margin" style="background-image: url(assets/burger.jpg); background-size: cover; background-position: center;">
+	
+	  <ion-card-content>
+	    <label>Fury Burguer <br> <small>Torremolinos, Málaga</small></label>
+	    <br>
+	    <div>
+		    <span>
+		    	4.3
+		    </span>
+
+		    <ion-icon name="star"></ion-icon>
+		    <ion-icon name="star"></ion-icon>
+		    <ion-icon name="star"></ion-icon>
+		    <ion-icon name="star-half"></ion-icon>
+		    <ion-icon name="star-outline"></ion-icon>
+	    </div>
+	  </ion-card-content>
+	
+	</ion-card>
+
+</div>
+
+<div class="bottom-informationH">
+	
+	<div class="handlerH">
+		<ion-icon name="chevron-up"></ion-icon>
+	</div>
+	<div class="information-boxH">
+
+		<!-- <label>LOCALIDAD <small [routerLink]="['/tabs/home/filtros']" routerDirection="forward"><ion-icon name="filter"></ion-icon> FILTRO AVANZADO</small></label>
+		<ion-list>
+
+			<ion-item class="ion-no-padding" lines="none">
+
+				<div class="search">
+					<span>
+						<ion-icon name="search"></ion-icon>
+					</span>
+
+					<input type="text">
+				</div>
+
+			</ion-item>
+
+			<hr style="border-bottom: .5px solid #767070">
+
+			<div class="selections">
+				
+				<ion-row>
+					<ion-col (click)="select(1)" [ngClass]="selection == 1 ? 'selected' : ''">
+						<small>AMBIENTES</small>
+						<label>{{ambiente}}</label>
+					</ion-col>
+
+					<ion-col (click)="select(2)" [ngClass]="selection == 2 ? 'selected' : ''">
+						<small>TIPO DE MUSICA</small>
+						<label>{{musica}}</label>
+					</ion-col>
+				</ion-row>
+
+				<hr style="border-bottom: .5px solid #767070">
+
+				<div *ngIf="selection == 1">
+					<h5>AMBIENTES</h5>
+
+					<div [ngClass]="ambiente == a ? 'type actual' : 'type'" *ngFor="let a of ambientes" (click)="ambiente = a">{{a}}</div>
+
+					<br>
+
+					<div style="clear: both;"></div>
+
+					<ion-button class="an-button" (click)="cerrar()">Aplicar</ion-button>
+				</div>
+
+				<div *ngIf="selection == 2">
+					<h5>TIPO DE MÚSICA</h5>
+
+					<div [ngClass]="musica == m ? 'type actual' : 'type'" *ngFor="let m of tmusica" (click)="musica = m">{{m}}</div>
+
+					<br>
+
+					<div style="clear: both;"></div>
+
+					<ion-button class="an-button" (click)="cerrar()">Aplicar</ion-button>
+				</div>
+
+			</div>
+
+
+		</ion-list> -->
+		
+	</div>
+
+</div>

@@ -12,6 +12,15 @@ export class SplashPage implements OnInit {
 
   ngOnInit() {
   	setTimeout(()=>{
+  		if (localStorage.getItem('ANuser')) {
+  			let role = JSON.parse(localStorage.getItem('ANuser'))['role'];
+        console.log(role);
+  			if (role == 2) {
+  				return this.nav.navigateRoot('tabs');
+  			}else{
+  				return this.nav.navigateRoot('local');
+  			}
+  		}
   		this.nav.navigateRoot('welcome');
   	},2000)
   }

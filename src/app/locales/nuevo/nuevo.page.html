@@ -19,109 +19,215 @@
 	<div class="central-block">
 		<ion-list *ngIf="step == 1">
 
-			<ion-item class="ion-no-padding">
-				<ion-label position="floating">NOMBRE DEL LOCAL</ion-label>
-				<ion-input [(ngModel)]="todo.name" type="text" ></ion-input>
+			<form class="form" [formGroup]="validations_form1" (ngSubmit)="validate1(validations_form1.value)">
 
-				<span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span>
-			</ion-item>
+				<ion-item class="ion-no-padding">
+					<ion-label position="stacked">NOMBRE DEL LOCAL</ion-label>
+					<ion-input formControlName="name" type="text" ></ion-input>
 
-			<ion-item class="ion-no-padding">
-				<ion-label position="floating">DIRECCIÓN</ion-label>
-				<ion-input [(ngModel)]="todo.address" type="text" ></ion-input>
+					<span slot="end">
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.name">
+			            <div class="error-message" *ngIf="validations_form1.get('name').hasError(validation.type) && (validations_form1.get('name').dirty || validations_form1.get('name').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-				<span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span>
-			</ion-item>
+				<ion-item class="ion-no-padding">
+					<ion-label position="stacked">DIRECCIÓN</ion-label>
+					<!-- <ion-input formControlName="address" id="searchTextField" type="text" ></ion-input> -->
+					<input formControlName="address" id="searchTextField" type="text" />
 
-			<ion-item class="ion-no-padding" style="margin: none;">
-				<ion-label position="floating">DESCRIPCIÓN</ion-label>
-				<ion-textarea [(ngModel)]="todo.description" placeholder="Escriba una descripción del local" rows="8" ></ion-textarea>
+					<span slot="end">
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.address">
+			            <div class="error-message" *ngIf="validations_form1.get('address').hasError(validation.type) && (validations_form1.get('address').dirty || validations_form1.get('address').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-				<span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span>
-			</ion-item>
+				<ion-item class="ion-no-padding" style="margin: none;">
+					<ion-label position="stacked">DESCRIPCIÓN</ion-label>
+					<ion-textarea formControlName="description" maxlength="500" placeholder="Escriba una descripción del local" rows="8" ></ion-textarea>
 
-			<div>
-				<span style="font-size: 12px; color:#b3b3b3; display: block; float: right">0 / 500 caracteres</span>
-			</div>
+					<span slot="end">
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.description">
+			            <div class="error-message" *ngIf="validations_form1.get('description').hasError(validation.type) && (validations_form1.get('description').dirty || validations_form1.get('description').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+				<div>
+					<span style="font-size: 12px; color:#b3b3b3; display: block; float: right">{{validations_form1.value.description?.length || 0}} / <span style="color: #0f0">500</span> caracteres</span>
+				</div>
+
+				<br>
+
+				<ion-button (click)="nextStep()" [disabled]="!validations_form1.valid" class="an-button" routerDirection="root">Siguiente</ion-button>
+
+			</form>
 
 
 		</ion-list>
 
 		<ion-list *ngIf="step == 2">
 
-			<ion-item class="ion-no-padding">
-				<ion-label position="floating">AMBIENTE</ion-label>
-				<ion-select>
-					<ion-select-option>Ambiente 1</ion-select-option>
-					<ion-select-option>Ambiente 2</ion-select-option>
-					<ion-select-option>Ambiente 3</ion-select-option>
-				</ion-select>
+			<form class="form" [formGroup]="validations_form2" (ngSubmit)="validate1(validations_form2.value)">
 
-				<span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span>
-			</ion-item>
+				<ion-item class="ion-no-padding">
+					<ion-label position="stacked">AMBIENTE</ion-label>
+					<ion-select multiple formControlName="ambients">
+						<ion-select-option *ngFor="let a of ambients">{{a.title}}</ion-select-option>
+					</ion-select>
 
-			<ion-item class="ion-no-padding">
-				<ion-label position="floating">TIPO DE MÚSICA</ion-label>
-				<ion-select multiple>
-					<ion-select-option>Ambiente 1</ion-select-option>
-					<ion-select-option>Ambiente 2</ion-select-option>
-					<ion-select-option>Ambiente 3</ion-select-option>
-				</ion-select>
+					<span slot="end">
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages2.ambients">
+			            <div class="error-message" *ngIf="validations_form2.get('ambients').hasError(validation.type) && (validations_form2.get('ambients').dirty || validations_form2.get('ambients').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-				<span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span>
-			</ion-item>
+				<ion-item class="ion-no-padding">
+					<ion-label position="stacked">TIPO DE MÚSICA</ion-label>
+					<ion-select multiple formControlName="musics">
+						<ion-select-option *ngFor="let m of musics">{{m.title}}</ion-select-option>
+					</ion-select>
 
-			<ion-item class="ion-no-padding">
-				<ion-label position="floating">COMPRA MÍNIMA (€)</ion-label>
-				<ion-input type="number" ></ion-input>
+					<span slot="end">
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages2.musics">
+			            <div class="error-message" *ngIf="validations_form2.get('musics').hasError(validation.type) && (validations_form2.get('musics').dirty || validations_form2.get('musics').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-				<span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span>
-			</ion-item>
+				<ion-item class="ion-no-padding">
+					<ion-label position="stacked">COMPRA MÍNIMA (€)</ion-label>
+					<ion-input formControlName="minumum" type="number" ></ion-input>
 
-			<ion-item class="ion-no-padding">
-				<ion-label position="floating">TIEMPO PROMEDIO (MINUTOS)</ion-label>
-				<ion-input type="number" ></ion-input>
+					<span slot="end">
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages2.minumum">
+			            <div class="error-message" *ngIf="validations_form2.get('minumum').hasError(validation.type) && (validations_form2.get('minumum').dirty || validations_form2.get('minumum').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-				<span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span>
-			</ion-item>
+				<ion-item class="ion-no-padding">
+					<ion-label position="stacked">TIEMPO PROMEDIO (MINUTOS)</ion-label>
+					<ion-input formControlName="average" type="number" ></ion-input>
 
-			<ion-item class="ion-no-padding">
-				<ion-label position="floating">CAPACIDAD</ion-label>
-				<ion-input type="number" ></ion-input>
+					<span slot="end">
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages2.average">
+			            <div class="error-message" *ngIf="validations_form2.get('average').hasError(validation.type) && (validations_form2.get('average').dirty || validations_form2.get('average').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-				<span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span>
-			</ion-item>
+				<ion-item class="ion-no-padding">
+					<ion-label position="stacked">CAPACIDAD</ion-label>
+					<ion-input formControlName="capacity" type="number" ></ion-input>
+
+					<span slot="end">
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages2.capacity">
+			            <div class="error-message" *ngIf="validations_form2.get('capacity').hasError(validation.type) && (validations_form2.get('capacity').dirty || validations_form2.get('capacity').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+				<br>
+
+				<ion-button (click)="nextStep()" [disabled]="!validations_form2.valid" class="an-button" routerDirection="root">Siguiente</ion-button>
+
+			</form>
 
 
 		</ion-list>
 
 		<ion-list *ngIf="step == 3">
 
-			<ion-item class="ion-no-padding">
+			<ion-item class="ion-no-padding" lines="none">
 				<ion-label position="stacked">HORARIO</ion-label>
-				
 
+				<ion-button size="small" (click)="addDay()" style="margin-top: 10px;">Añadir día</ion-button>
 
-				<span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span>
 			</ion-item>
+
+
+			<ion-item class="ion-no-padding" *ngFor="let day of days; let i = index">
+
+				<ion-row style="width: 100%">
+					<ion-col size="4">
+						<label style="font-size: 14px;">Día</label>
+						<ion-select [(ngModel)]="day.day" style="width: 100%; background-color: transparent; border: none; padding-left: 0; max-width: 100% !important">
+							<ion-select-option value="0">Domingo</ion-select-option>
+							<ion-select-option value="1">Lunes</ion-select-option>
+							<ion-select-option value="2">Martes</ion-select-option>
+							<ion-select-option value="3">Miércoles</ion-select-option>
+							<ion-select-option value="4">Jueves</ion-select-option>
+							<ion-select-option value="5">Viernes</ion-select-option>
+							<ion-select-option value="6">Sábado</ion-select-option>
+						</ion-select>
+					</ion-col>
+
+					<ion-col size="3">
+						<label style="font-size: 14px;">Desde</label>
+						<ion-datetime [(ngModel)]="day.from" style="padding-left: 0" displayFormat="HH:mm"></ion-datetime>
+					</ion-col>
+
+					<ion-col size="3">
+						<label style="font-size: 14px;">Hasta</label>
+						<ion-datetime [(ngModel)]="day.to" style="padding-left: 0" displayFormat="HH:mm"></ion-datetime>
+					</ion-col>
+
+					<ion-col size="2">
+						<label>&nbsp;</label> <br>
+						<ion-button color="danger" (click)="removeDay(i)" style="float: right;">x</ion-button>
+					</ion-col>
+				</ion-row>
+
+				<!-- <span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span> -->
+			</ion-item>
+
+			<ion-button (click)="nextStep(1)" [disabled]="days.length == 0" class="an-button" routerDirection="root">Siguiente</ion-button>
 
 		</ion-list>
 
@@ -132,8 +238,9 @@
 				
 				<span class="adicional-info">Carga el logotipo de tu local haciendo clic en el icono</span>
 
-				<div class="logotipo">
-					
+				<div class="logotipo" (click)="loadImage('logo')">
+					<div class="uploaded" [ngStyle]="{'background-image':'url('+logo+')'}">
+					</div>
 				</div>
 
 				<!-- <span slot="end">
@@ -146,8 +253,9 @@
 				
 				<span class="adicional-info">Carga la imagen principal de tu local haciendo clic en la imagen de ejemplo. <br> La imagen quedara genial si eliges una fotografia en formato vertical!!</span>
 
-				<div class="principal">
-					
+				<div class="principal" (click)="loadImage('main')">
+					<div class="uploaded" [ngStyle]="{'background-image':'url('+main+')'}">
+					</div>
 				</div>
 
 				<!-- <span slot="end">
@@ -155,13 +263,15 @@
 				</span> -->
 			</ion-item>
 
+			<ion-button (click)="nextStep(1)" [disabled]="!logo && !main" class="an-button" routerDirection="root">Terminar</ion-button>
+
 		</ion-list>
 	</div>
 
-	<ion-button (click)="nextStep()" class="an-button" routerDirection="root">
+	<!-- <ion-button (click)="nextStep()" class="an-button" routerDirection="root">
 		<span *ngIf="step < 4">Siguiente</span>
 		<span *ngIf="step == 4">Terminar</span>
-	</ion-button>
+	</ion-button> -->
 
 
 </ion-content>

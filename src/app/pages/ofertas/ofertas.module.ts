@@ -8,11 +8,14 @@ import { OfertasPageRoutingModule } from './ofertas-routing.module';
 
 import { OfertasPage } from './ofertas.page';
 
+import { ComponentModule } from '../../component.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentModule,
     OfertasPageRoutingModule
   ],
   declarations: [OfertasPage]

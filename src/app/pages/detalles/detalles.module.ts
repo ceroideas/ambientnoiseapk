@@ -8,11 +8,14 @@ import { DetallesPageRoutingModule } from './detalles-routing.module';
 
 import { DetallesPage } from './detalles.page';
 
+import { ComponentModule } from '../../component.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentModule,
     DetallesPageRoutingModule
   ],
   declarations: [DetallesPage]

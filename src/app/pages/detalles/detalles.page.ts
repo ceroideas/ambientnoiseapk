@@ -11,6 +11,8 @@ export class DetallesPage implements OnInit {
 
   @ViewChild('content') private content: any;
 
+  tutorialValue = parseInt(localStorage.getItem('tutorial')) || 0;
+
   types = [
   "Menú",
   "Información",

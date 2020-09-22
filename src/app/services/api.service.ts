@@ -30,5 +30,9 @@ export class ApiService {
     return this.http.get(this.url+'/getStablishment/'+id);
   }
 
+  saveStablishment(data){
+    return this.http.post(this.url+'/saveStablishment',data);
+  }
+
 
 }

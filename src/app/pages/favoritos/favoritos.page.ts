@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class FavoritosPage implements OnInit {
 
   favoritos;
+  tutorialValue = parseInt(localStorage.getItem('tutorial')) || 0;
 
   constructor() { }
 

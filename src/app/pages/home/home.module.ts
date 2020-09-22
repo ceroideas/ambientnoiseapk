@@ -10,12 +10,15 @@ import { HomePage } from './home.page';
 
 import { PipesModule } from '../../pipes/pipes.module';
 
+import { ComponentModule } from '../../component.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     PipesModule,
+    ComponentModule,
     HomePageRoutingModule
   ],
   declarations: [HomePage]

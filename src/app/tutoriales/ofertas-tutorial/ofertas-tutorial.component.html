@@ -1,26 +1,4 @@
-<!-- <ion-header hidden>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
-<ion-content class="ion-padding">
-
-	<h4> <ion-icon [routerLink]="['/login']" routerDirection="root" name="chevron-back"></ion-icon>
-
-		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
-
-	</h4>
-
-	<img src="../assets/logo.svg" alt="" class="logo mt-def" style="margin: -20px auto">
-
-	<h3>Ofertas destacadas</h3>
-
-	<br>
-
-	<app-ofertas-tutorial *ngIf="tutorialValue < 14"></app-ofertas-tutorial>
-
-	<div *ngIf="tutorialValue >= 14">
+<div>
 		
 		<ion-row style="margin-bottom: 12px;">
 			<ion-col size="9">
@@ -110,5 +88,3 @@
 		</ion-row>
 
 	</div>
-
-</ion-content>
