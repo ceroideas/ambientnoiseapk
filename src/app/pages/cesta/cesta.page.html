@@ -16,6 +16,10 @@
 
 	<br>
 
+	<div *ngIf="establishments?.length == 0">
+		<h6>Aún no ha agregado productos al carrito.</h6>
+	</div>
+
 	<section *ngFor="let e of establishments; let i = index">
 
 		<div *ngIf="e.products.length > 0">

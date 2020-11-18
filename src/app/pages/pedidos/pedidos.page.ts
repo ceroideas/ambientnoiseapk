@@ -10,8 +10,8 @@ import { QrPage } from '../qr/qr.page';
 })
 export class PedidosPage implements OnInit {
 
-  pedidos:any = [];
-  roperos:any = [];
+  pedidos:any;
+  roperos:any;
 
   user = JSON.parse(localStorage.getItem('ANuser'));
 

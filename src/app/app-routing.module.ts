@@ -147,6 +147,10 @@ const routes: Routes = [
     path: 'chat-room',
     loadChildren: () => import('./pages/chat-room/chat-room.module').then( m => m.ChatRoomPageModule)
   },
+  {
+    path: 'qr-scanner',
+    loadChildren: () => import('./locales/qr-scanner/qr-scanner.module').then( m => m.QrScannerPageModule)
+  },
   // {
   //   path: 'locales',
   //   loadChildren: () => import('./locales/locales.module').then( m => m.LocalesPageModule)

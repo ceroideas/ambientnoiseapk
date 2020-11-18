@@ -14,7 +14,11 @@
 
 	<h3>Mis Pedidos</h3>
 
-	<div *ngIf="pedidos.length > 0">
+	<div *ngIf="pedidos?.length == 0">
+		<h6>Aún no ha hecho pedidos.</h6>
+	</div>
+
+	<div *ngIf="pedidos?.length > 0">
 		<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
 			
 		  <ion-card-content>
@@ -76,7 +80,10 @@
 
 	<h3>Ropero</h3>
 
-	<div *ngIf="roperos.length > 0">
+	<div *ngIf="roperos?.length == 0">
+		<h6>Aún no ha contratado el servicio de ropero.</h6>
+	</div>
+	<div *ngIf="roperos?.length > 0">
 		
 		<ion-row style="background-color: #373333; border-radius: 20px; padding: 10px; margin-bottom: 20px" *ngFor="let r of roperos">
 			<ion-col size="4">
