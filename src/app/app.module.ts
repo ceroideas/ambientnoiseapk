@@ -13,6 +13,12 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { EventsService } from './services/events.service';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+import { OneSignal } from '@ionic-native/onesignal/ngx';
+
+const config: SocketIoConfig = { url: 'http://bulldogames.com:9000', options: {} };
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -20,6 +26,7 @@ import { EventsService } from './services/events.service';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(),
+    SocketIoModule.forRoot(config),
     AppRoutingModule
   ],
   providers: [
@@ -27,6 +34,7 @@ import { EventsService } from './services/events.service';
     StatusBar,
     SplashScreen,
     Geolocation,
+    OneSignal,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

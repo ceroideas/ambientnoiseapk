@@ -6,23 +6,70 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4>
+		<ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
 	</h4>
 
-	<!-- <h3>Chat</h3> -->
+	<h3>Chat</h3>
 
-	<ion-row style="margin-top: 16px;">
+	<!-- <ion-row style="margin-top: 16px;">
 		<ion-col size="4">
 			<span style="background-image: url(assets/restaurant.jpg)" class="logo-restaurante"></span>
 		</ion-col>
 		<ion-col size="8">
-			<h2 class="title-tactic">Brooklyn River Bar</h2>
+			<h2 class="title-tactic" (click)="scll()">Brooklyn River Bar</h2>
 		</ion-col>
-	</ion-row>
+	</ion-row> -->
 
 	<br>
 
+	<div style="height: calc(100vh - 260px); overflow: auto;" id="messages">
+		
+		<div *ngFor="let m of myMessages; let i = index">
+			<div *ngIf="m.from_id == user.id">
+				<h6>{{m.created_at}}</h6>
+				<div class="chat-me" no-lines text-wrap>
+					<div class="text">
+						<span><b>{{m?.user?.name}}:</b> <label [innerHtml]="m.message | secure"></label></span>
+					</div>
+					<div class="pic">
+						<div [ngStyle]="{'background-image':'url('+m?.user?.avatar+')'}"></div>
+					</div>
+					<div style="clear: both"></div>
+				</div>
+			</div>
+
+			<div *ngIf="m.from_id != user.id">
+				<h6>{{m.created_at}}</h6>
+				<div class="chat-not-me" no-lines text-wrap>
+					<div class="text">
+						<span><b>{{m?.user?.name}}:</b> <label [innerHtml]="m.message | secure"></label></span>
+					</div>
+					<div class="pic">
+						<div [ngStyle]="{'background-image':'url('+m?.user?.avatar+')'}"></div>
+					</div>
+					<div style="clear: both"></div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
 </ion-content>
+
+<ion-footer>
+	<ion-row class="ion-no-padding" style="background-color: #fff;">
+		<ion-col size="1" class="ion-no-padding" style="display: flex;" (click)="openAction()">
+			<ion-icon id="icon-camera" name="camera"></ion-icon>
+		</ion-col>
+		<ion-col size="9" class="ion-no-padding">
+			<input id="input-chat" type="text" placeholder="Mensaje" (keyup.enter)="addMessage()" [(ngModel)]="text">
+		</ion-col>
+		<ion-col size="2" class="ion-no-padding" style="display: flex;">
+			<h6 id="send" (click)="addMessage()">Enviar</h6>
+		</ion-col>
+	</ion-row>
+</ion-footer>

@@ -6,7 +6,8 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon [routerLink]="['/login']" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4>
+		<!-- <ion-icon [routerLink]="['/login']" routerDirection="root" name="chevron-back"></ion-icon> -->
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -24,44 +25,40 @@
 
 		<div>
 			
-			<ion-row style="margin-bottom: 12px;">
+			<ion-row style="margin-bottom: 12px;" *ngFor="let e of eventos; let i = index">
 				<ion-col size="12">
-					<div class="left-side-off" (click)="openInformation(1)">
+					<div class="left-side-off" (click)="openInformation(i)">
 						<ion-row>
 							<ion-col size="4">
-								<div class="rest-pic" style="background-image: url('../assets/fondo-restaurante-01.jpg')">
+								<div class="rest-pic" [ngStyle]="{'background-image': 'url('+e.avatar+')'}">
 									
 								</div>
 							</ion-col>
 							<ion-col size="8">
 								<div class="rest-info">
-									<label class="title">Brooklyn River Bar</label>
+									<!-- <ion-icon name="trash" class="delete-icon" (click)="deleteEvent(e.id)"></ion-icon> -->
+									<label class="title">{{e.establishment.title}}</label>
 
-									<small>BRUGAL EXPERIENCE</small>
+									<small>{{e.title}}</small>
 
-									<span class="date">Sábado 29 AGOSTO 2020 <br> de 00:00 a 02:00 H</span>
+									<span class="date"> <span style="text-transform: capitalize;">{{e | expired:'local'}}</span> <br> de {{e.hour_from}} a {{e.hour_to}} H</span>
 								</div>
 							</ion-col>
 						</ion-row>
 
-						<div class="bottom-information" id="bi-1">
+						<div class="bottom-information-E" [id]="'bi-'+i">
 							<hr>
-							<h4>BRUGAL EXPERIENCE</h4>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, illum, repellat. Esse itaque tempora rerum praesentium maiores, ducimus sunt numquam qui voluptate atque velit odit repellat, ea. Facilis, doloremque, labore?</p>
+							<h4>{{e.title}}</h4>
+							<p [innerHtml]="e.description"></p>
 
-							<span [routerLink]="['/tabs/eventos/lista']">Ver lista</span>
+							<span style="margin-top: 8px;" *ngIf="e.list" (click)="addGuess(e.list,i)">{{ e.list | guests:user.id:'list' }}</span>
 
 						</div>
 					</div>
 				</ion-col>
-				<!-- <ion-col size="3">
-					<div class="right-side-off">
-						<h1>%10</h1>
-					</div>
-				</ion-col> -->
 			</ion-row>
 
-			<ion-row style="margin-bottom: 12px;">
+			<!-- <ion-row style="margin-bottom: 12px;">
 				<ion-col size="12">
 					<div class="left-side-off" (click)="openInformation(2)">
 						<ion-row>
@@ -89,11 +86,6 @@
 						</div>
 					</div>
 				</ion-col>
-				<!-- <ion-col size="3">
-					<div class="right-side-off">
-						<h1>2x1</h1>
-					</div>
-				</ion-col> -->
 			</ion-row>
 
 			<ion-row style="margin-bottom: 12px;">
@@ -124,12 +116,7 @@
 						</div>
 					</div>
 				</ion-col>
-				<!-- <ion-col size="3">
-					<div class="right-side-off">
-						<h1>%20</h1>
-					</div>
-				</ion-col> -->
-			</ion-row>
+			</ion-row> -->
 
 		</div>
 

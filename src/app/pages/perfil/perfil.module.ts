@@ -8,11 +8,14 @@ import { PerfilPageRoutingModule } from './perfil-routing.module';
 
 import { PerfilPage } from './perfil.page';
 
+import { PipesModule } from '../../pipes/pipes.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     PerfilPageRoutingModule
   ],
   declarations: [PerfilPage]

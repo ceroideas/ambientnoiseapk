@@ -7,11 +7,13 @@
 <ion-content class="ion-padding">
 
 	<h4>
-		<ion-icon [routerLink]="['/login']" routerDirection="root" name="chevron-back"></ion-icon>
+		<!-- <ion-icon [routerLink]="['/login']" routerDirection="root" name="chevron-back"></ion-icon> -->
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
-		<img src="assets/pin.svg" alt="" [routerLink]="['/tabs/home/map']" style="height: 28px;">
+		<img src="assets/pin.svg" alt="" (click)="passData()" [routerLink]="['/tabs/home/map']" style="height: 28px;">
+
+		<ion-icon (click)="changeBottom($event)" style="float: right;top: 4px;position: relative;color: #a365b8;" name="search"></ion-icon>
 
 	</h4>
 
@@ -52,15 +54,15 @@
 
 			<ion-slides [options]="slideOpts" style="margin-bottom: 40px;">
 				
-				<ion-slide>
+				<ion-slide *ngFor="let amb of ambients" [ngClass]="{'amb-selected': quickAmbient == amb.id}" (click)="selectQuickAmbient(amb.id)">
 					<div>
-						<img src="assets/cocktail.svg" alt="" class="img-ambient">
+						<img [src]="amb.avatar" alt="" class="img-ambient">
 
-						<label class="ambient-label">Cócteles</label>
+						<label class="ambient-label">{{amb.title}}</label>
 					</div>
 				</ion-slide>
 
-				<ion-slide>
+				<!-- <ion-slide>
 					<div>
 						<img src="assets/beer.svg" alt="" class="img-ambient">
 
@@ -98,21 +100,21 @@
 
 						<label class="ambient-label">Cócteles</label>
 					</div>
-				</ion-slide>
+				</ion-slide> -->
 
 			</ion-slides>
 
-			<h5><span (click)="openFilter()">{{filter}}</span> <ion-icon style="position: relative; top: 4px; margin-left: 4px;" name="arrow-down"></ion-icon> <small>VER TODOS</small></h5>
+			<h5><span (click)="openFilter()">{{filter}}</span> <ion-icon style="position: relative; top: 4px; margin-left: 4px;" name="arrow-down"></ion-icon> <small (click)="selectQuickAmbient(null)">VER TODOS</small></h5>
 
-			<ion-card *ngFor="let l of locales | search:query" [routerLink]="['/tabs/home/detalles']" class="card-restaurante ion-no-margin"
-			[ngStyle]="{'background-image': 'url(assets/'+l.bg+')', 'background-size': 'cover', 'background-position': 'center'}">
+			<ion-card *ngFor="let l of establishments | search:query" (click)="getLocal(l)" [routerLink]="['/tabs/home/detalles/'+l.id]" class="card-restaurante ion-no-margin"
+			[ngStyle]="{'background-image': 'url('+l.main+')', 'background-size': 'cover', 'background-position': 'center'}">
 			
 			  <ion-card-content>
-			    <label>{{l.name}} <br> <small>{{l.location}}</small></label>
+			    <label>{{l.title}} <br> <small>{{l.locality.name}}</small></label>
 			    <br>
 			    <div>
 				    <span>
-				    	{{l.stars}}
+				    	4.3{{l.stars}}
 				    </span>
 
 				    <ion-icon name="star"></ion-icon>
@@ -124,6 +126,13 @@
 			  </ion-card-content>
 			
 			</ion-card>
+
+			<ion-infinite-scroll threshold="100px" (ionInfinite)="getEstablishments($event)">
+			    <ion-infinite-scroll-content
+			      loadingSpinner="bubbles"
+			      loadingText="Cargando establecimientos...">
+			    </ion-infinite-scroll-content>
+			</ion-infinite-scroll>
 
 			<!-- <ion-card [routerLink]="['/tabs/home/detalles']" class="card-restaurante ion-no-margin" style="background-image: url(assets/bobby-logan.jpg); background-size: cover; background-position: center;">
 			
@@ -167,24 +176,34 @@
 
 		</div>
 
-		<div class="bottom-informationH">
+		<div class="bottom-informationH" style="height: 28px;">
 			
 			<div class="handlerH" (click)="changeBottom($event)">
 				<ion-icon name="chevron-up"></ion-icon>
 			</div>
 			<div class="information-boxH">
 
-				<label>LOCALIDAD <small [routerLink]="['/tabs/home/filtros']" routerDirection="forward"><ion-icon name="filter"></ion-icon> FILTRO AVANZADO</small></label>
+				<label>LOCALIDAD <small (click)="passFilterData()"><ion-icon name="filter"></ion-icon> FILTRO AVANZADO</small></label>
 				<ion-list>
 
-					<ion-item class="ion-no-padding" lines="none">
+					<ion-item class="ion-no-padding" lines="none" style="overflow: unset;">
 
 						<div class="search">
 							<span>
 								<ion-icon name="search"></ion-icon>
 							</span>
 
-							<input type="text">
+							<input type="text" [(ngModel)]="buscar" (keyup)="goBuscar()">
+
+							<div class="list-search" *ngIf="openDialog">
+								
+								<ul style="padding: 0">
+									<li style="list-style: none; border-bottom: 1px solid #6e6e6e; padding: 4px 8px;"
+									(click)="selectProvince(pr.id,pr.name)"
+									*ngFor="let pr of provincias">{{pr.name}}</li>
+								</ul>
+
+							</div>
 						</div>
 
 					</ion-item>
@@ -196,12 +215,12 @@
 						<ion-row>
 							<ion-col (click)="select(1)" [ngClass]="selection == 1 ? 'selected' : ''">
 								<small>AMBIENTES</small>
-								<label>{{ambiente}}</label>
+								<label>{{ambientes | search:ambiente:'category' }}</label>
 							</ion-col>
 
 							<ion-col (click)="select(2)" [ngClass]="selection == 2 ? 'selected' : ''">
 								<small>TIPO DE MUSICA</small>
-								<label>{{musica}}</label>
+								<label>{{tmusica | search:musica:'category' }}</label>
 							</ion-col>
 						</ion-row>
 
@@ -210,7 +229,7 @@
 						<div *ngIf="selection == 1">
 							<h5>AMBIENTES</h5>
 
-							<div [ngClass]="ambiente == a ? 'type actual' : 'type'" *ngFor="let a of ambientes" (click)="ambiente = a">{{a}}</div>
+							<div [ngClass]="ambiente == a.id ? 'type actual' : 'type'" *ngFor="let a of ambientes" (click)="ambiente = a.id">{{a.title}}</div>
 
 							<br>
 
@@ -222,7 +241,7 @@
 						<div *ngIf="selection == 2">
 							<h5>TIPO DE MÚSICA</h5>
 
-							<div [ngClass]="musica == m ? 'type actual' : 'type'" *ngFor="let m of tmusica" (click)="musica = m">{{m}}</div>
+							<div [ngClass]="musica == m.id ? 'type actual' : 'type'" *ngFor="let m of tmusica" (click)="musica = m.id">{{m.title}}</div>
 
 							<br>
 

@@ -71,8 +71,8 @@ export class TabsPage implements OnInit {
   		localStorage.setItem('tutorial_url','tabs/favoritos')
   	}
   	if (this.tutorial == 12) {
-  		this.router.navigateByUrl('tabs/chat');
-  		localStorage.setItem('tutorial_url','tabs/chat')
+  		this.router.navigateByUrl('tabs/chat-room');
+  		localStorage.setItem('tutorial_url','tabs/chat-room')
   	}
   	if (this.tutorial == 13) {
   		this.router.navigateByUrl('tabs/perfil');
@@ -81,6 +81,10 @@ export class TabsPage implements OnInit {
   	if (this.tutorial == 14) {
   		this.router.navigateByUrl('tabs/home');
   		localStorage.setItem('tutorial_url','tabs/home');
+      this.events.publish('restoreCourseOf');
+      this.events.publish('restoreCourseEv');
+      this.events.publish('restoreCourseFv');
+      this.events.publish('restoreCourseChat');
   	}
   }
 

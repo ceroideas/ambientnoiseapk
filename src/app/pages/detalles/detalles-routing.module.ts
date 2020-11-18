@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: DetallesPage
+  },
+  {
+    path: 'ver',
+    loadChildren: () => import('./ver/ver.module').then( m => m.VerPageModule)
   }
 ];
 

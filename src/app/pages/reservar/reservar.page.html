@@ -1,0 +1,65 @@
+
+<ion-content class="ion-padding">
+
+	<h4>
+		<ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+		<!-- <ion-button class="an-button" [routerLink]="['/local/locales/nueva-reserva/'+room?.id]" routerDirection="forward">Crear reserva</ion-button> -->
+
+	</h4>
+
+	<h3>Salas <br> {{local?.title}}</h3>
+
+	<br>
+
+	<div class="croquis" [ngStyle]="{'background-image':'url('+local?.rooms+')'}">
+		
+	</div>
+
+	<br>
+
+
+	<div *ngFor="let room of rooms">
+
+		<div *ngIf="room?.reserves?.length > 0">
+		
+			<label style="display: block; margin-bottom: 8px" for="">Reservas {{room.title}}</label>
+			
+			<ion-row style="margin-bottom: 12px;">
+				<ion-col size="12" class="all-rooms">
+					<div class="rooms" [ngClass]="{'only': reserves?.length == 1}" *ngFor="let r of room?.reserves">
+						<ion-row>
+							<ion-col size="4">
+								<div class="rest-pic" [ngStyle]="{'background-image': 'url('+room.avatar+')'}">
+									
+								</div>
+							</ion-col>
+							<ion-col size="8">
+								<div class="rest-info" style="height: 70px;">
+									<label class="title">{{r.date | expired:'date'}}</label>
+
+									<small>De {{r.hour_from}}:{{r.minute_from}} a {{r.hour_to}}:{{r.minute_to}}</small>
+								</div>
+
+								<ion-row>
+									<ion-col size="6" style="text-align: left">
+										<ion-button class="an-button mini" (click)="reservar(r,room)">Reservar</ion-button>
+									</ion-col>
+									<ion-col size="2" style="text-align: right">
+										<!-- <ion-icon (click)="editReserve(r)" name="create-outline"></ion-icon> -->
+									</ion-col>
+									<ion-col size="4" style="text-align: right">
+										<span style="color: #a365b8">{{r.price}}€</span>
+									</ion-col>
+								</ion-row>	
+							</ion-col>
+						</ion-row>
+					</div>
+				</ion-col>
+			</ion-row>
+		</div>
+	</div>
+
+</ion-content>

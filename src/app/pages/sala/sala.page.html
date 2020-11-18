@@ -12,7 +12,7 @@
 
 	</h4>
 
-	<h3>Sala Brooklyn River Bar</h3>
+	<h3>Sala {{local.title}}</h3>
 
 <!-- 	<ion-row style="margin-top: 16px;">
 		<ion-col size="4">
@@ -27,23 +27,36 @@
 
 	<div>
 
-		<ion-row style="background-color: #373333; border-radius: 20px; margin-bottom: 20px" (click)="openDetalle('0.jpg','Illya Alvarado','37 Años')">
-			<ion-col size="3">
-				<div class="profile-pic" style="background-image: url(assets/faces/0.jpg)">
-				</div>
-			</ion-col>
-			<ion-col size="6" style="display: flex;">
-				<h5 style="position: relative; margin: auto; text-align: center;">Illya Alvarado <br> <small style="color: #a365b8">37 Años</small></h5>
-			</ion-col>
+		<ion-button class="an-button" [disabled]="!users.length" (click)="openDetalle()">Ver nuevos usuarios</ion-button>
 
-			<ion-col size="3">
-				<h5 style="position: relative; display: flex;">
-					<img src="assets/ig.svg" alt="" style="margin: auto; width: 60%;">
-				</h5>
-			</ion-col>
-		</ion-row>
+		<small>Usuarios aprobados</small>
 
-		<ion-row style="background-color: #373333; border-radius: 20px; margin-bottom: 20px" (click)="openDetalle('1.jpg','Blanca Suarez','23 Años')">
+		<div *ngFor="let u of aprobedUsers">
+			<ion-row style="background-color: #373333; border-radius: 20px; margin-bottom: 20px">
+				<ion-col size="3" (click)="openChat(u)">
+					<div class="profile-pic" [ngStyle]="{'background-image': 'url('+(u.avatar || 'assets/user.jpg')+')'}">
+					</div>
+				</ion-col>
+				<ion-col size="6" style="display: flex;" (click)="openChat(u)">
+					<h5 style="position: relative; margin: auto; text-align: center;">{{u.name}} <br> <small style="color: #a365b8">25 Años</small></h5>
+				</ion-col>
+
+				<ion-col size="3">
+					<h5 style="position: relative; display: block; text-align: center;">
+						<!-- <img src="assets/ig.svg" alt="" style="margin: auto; height: 50px;"> -->
+						<ion-icon (click)="verGaleria(u)" name="image-outline" style="font-size: 50px"></ion-icon>
+					</h5>
+				</ion-col>
+			</ion-row>
+		</div>
+
+		<div *ngIf="aprobedUsers?.length == 0">
+			<h4>
+				No hay usuarios aprobados
+			</h4>
+		</div>
+
+		<!-- <ion-row style="background-color: #373333; border-radius: 20px; margin-bottom: 20px" (click)="openDetalle('1.jpg','Blanca Suarez','23 Años')">
 			<ion-col size="3">
 				<div class="profile-pic" style="background-image: url(assets/faces/1.jpg)">
 				</div>
@@ -53,8 +66,8 @@
 			</ion-col>
 
 			<ion-col size="3">
-				<h5 style="position: relative; display: flex;">
-					<img src="assets/ig.svg" alt="" style="margin: auto; width: 60%;">
+				<h5 style="position: relative; display: block; text-align: center;">
+					<img src="assets/ig.svg" alt="" style="margin: auto; height: 50px;">
 				</h5>
 			</ion-col>
 		</ion-row>
@@ -69,8 +82,7 @@
 			</ion-col>
 
 			<ion-col size="3">
-				<h5 style="position: relative; display: flex;">
-					<!-- <img src="assets/ig.svg" alt="" style="margin: auto; width: 60%;"> -->
+				<h5 style="position: relative; display: block; text-align: center;">
 				</h5>
 			</ion-col>
 		</ion-row>
@@ -85,11 +97,11 @@
 			</ion-col>
 
 			<ion-col size="3">
-				<h5 style="position: relative; display: flex;">
-					<img src="assets/ig.svg" alt="" style="margin: auto; width: 60%;">
+				<h5 style="position: relative; display: block; text-align: center;">
+					<img src="assets/ig.svg" alt="" style="margin: auto; height: 50px;">
 				</h5>
 			</ion-col>
-		</ion-row>
+		</ion-row> -->
 
 	</div>
 

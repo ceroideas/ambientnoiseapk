@@ -86,6 +86,9 @@ h6 {
 		color: #767070;
 		display: block;
 		margin-top: 8px;
+		text-overflow: ellipsis;
+	    white-space: nowrap;
+	    overflow: hidden;
 	}
 }
 
@@ -121,4 +124,48 @@ h6 {
 		content: "";
 		clear: both;
 	}
+}
+
+.menu-type {
+	display: block; 
+	border-bottom: 1px solid #1c1c1c;
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+
+.menu-items {
+	background-color: #464545;
+	transition: all 200ms;
+	height: 0;
+	overflow: hidden;
+
+	.menu-item {
+		position: relative;
+		padding: 10px;
+		// border-bottom: 0.5px solid #1c1c1c;
+		// [name="add"] {
+		// 	position: absolute;
+		// 	right: 0;
+		// 	font-size: 30px;
+		// 	color: #a365b8;
+		// 	top: 20%;
+		// }
+		// span {
+		// 	color: silver;
+		// }
+	}
+}
+
+.total {
+	float: right;
+    margin-right: 12px;
+    margin-bottom: 10px;
+    span {
+    	color: #a365b8;
+    	font-size: 20px;
+    }
+    &:after {
+    	content: "";
+    	clear: both;
+    }
 }

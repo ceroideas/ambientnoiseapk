@@ -91,6 +91,7 @@ ion-list{
 }
 ion-item {
 	--background: transparent !important;
+	--padding-start: 0 !important;
 }
 
 	.white {
@@ -100,6 +101,11 @@ ion-item {
 	}
 	.pink {
 		color: #a365b8;
+		font-size: 13px;
+		display: block;
+	}
+	.crimson {
+		color: crimson;
 		font-size: 13px;
 		display: block;
 	}

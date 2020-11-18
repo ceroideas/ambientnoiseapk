@@ -19,126 +19,180 @@
 	<div class="central-block">
 		<ion-list>
 
-			<ion-item class="ion-no-padding">
-				<ion-label position="floating">NOMBRE DE LA OFERTA</ion-label>
-				<ion-input [(ngModel)]="todo.name" type="text" ></ion-input>
+			<form class="form" [formGroup]="validations_form1">
 
-				<span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span>
-			</ion-item>
-
-			<ion-item class="ion-no-padding" lines="none">
-				<ion-label position="stacked">TIPO DE DESCUENTO</ion-label>
-
-				<label class="label">Por Porcentaje
+				<ion-item class="ion-no-padding">
+					<ion-label position="floating">NOMBRE DE LA OFERTA</ion-label>
+					<ion-input formControlName="name" type="text" ></ion-input>
 
 					<span slot="end">
-						<ion-icon *ngIf="type != 'percent'" name="square-outline"></ion-icon>
-						<ion-icon *ngIf="type == 'percent'" name="checkbox-outline"></ion-icon>
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
 					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.name">
+			            <div class="error-message" *ngIf="validations_form1.get('name').hasError(validation.type) && (validations_form1.get('name').dirty || validations_form1.get('name').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-					<input type="radio" [(ngModel)]="type" value="percent" style="display: none;">
+				<ion-item class="ion-no-padding" lines="none">
+					<ion-label position="stacked">TIPO DE DESCUENTO</ion-label>
 
-				</label>
+					<label class="label">Por Porcentaje
 
-			</ion-item>
+						<span slot="end">
+							<ion-icon *ngIf="validations_form1.value.type != 1" name="square-outline"></ion-icon>
+							<ion-icon *ngIf="validations_form1.value.type == 1" name="checkbox-outline"></ion-icon>
+						</span>
 
-			<ion-item *ngIf="type == 'percent'" class="ion-no-padding">
-				
-				<ion-label>Seleccione el porcentaje</ion-label>
+						<input type="radio" formControlName="type" (change)="restartValue()" value="1" style="display: none;">
 
-				<ion-select>
-					<ion-select-option>10%</ion-select-option>
-					<ion-select-option>20%</ion-select-option>
-					<ion-select-option>30%</ion-select-option>
-					<ion-select-option>40%</ion-select-option>
-					<ion-select-option>50%</ion-select-option>
-					<ion-select-option>60%</ion-select-option>
-					<ion-select-option>70%</ion-select-option>
-					<ion-select-option>80%</ion-select-option>
-				</ion-select>
+					</label>
 
-			</ion-item>
+				</ion-item>
 
-
-			<ion-item class="ion-no-padding" lines="none">
-
-				<label class="label">Por Cantidad
-
-					<span slot="end">
-						<ion-icon *ngIf="type != 'quantity'" name="square-outline"></ion-icon>
-						<ion-icon *ngIf="type == 'quantity'" name="checkbox-outline"></ion-icon>
-					</span>
-
-					<input type="radio" [(ngModel)]="type" value="quantity" style="display: none;">
-
-				</label>
-
-
-			</ion-item>
-
-			<ion-item *ngIf="type == 'quantity'" class="ion-no-padding">
-				
-				<ion-label>Seleccione la cantidad</ion-label>
-
-				<ion-select>
-					<ion-select-option>2</ion-select-option>
-					<ion-select-option>3</ion-select-option>
-					<ion-select-option>4</ion-select-option>
-					<ion-select-option>5</ion-select-option>
-					<ion-select-option>6</ion-select-option>
-					<ion-select-option>7</ion-select-option>
-					<ion-select-option>8</ion-select-option>
-				</ion-select>
-
-			</ion-item>
-
-
-
-			<!-- - -->
-
-
-			<ion-item class="ion-no-padding" lines="none" style="margin: 0">
-				<ion-label style="margin-bottom: 0 !important">TIEMPO DE LA OFERTA</ion-label>
-			</ion-item>
-
-			<ion-item class="ion-no-padding" lines="none">
-				<ion-label position="floating">Desde</ion-label>
-				<ion-datetime
-				monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, oct, Nov, Dec"
-				displayFormat="D MMM, YYYY"></ion-datetime>
-
-			</ion-item>
-
-			<ion-item class="ion-no-padding" lines="none">
-				<ion-label position="floating">Hasta</ion-label>
-				<ion-datetime
-				monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, oct, Nov, Dec"
-				displayFormat="D MMM, YYYY"></ion-datetime>
-
-			</ion-item>
-
-			<ion-item class="ion-no-padding" lines="none">
-				<ion-label position="stacked">IMAGEN DE LA OFERTA</ion-label>
-				
-				<span class="adicional-info">Carga la imagen de la oferta haciendo clic en el icono</span>
-
-				<div class="logotipo">
+				<ion-item *ngIf="validations_form1.value.type == 1" class="ion-no-padding">
 					
-				</div>
+					<ion-label>Seleccione el porcentaje</ion-label>
 
-				<!-- <span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span> -->
-			</ion-item>
+					<ion-select formControlName="quantity">
+						<ion-select-option>10%</ion-select-option>
+						<ion-select-option>20%</ion-select-option>
+						<ion-select-option>30%</ion-select-option>
+						<ion-select-option>40%</ion-select-option>
+						<ion-select-option>50%</ion-select-option>
+						<ion-select-option>60%</ion-select-option>
+						<ion-select-option>70%</ion-select-option>
+						<ion-select-option>80%</ion-select-option>
+					</ion-select>
 
+				</ion-item>
+
+
+				<ion-item class="ion-no-padding" lines="none">
+
+					<label class="label">Por Cantidad
+
+						<span slot="end">
+							<ion-icon *ngIf="validations_form1.value.type != 2" name="square-outline"></ion-icon>
+							<ion-icon *ngIf="validations_form1.value.type == 2" name="checkbox-outline"></ion-icon>
+						</span>
+
+						<input type="radio" formControlName="type" (change)="restartValue()" value="2" style="display: none;">
+
+					</label>
+
+
+				</ion-item>
+
+				<ion-item *ngIf="validations_form1.value.type == 2" class="ion-no-padding">
+					
+					<ion-label>Seleccione la cantidad</ion-label>
+
+					<ion-select formControlName="quantity">
+						<ion-select-option>2</ion-select-option>
+						<ion-select-option>3</ion-select-option>
+						<ion-select-option>4</ion-select-option>
+						<ion-select-option>5</ion-select-option>
+						<ion-select-option>6</ion-select-option>
+						<ion-select-option>7</ion-select-option>
+						<ion-select-option>8</ion-select-option>
+					</ion-select>
+
+				</ion-item>
+
+
+				<ion-item class="ion-no-padding">
+					<ion-label position="stacked">SELECCIONE UN LOCAL</ion-label>
+					<ion-select formControlName="local_id">
+						<ion-select-option *ngFor="let l of locals" [value]="l.id">{{l.title}}</ion-select-option>
+					</ion-select>
+
+					<!-- <span slot="end">
+						<ion-icon name="checkmark"></ion-icon>
+					</span> -->
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.local_id">
+			            <div class="error-message" *ngIf="validations_form1.get('local_id').hasError(validation.type) && (validations_form1.get('local_id').dirty || validations_form1.get('local_id').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+
+
+				<!-- - -->
+
+
+				<ion-item class="ion-no-padding" lines="none" style="margin: 0">
+					<ion-label style="margin-bottom: 0 !important">TIEMPO DE LA OFERTA</ion-label>
+				</ion-item>
+
+				<ion-item class="ion-no-padding" lines="none">
+					<ion-label position="floating">Desde</ion-label>
+					<ion-datetime
+					formControlName="from"
+					monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, oct, Nov, Dec"
+					displayFormat="D MMM, YYYY"></ion-datetime>
+
+				</ion-item>
+
+				<ion-item class="ion-no-padding" lines="none">
+					<ion-label position="floating">Hasta</ion-label>
+					<ion-datetime
+					formControlName="to"
+					monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, oct, Nov, Dec"
+					displayFormat="D MMM, YYYY"></ion-datetime>
+
+				</ion-item>
+
+				<ion-item class="ion-no-padding">
+					<ion-label position="floating">CANTIDAD DE USOS POR USUARIO</ion-label>
+					<ion-input formControlName="uses" type="number" ></ion-input>
+
+					<span slot="end">
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.uses">
+			            <div class="error-message" *ngIf="validations_form1.get('uses').hasError(validation.type) && (validations_form1.get('uses').dirty || validations_form1.get('uses').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+				<ion-item class="ion-no-padding" lines="none">
+					<ion-label position="stacked">IMAGEN DE LA OFERTA</ion-label>
+					
+					<span class="adicional-info">Carga la imagen de la oferta haciendo clic en el icono</span>
+
+					<div style="width: 100%">
+						
+						<div class="logotipo" (click)="loadImage()">
+							<div class="uploaded" [ngStyle]="{'background-image':'url('+validations_form1.value.image+')'}">
+							</div>
+						</div>
+
+						<div style="position: relative; z-index: 9999;">
+							<ion-button (click)="publishOffer()" [disabled]="!validations_form1.valid" class="an-button">Guardar</ion-button>
+						</div>
+
+					</div>
+
+					<!-- <span slot="end">
+						<ion-icon name="checkmark"></ion-icon>
+					</span> -->
+				</ion-item>
+
+			</form>
 
 		</ion-list>
 
 	</div>
-
-	<ion-button (click)="nav.back()" class="an-button" routerDirection="root">Guardar</ion-button>
 
 
 </ion-content>

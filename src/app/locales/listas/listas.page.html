@@ -6,7 +6,8 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon [routerLink]="['/login']" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4>
+		<!-- <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon> -->
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -20,23 +21,23 @@
 
 	<div>
 		
-		<div class="local">
+		<div class="local" *ngFor="let l of lists">
 			<ion-row>
 				<ion-col size="3">
-					<div class="rest-pic" style="background-image: url('../assets/fondo-restaurante-01.jpg')">
+					<div class="rest-pic" [ngStyle]="{'background-image': 'url('+l.avatar+')'}">
 						
 					</div>
 				</ion-col>
 				<ion-col size="9">
 					<div class="rest-info">
-						<label class="title">Lista 1</label>
+						<label class="title" (click)="getList(l)">{{l.title}}</label>
 
-						<small>Brooklyn River Bar</small>
+						<small>{{l.establishment.title}}</small>
 
 						<div class="opciones">
-							<img src="assets/locales/borrar.svg" alt="">
-							<img src="assets/locales/editar.svg" alt="">
-							<ion-icon name="checkbox-outline"></ion-icon>
+							<img src="assets/locales/borrar.svg" alt="" (click)="deleteList(l.id)">
+							<!-- <img src="assets/locales/editar.svg" alt=""> -->
+							<ion-icon name="checkbox-outline" ></ion-icon>
 						</div>
 
 						<!-- <label class="label-1">4.3</label>
@@ -47,7 +48,14 @@
 			</ion-row>
 		</div>
 
-		<div class="local">
+		<ion-infinite-scroll threshold="100px" (ionInfinite)="getMoreLists($event)">
+		    <ion-infinite-scroll-content
+		      loadingSpinner="bubbles"
+		      loadingText="Cargando listas...">
+		    </ion-infinite-scroll-content>
+		</ion-infinite-scroll>
+
+		<!-- <div class="local">
 			<ion-row>
 				<ion-col size="3">
 					<div class="rest-pic" style="background-image: url('../assets/1.jpg')">
@@ -66,9 +74,6 @@
 							<ion-icon name="checkbox-outline"></ion-icon>
 						</div>
 
-						<!-- <label class="label-1">4.3</label>
-
-						<ion-icon name="heart-outline"></ion-icon> -->
 					</div>
 				</ion-col>
 			</ion-row>
@@ -93,13 +98,10 @@
 							<ion-icon name="checkbox-outline"></ion-icon>
 						</div>
 
-						<!-- <label class="label-1">4.3</label>
-
-						<ion-icon name="heart-outline"></ion-icon> -->
 					</div>
 				</ion-col>
 			</ion-row>
-		</div>
+		</div> -->
 
 	</div>
 

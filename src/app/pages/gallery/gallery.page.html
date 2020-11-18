@@ -1,0 +1,39 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.back()" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+		<ion-icon *ngIf="self" (click)="takePhoto()" style="float: right;top: 4px;position: relative;color: #a365b8;" name="camera"></ion-icon>
+
+	</h4>
+
+	<h3 *ngIf="local_id">Galeria <br> {{local?.title}}</h3>
+
+	<div *ngIf="!local_id">
+	<h3 *ngIf="self">Mi galería</h3>
+	<h3 *ngIf="!self">Galería de {{user?.name}}</h3>
+	</div>
+
+	<div>
+		
+		<ion-row>
+			<ion-col *ngFor="let im of images" size="4">
+				<div class="gallery-image" [ngStyle]="{'background-image':'url('+im.image+')'}" (click)="verImage(im)">
+					
+				</div>
+			</ion-col>
+		</ion-row>
+
+	</div>
+
+
+	<br>
+
+</ion-content>

@@ -4,7 +4,9 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content class="ion-padding">
+<ion-content>
+
+	<div class="ion-padding" style="background-image: url(assets/fondo-01.png); background-size: cover; background-position: center; height: fit-content; min-height: 100%;">
 		
 	<h4> <ion-icon (click)="nav.back()" routerDirection="back" name="chevron-back"></ion-icon>
 
@@ -14,10 +16,10 @@
 
 	<ion-row class="mt-20">
 		<ion-col size="4">
-			<span style="background-image: url(assets/restaurant.jpg)" class="logo-restaurante"></span>
+			<span [ngStyle]="{'background-image': 'url('+local.avatar+')'}" class="logo-restaurante"></span>
 		</ion-col>
 		<ion-col size="8">
-			<h2 class="title-tactic">Brooklyn River Bar</h2>
+			<h2 class="title-tactic">{{local.title}}</h2>
 		</ion-col>
 	</ion-row>
 
@@ -69,5 +71,7 @@
 		</div>
 
 	</div>
+
+</div>
 
 </ion-content>

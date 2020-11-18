@@ -99,6 +99,58 @@ const routes: Routes = [
     path: 'l-ropero',
     loadChildren: () => import('./locales/l-ropero/l-ropero.module').then( m => m.LRoperoPageModule)
   },
+  {
+    path: 'menu',
+    loadChildren: () => import('./locales/menu/menu.module').then( m => m.MenuPageModule)
+  },
+  {
+    path: 'contacto',
+    loadChildren: () => import('./contact/contact.module').then( m => m.ContactPageModule)
+  },
+  {
+    path: 'pedidos',
+    loadChildren: () => import('./pages/pedidos/pedidos.module').then( m => m.PedidosPageModule)
+  },
+  {
+    path: 'qr',
+    loadChildren: () => import('./pages/qr/qr.module').then( m => m.QrPageModule)
+  },
+  {
+    path: 'gallery',
+    loadChildren: () => import('./pages/gallery/gallery.module').then( m => m.GalleryPageModule)
+  },
+  {
+    path: 'crear-salas',
+    loadChildren: () => import('./locales/crear-salas/crear-salas.module').then( m => m.CrearSalasPageModule)
+  },
+  {
+    path: 'nueva-sala',
+    loadChildren: () => import('./locales/nueva-sala/nueva-sala.module').then( m => m.NuevaSalaPageModule)
+  },
+  {
+    path: 'nueva-reserva',
+    loadChildren: () => import('./locales/nueva-reserva/nueva-reserva.module').then( m => m.NuevaReservaPageModule)
+  },
+  {
+    path: 'reservas',
+    loadChildren: () => import('./locales/reservas/reservas.module').then( m => m.ReservasPageModule)
+  },
+  {
+    path: 'reservar',
+    loadChildren: () => import('./pages/reservar/reservar.module').then( m => m.ReservarPageModule)
+  },
+  {
+    path: 'mis-reservas',
+    loadChildren: () => import('./pages/mis-reservas/mis-reservas.module').then( m => m.MisReservasPageModule)
+  },
+  {
+    path: 'chat-room',
+    loadChildren: () => import('./pages/chat-room/chat-room.module').then( m => m.ChatRoomPageModule)
+  },
+  // {
+  //   path: 'locales',
+  //   loadChildren: () => import('./locales/locales.module').then( m => m.LocalesPageModule)
+  // },
   // {
   //   path: 'home-tutorial',
   //   loadChildren: () => import('./tutoriales/home-tutorial/home-tutorial.module').then( m => m.HomeTutorialPageModule)

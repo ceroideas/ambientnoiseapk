@@ -9,7 +9,7 @@
 	<div class="ion-padding" style="background-image: url(assets/fondo-02.png); background-size: cover; background-position: center; height: fit-content; min-height: 100%;">
 		
 
-	<h4> <ion-icon (click)="nav.back()" name="chevron-back"></ion-icon>
+	<h4> <ion-icon [routerLink]="['/local/listas']" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -17,7 +17,7 @@
 
 	</h4>
 
-	<h3>{{name}}</h3>
+	<h3>{{list.title}}</h3>
 
 	<ion-list>
 
@@ -29,7 +29,7 @@
 					<ion-icon name="search"></ion-icon>
 				</span>
 
-				<input type="text" [(ngModel)]="query" placeholder="Buscar invitado">
+				<input type="text" [(ngModel)]="query" (keyup)="searchUsers()" placeholder="Buscar invitado">
 			</div>
 
 		</ion-item>
@@ -39,12 +39,13 @@
 
 	<span style="background-image: url(assets/restaurant.jpg)" class="logo-restaurante"></span>
 
-	<ion-card class="list-card" *ngFor="let guest of list | search:query; let i = index">
+	<ion-card class="list-card" *ngFor="let guest of users; let i = index">
 		
 		<ion-card-content>
-			<ion-row (click)="addGuest(i)">
+			<ion-row (click)="saveRosterUser(guest,i)">
 				<ion-col size="2" style="display: flex;">
-					<ion-icon name="checkbox-outline" [ngStyle]="{'color': ((guests | guests:i) ? 'lightgreen' : '#fff') }"></ion-icon>
+					<ion-icon *ngIf="!guest.lists.length" name="square-outline"></ion-icon>
+					<ion-icon *ngIf="guest.lists.length" style="color: lightgreen;" name="checkbox-outline"></ion-icon>
 				</ion-col>
 				<ion-col size="8" style="display: flex">
 					<h5 style="margin: auto; vertical-align: middle;">{{guest.name}}</h5>
@@ -98,6 +99,8 @@
 
 	</ion-card> -->
 	
+		<ion-button (click)="saveUsers()" class="an-button" routerDirection="root">Terminar</ion-button>
 	</div>
+
 
 </ion-content>

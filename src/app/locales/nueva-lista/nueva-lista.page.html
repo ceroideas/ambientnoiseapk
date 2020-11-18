@@ -19,35 +19,86 @@
 	<div class="central-block">
 		<ion-list>
 
-			<ion-item class="ion-no-padding">
-				<ion-label position="floating">NOMBRE DE LA LISTA</ion-label>
-				<ion-input [(ngModel)]="todo.name" type="text" ></ion-input>
+			<form class="form" [formGroup]="validations_form">
 
-				<span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span>
-			</ion-item>
+				<ion-item class="ion-no-padding">
+					<ion-label position="floating">NOMBRE DE LA LISTA</ion-label>
+					<ion-input formControlName="name" type="text" ></ion-input>
 
-			<ion-item class="ion-no-padding" lines="none">
-				<ion-label position="stacked">IMAGEN DE LA LISTA</ion-label>
-				
-				<span class="adicional-info">Carga la imagen de la lista haciendo clic en el icono</span>
+					<!-- <span slot="end">
+						<ion-icon name="checkmark"></ion-icon>
+					</span> -->
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.name">
+			            <div class="error-message" *ngIf="validations_form.get('name').hasError(validation.type) && (validations_form.get('name').dirty || validations_form.get('name').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-				<div class="logotipo">
-					
-				</div>
+				<ion-item class="ion-no-padding">
+						<ion-label position="stacked">SELECCIONE UN LOCAL</ion-label>
+						<ion-select formControlName="local_id">
+							<ion-select-option *ngFor="let l of locals" [value]="l.id">{{l.title}}</ion-select-option>
+						</ion-select>
 
-				<!-- <span slot="end">
-					<ion-icon name="checkmark"></ion-icon>
-				</span> -->
-			</ion-item>
+						<!-- <span slot="end">
+							<ion-icon name="checkmark"></ion-icon>
+						</span> -->
+					</ion-item>
+						<div class="validation-errors">
+				          <ng-container *ngFor="let validation of validation_messages.local_id">
+				            <div class="error-message" *ngIf="validations_form.get('local_id').hasError(validation.type) && (validations_form.get('local_id').dirty || validations_form.get('local_id').touched)">
+				              {{ validation.message }}
+				            </div>
+				          </ng-container>
+				        </div>
+
+				    <ion-item class="ion-no-padding">
+						<ion-label position="floating">PARTICIPACIONES</ion-label>
+						<ion-input formControlName="participations" type="number" min="0"></ion-input>
+
+						<!-- <span slot="end">
+							<ion-icon name="checkmark"></ion-icon>
+						</span> -->
+					</ion-item>
+
+					<ion-item class="ion-no-padding" lines="none">
+						<ion-label position="stacked">IMAGEN DE LA LISTA</ion-label>
+						
+						<span class="adicional-info">Carga la imagen de la lista haciendo clic en el icono</span>
+
+						<!-- <div class="logotipo" (click)="loadImage()">
+							<div class="uploaded" [ngStyle]="{'background-image':'url('+validations_form.value.image+')'}">
+							</div>
+						</div> -->
+
+						<!-- <span slot="end">
+							<ion-icon name="checkmark"></ion-icon>
+						</span> -->
+						<div style="width: 100%">
+						
+							<div class="logotipo" (click)="loadImage()">
+								<div class="uploaded" [ngStyle]="{'background-image':'url('+validations_form.value.image+')'}">
+								</div>
+							</div>
+
+							<div style="position: relative; z-index: 9999;">
+								<ion-button (click)="addGuests()" [disabled]="!validations_form.valid" class="an-button">Crear y Añadir Invitados</ion-button>
+							</div>
+
+						</div>
+					</ion-item>
+
+				</form>
 
 
 		</ion-list>
 
 	</div>
 
-	<ion-button (click)="addGuests()" class="an-button" routerDirection="root">Añadir Invitados</ion-button>
+	<!-- <ion-button (click)="addGuests()" [disabled]="!validations_form.valid" class="an-button" routerDirection="root">Crear y Añadir Invitados</ion-button> -->
 
 
 </ion-content>

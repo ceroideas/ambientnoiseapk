@@ -8,11 +8,14 @@ import { MapPageRoutingModule } from './map-routing.module';
 
 import { MapPage } from './map.page';
 
+import { PipesModule } from '../../pipes/pipes.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     MapPageRoutingModule
   ],
   declarations: [MapPage]

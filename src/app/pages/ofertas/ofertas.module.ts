@@ -10,12 +10,15 @@ import { OfertasPage } from './ofertas.page';
 
 import { ComponentModule } from '../../component.module';
 
+import { PipesModule } from '../../pipes/pipes.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     ComponentModule,
+    PipesModule,
     OfertasPageRoutingModule
   ],
   declarations: [OfertasPage]

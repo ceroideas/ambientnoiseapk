@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { NavController, IonSlides } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { ApiService } from '../../services/api.service';
+import { EventsService } from '../../services/events.service';
+import { NavparamsService } from '../../services/navparams.service';
 
 declare var google;
 @Component({
@@ -19,33 +23,84 @@ export class MapPage implements OnInit {
   musica = "Todos";
 
   ambientes = [
-	"Todos",
-	"Discoteca",
-	"Cócteles",
-	"Irlandés",
-	"Karaoke",
-	"Cafés",
-	"Teterías"
+	// "Todos",
+	// "Discoteca",
+	// "Cócteles",
+	// "Irlandés",
+	// "Karaoke",
+	// "Cafés",
+	// "Teterías"
   ];
 
   tmusica = [
-	"Todos",
-	"Bachata",
-	"Cumbia",
-	"Salsa"
+	// "Todos",
+	// "Bachata",
+	// "Cumbia",
+	// "Salsa"
   ];
 
+  establishments:any;
+
   @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('slides') slides: IonSlides;
   map: any;
   places: any;
+
+  ocupacion:any;
+  range = {lower:20,upper:80};
+
+  province:any;
 
   public user;
   public locations: any[] = [];
 
-  constructor(private geolocation: Geolocation) {
+  buscar;
+  provincias;
+
+  page = 1;
+
+  lat
+  lon
+
+  constructor(private geolocation: Geolocation, public api: ApiService, public events: EventsService, public nav: NavController, public navparams: NavparamsService) {
   }
 
   ngOnInit() {
+
+
+    this.events.destroy('filterMapEstablishments');
+    this.events.subscribe('filterMapEstablishments',()=>{
+      let data = this.navparams.getParam();
+
+      this.ambientes = data.ambientes;
+      this.tmusica = data.tmusica;
+      this.page = 1;
+
+      this.ambiente = data.ambiente;
+      // this.establishments = data.establishments;
+      this.musica = data.musica;
+      this.ocupacion = data.ocupacion;
+      this.range = data.range;
+
+      this.filterEstablishment(false);
+    });
+
+    let data = this.navparams.getParam();
+
+    this.ambientes = data.ambientes;
+    this.tmusica = data.tmusica;
+    this.page = data.page;
+
+    this.establishments = data.establishments;
+    this.province = data.establishments;
+
+    this.ambiente = data.ambiente;
+    this.musica = data.musica;
+    this.ocupacion = data.ocupacion;
+    this.range = data.range;
+    this.province = data.province;
+
+    console.log(data);
   }
 
   ionViewDidEnter()
@@ -54,40 +109,81 @@ export class MapPage implements OnInit {
       this.geolocation.getCurrentPosition().then((resp) => {
         localStorage.setItem('lat',resp.coords.latitude.toString());
         localStorage.setItem('lon',resp.coords.longitude.toString());
+
+        this.lat = resp.coords.latitude.toString()
+        this.lon = resp.coords.longitude.toString()
         this.loadMap();
       }).catch((error) => {
         console.log('Error getting location', error);
       });
     }
-  	let h = (document.getElementsByClassName('information-box1')[0] as HTMLElement).offsetHeight;
-  	(document.getElementsByClassName('bottom-information1')[0] as HTMLElement).style.bottom = "-"+h+"px";
+  	// let h = (document.getElementsByClassName('information-box1')[0] as HTMLElement).offsetHeight;
+  	(document.getElementsByClassName('bottom-information1')[0] as HTMLElement).style.height = "28px";
   }
 
   changeBottom(e)
   {
-  	let parentB = (document.getElementsByClassName('bottom-information1')[0] as HTMLElement).style.bottom;
+  	let parentB = (document.getElementsByClassName('bottom-information1')[0] as HTMLElement).style.height;
   	let handlerI = document.getElementsByClassName('handler1')[0].children[0].attributes['name'].nodeValue;
 
   	let h = (document.getElementsByClassName('information-box1')[0] as HTMLElement).offsetHeight;
 
-  	if (parentB != '0px') {
-  		(document.getElementsByClassName('bottom-information1')[0] as HTMLElement).style.bottom = "0";
-  		document.getElementsByClassName('handler1')[0].children[0].attributes['name'].nodeValue = 'chevron-down';
+  	if (parentB != '28px') {
+  		(document.getElementsByClassName('bottom-information1')[0] as HTMLElement).style.height = "28px";
+  		document.getElementsByClassName('handler1')[0].children[0].attributes['name'].nodeValue = 'chevron-up';
   	}else{
 
-  		(document.getElementsByClassName('bottom-information1')[0] as HTMLElement).style.bottom = "-"+h+"px";
-  		document.getElementsByClassName('handler1')[0].children[0].attributes['name'].nodeValue = 'chevron-up';
+  		(document.getElementsByClassName('bottom-information1')[0] as HTMLElement).style.height = h+"px";
+  		document.getElementsByClassName('handler1')[0].children[0].attributes['name'].nodeValue = 'chevron-down';
   	}
+  }
+
+  getLocal(l)
+  {
+    localStorage.setItem('actualLocal',JSON.stringify(l));
   }
 
   select(a)
   {
   	this.selection = a;
+
+    setTimeout(()=>{
+      let h = (document.getElementsByClassName('information-box1')[0] as HTMLElement).offsetHeight;
+      (document.getElementsByClassName('bottom-information1')[0] as HTMLElement).style.height = h+"px";
+    },100)
+  }
+
+  cargarMas()
+  {
+    this.slides.length().then(i=>{
+      this.page+=1;
+      this.api.getEstablishments({province:this.province,ambient:this.ambiente,music:this.musica,lat:this.lat, lon:this.lon},this.page).subscribe((request:any)=>{
+        this.establishments = this.establishments.concat(request.data);
+
+        setTimeout(()=>{
+          this.slides.slideTo(i-1,0).then(()=>{
+            console.log('slide',i);
+          })
+        },1)
+
+
+        if (!request.data.length) {
+
+        }
+      });
+    })
   }
 
   cerrar()
   {
   	this.selection = null;
+
+    setTimeout(()=>{
+      let h = (document.getElementsByClassName('information-box1')[0] as HTMLElement).offsetHeight;
+      (document.getElementsByClassName('bottom-information1')[0] as HTMLElement).style.height = h+"px";
+    },100)
+
+    this.filterEstablishment(true);
   }
 
   loadMap(){
@@ -327,6 +423,55 @@ export class MapPage implements OnInit {
     //     infoWindow.open(this.map, marker);
     //   });
     // }
+  }
+
+  filterEstablishment(close = null)
+  {
+    console.log('filter')
+    this.api.getEstablishments({province:this.province,ambient:this.ambiente,music:this.musica},this.page).subscribe(data=>{
+      this.establishments = data;
+
+      if (close) {
+        this.changeBottom(null);
+      }
+    });
+  }
+
+  passFilterData()
+  {
+    let data = {ambientes:this.ambientes,tmusica:this.tmusica,ocupacion:this.ocupacion,range:this.range, ambiente: this.ambiente, musica:this.musica};
+    this.navparams.setParam(data);
+
+    this.nav.navigateForward(['/tabs/home/filtros']);
+  }
+
+  timeout;
+  openDialog = false;
+  goBuscar()
+  {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(()=>{
+
+      if (this.buscar) {
+        this.api.searchProvinces({busqueda: this.buscar}).subscribe(data=>{
+          this.provincias = data;
+          this.openDialog = true;
+
+          console.log(data);
+        })
+      }else{
+        this.openDialog = false;
+      }
+    },1000)
+  }
+
+  selectProvince(id,name)
+  {
+    this.openDialog = false;
+    this.buscar = name;
+    this.province = id;
+
+    this.filterEstablishment(true);
   }
 
 }

@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController, LoadingController } from '@ionic/angular';
+
+import { ApiService } from '../../services/api.service';
+import { EventsService } from '../../services/events.service';
+// import * as $ from 'jquery';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-l-ofertas',
@@ -8,9 +13,64 @@ import { NavController } from '@ionic/angular';
 })
 export class LOfertasPage implements OnInit {
 
-  constructor(public nav: NavController) { }
+  user = JSON.parse(localStorage.getItem('ANuser'));
+
+  offers:any = [];
+
+  page = 1;
+
+  constructor(public nav: NavController, public api: ApiService, public events: EventsService, public loading: LoadingController, public alert: AlertController) { }
 
   ngOnInit() {
+  	this.getMyOffers();
+
+  	this.events.destroy('reloadLocals');
+  	this.events.subscribe('reloadLocals',()=>{
+      this.page = 1;
+  		this.getMyOffers();
+  	});
+    this.events.destroy('updateUser');
+    this.events.subscribe('updateUser',()=>{
+      this.user = JSON.parse(localStorage.getItem('ANuser'));
+    });
+  }
+
+  getMyOffers(event = null)
+  {
+  	this.api.getMyOffers(this.user.id,this.page).subscribe((data:any)=>{
+  		this.offers = this.offers.concat(data.data);
+  	  
+      if (event) {
+        event.target.complete();
+
+        if (!data.length) {
+          event.target.disabled = true;
+        }
+      }
+    })
+  }
+
+  getMoreOffers(event)
+  {
+    this.page+=1;
+    this.getMyOffers(event);
+  }
+
+
+  deleteOffer(id)
+  {
+    this.alert.create({message:"Desea borrar la oferta seleccionada?", buttons:[{text:"Si, borrar", handler:()=>{
+      this.loading.create().then(l=>{
+        l.present();
+
+        this.api.deleteOffer(id).subscribe(data=>{
+          l.dismiss();
+          this.offers = [];
+          this.page = 1;
+          this.getMyOffers();
+        })
+      })
+    }},{text:"Cancelar"}]}).then(a=>{a.present()});
   }
 
 }

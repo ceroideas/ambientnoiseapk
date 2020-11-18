@@ -1,0 +1,42 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="modal.dismiss()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<!-- <ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle> -->
+
+	</h4>
+
+	<h3>{{plato.title}}</h3>
+
+	<!-- <br *ngIf="step < 4"> -->
+
+	<div class="central-block">
+
+		<div class="main-image" [ngStyle]="{'background-image':'url('+plato.avatar+')'}">
+			
+		</div>
+
+		<p [innerHtml]="plato.description">
+		</p>
+
+		<hr>
+
+		<h5>Precio: <small>{{plato.price}}€</small></h5>
+
+
+
+	</div>
+
+
+
+</ion-content>
+
+<ion-footer>
+	<ion-button (click)="addToCart()" class="an-button" routerDirection="root">Agregar al carrito</ion-button>
+</ion-footer>

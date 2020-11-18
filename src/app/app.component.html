@@ -15,18 +15,18 @@
             </ion-item>
           </ion-menu-toggle>
 
-          <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection="root" routerLink="/tabs/politica" lines="none" detail="false">
-              <ion-label style="color: #ddd; font-size: 13px;">Política de privacidad</ion-label>
+          <ion-menu-toggle auto-hide="false" *ngFor="let e of extras">
+            <ion-item routerDirection="root" [routerLink]="[e.url]" lines="none" detail="false">
+              <ion-label style="color: #ddd; font-size: 13px;">{{e.title}}</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection="root" routerLink="/tabs/faqs" lines="none" detail="false">
-              <ion-label style="color: #ddd; font-size: 13px;">Soporte y FAQs</ion-label>
+            <ion-item (click)="logout()" lines="none" detail="false">
+              <ion-icon slot="start" name="log-out-outline"></ion-icon>
+              <ion-label style="color: #ddd; font-size: 13px;">Logout</ion-label>
             </ion-item>
           </ion-menu-toggle>
-
 
         </ion-list>
 

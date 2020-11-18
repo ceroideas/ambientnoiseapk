@@ -8,6 +8,8 @@ import { NavController } from '@ionic/angular';
 })
 export class TacticPage implements OnInit {
 
+  local = JSON.parse(localStorage.getItem('actualLocal'));
+
   constructor(public nav: NavController) { }
 
   ngOnInit() {
@@ -15,6 +17,7 @@ export class TacticPage implements OnInit {
 
   openCart() {
   	localStorage.setItem('openCart','1');
+    // this.nav.navigateForward('/tabs/home/detalles/'+this.local.id);
   	this.nav.back();
   }
 

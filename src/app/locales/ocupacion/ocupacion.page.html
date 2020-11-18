@@ -13,7 +13,7 @@
 
 		<ion-list>
 		  <ion-item>
-		    <ion-range min="0" max="100" [(ngModel)]="ocupacion" color="primary" pin="true"></ion-range>
+		    <ion-range min="0" max="100" [(ngModel)]="ocupation" color="primary" pin="true"></ion-range>
 		  </ion-item>
 		</ion-list>
 
@@ -24,7 +24,7 @@
 	    		<div>
 	    			
 		    		Ocupación ahora: <br>
-		    		<span>{{ocupacion}}%</span>
+		    		<span>{{ocupation}}%</span>
 	    		
 	    		</div>
 	    	</div>
@@ -36,7 +36,7 @@
 	    </div>
 
 
-		<ion-button (click)="modal.dismiss()" class="an-button" routerDirection="root">
+		<ion-button (click)="saveOcupation()" class="an-button" routerDirection="root">
 			Guardar
 		</ion-button>
 

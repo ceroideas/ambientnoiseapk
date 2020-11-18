@@ -12,14 +12,15 @@
 
 	</h4>
 
-	<h3>Nuevo Local</h3>
+	<h3 *ngIf="!edit">Nuevo Local</h3>
+	<h3 *ngIf="edit">Editar Local</h3>
 
 	<!-- <br *ngIf="step < 4"> -->
 
 	<div class="central-block">
 		<ion-list *ngIf="step == 1">
 
-			<form class="form" [formGroup]="validations_form1" (ngSubmit)="validate1(validations_form1.value)">
+			<form class="form" [formGroup]="validations_form1">
 
 				<ion-item class="ion-no-padding">
 					<ion-label position="stacked">NOMBRE DEL LOCAL</ion-label>
@@ -85,7 +86,7 @@
 
 		<ion-list *ngIf="step == 2">
 
-			<form class="form" [formGroup]="validations_form2" (ngSubmit)="validate1(validations_form2.value)">
+			<form class="form" [formGroup]="validations_form2">
 
 				<ion-item class="ion-no-padding">
 					<ion-label position="stacked">AMBIENTE</ion-label>
@@ -263,7 +264,7 @@
 				</span> -->
 			</ion-item>
 
-			<ion-button (click)="nextStep(1)" [disabled]="!logo && !main" class="an-button" routerDirection="root">Terminar</ion-button>
+			<ion-button (click)="nextStep(1)" [disabled]="!logo && !main" class="an-button">Terminar</ion-button>
 
 		</ion-list>
 	</div>

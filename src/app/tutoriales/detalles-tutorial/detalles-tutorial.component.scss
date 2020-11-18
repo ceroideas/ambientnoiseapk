@@ -78,7 +78,7 @@ h5 {
 	background-size: cover;
 	background-position: center;
 	right: 12px;
-	top: 12px;
+	top: 36px;
 	border: 8px solid #a365b8;
 }
 
@@ -150,117 +150,117 @@ h5 {
 	}
 }
 
-.bottom-information{
+// .bottom-information{
 
-	position: fixed;
-	width: 100%;
-	// bottom: -500px;
-	transition: all 300ms;
+// 	position: fixed;
+// 	width: 100%;
+// 	// bottom: -500px;
+// 	transition: all 300ms;
 
-	.handler {
-		width: 100px;
-		background-color: #1c1c1c;
-		color: #a365b8;
-		border-radius: 12px 12px 0 0;
-		text-align: center;
-		padding: 4px;
-		margin: auto;
-	}
-	.information-box {
-		background-color: #1c1c1c;
-		height: 480px;
-		border-radius: 30px 30px 0 0;
-		padding: 32px 24px;
-		overflow: auto;
-	}
-}
+// 	.handler {
+// 		width: 100px;
+// 		background-color: #1c1c1c;
+// 		color: #a365b8;
+// 		border-radius: 12px 12px 0 0;
+// 		text-align: center;
+// 		padding: 4px;
+// 		margin: auto;
+// 	}
+// 	.information-box {
+// 		background-color: #1c1c1c;
+// 		height: 480px;
+// 		border-radius: 30px 30px 0 0;
+// 		padding: 32px 24px;
+// 		overflow: auto;
+// 	}
+// }
 
-.type {
-	font-size: 11px;
-	padding: 8px;
-	border-radius: 12px;
-	border: 1px solid #fff;
-	margin-bottom: 12px;
-	margin-right: 1.5%;
-	text-align: center;
-	font-weight: 100;
-}
+// .type {
+// 	font-size: 11px;
+// 	padding: 8px;
+// 	border-radius: 12px;
+// 	border: 1px solid #fff;
+// 	margin-bottom: 12px;
+// 	margin-right: 1.5%;
+// 	text-align: center;
+// 	font-weight: 100;
+// }
 
-.actual {
-	border-color: #a365b8;
-	color: #a365b8 !important;
-}
+// .actual {
+// 	border-color: #a365b8;
+// 	color: #a365b8 !important;
+// }
 
-.card-detalle {
-	--border-radius: 20px;
-	background-color: #373333;
-	ion-list{
-		background: transparent !important;
-	}
-	ion-item {
-		font-size: 13px;
-		--background: transparent !important;
-		--inner-padding-end: 0;
-		color: #b3b3b3;
-		label {
-			padding-top: 17px;
-			padding-bottom: 12px;
-		}
-		span {
-			display: block;
-			font-size: 14px;
-			color: #ccc;
-		}
-	}
-}
+// .card-detalle {
+// 	--border-radius: 20px;
+// 	background-color: #373333;
+// 	ion-list{
+// 		background: transparent !important;
+// 	}
+// 	ion-item {
+// 		font-size: 13px;
+// 		--background: transparent !important;
+// 		--inner-padding-end: 0;
+// 		color: #b3b3b3;
+// 		label {
+// 			padding-top: 17px;
+// 			padding-bottom: 12px;
+// 		}
+// 		span {
+// 			display: block;
+// 			font-size: 14px;
+// 			color: #ccc;
+// 		}
+// 	}
+// }
 
-label {
-	width: 100%;
-}
+// label {
+// 	width: 100%;
+// }
 
-.menu-type {
-	display: block; 
-	border-bottom: 1px solid #1c1c1c;
-	padding-bottom: 12px;
-	small {
-		float: right;
-	}
-}
+// .menu-type {
+// 	display: block; 
+// 	border-bottom: 1px solid #1c1c1c;
+// 	padding-bottom: 12px;
+// 	small {
+// 		float: right;
+// 	}
+// }
 
-.menu-items {
-	background-color: #464545;
-	transition: all 200ms;
-	height: 0;
+// .menu-items {
+// 	background-color: #464545;
+// 	transition: all 200ms;
+// 	height: 0;
 
-	.menu-item {
-		position: relative;
-		padding: 10px;
-		border-bottom: 0.5px solid #1c1c1c;
-		[name="add"] {
-			position: absolute;
-			right: 0;
-			font-size: 30px;
-			color: #a365b8;
-			top: 20%;
-		}
-		span {
-			color: silver;
-		}
-	}
-}
+// 	.menu-item {
+// 		position: relative;
+// 		padding: 10px;
+// 		border-bottom: 0.5px solid #1c1c1c;
+// 		[name="add"] {
+// 			position: absolute;
+// 			right: 0;
+// 			font-size: 30px;
+// 			color: #a365b8;
+// 			top: 20%;
+// 		}
+// 		span {
+// 			color: silver;
+// 		}
+// 	}
+// }
 
-.no-p-b {
-	padding-bottom: 0 !important;
-}
+// .no-p-b {
+// 	padding-bottom: 0 !important;
+// }
 
-.comment {
-	p {
-		font-size: 12px;
-		color: #767070;
-		margin: 4px 0;
-	}
-	ion-icon {
-		color: #e9a12f;
-		font-size: 14px;
-	}
-}
+// .comment {
+// 	p {
+// 		font-size: 12px;
+// 		color: #767070;
+// 		margin: 4px 0;
+// 	}
+// 	ion-icon {
+// 		color: #e9a12f;
+// 		font-size: 14px;
+// 	}
+// }

@@ -8,11 +8,14 @@ import { TOfertasPageRoutingModule } from './t-ofertas-routing.module';
 
 import { TOfertasPage } from './t-ofertas.page';
 
+import { PipesModule } from '../../pipes/pipes.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     TOfertasPageRoutingModule
   ],
   declarations: [TOfertasPage]

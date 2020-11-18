@@ -30,10 +30,10 @@
 
 		<ion-row style="margin-top: -16px;">
 			<ion-col size="4">
-				<span style="background-image: url(assets/restaurant.jpg)" class="logo-restaurante"></span>
+				<span [ngStyle]="{'background-image': 'url('+local.avatar+')'}" class="logo-restaurante"></span>
 			</ion-col>
 			<ion-col size="8">
-				<h2 class="title-tactic">Brooklyn River Bar</h2>
+				<h2 class="title-tactic">{{local.title}}</h2>
 			</ion-col>
 		</ion-row>
 
@@ -48,24 +48,35 @@
 			</ion-col>
 			<ion-col size="8" class="info-ropero">
 				<label>Servicio Ropero</label>
-				<small>Selecciona el número de prendas</small>
+				<small *ngIf="!closet">Selecciona el número de prendas</small>
+				<small *ngIf="closet">Número de prendas</small>
 
 				<div style="margin-top: 16px;">
-					<ion-icon fix-top [ngClass]="quantity == 0 ? 'disabled' : '' " (click)="subQ()" name="remove-circle"></ion-icon>
+					<ion-icon *ngIf="!closet" fix-top [ngClass]="quantity == 0 ? 'disabled' : '' " (click)="subQ()" name="remove-circle"></ion-icon>
 
-					<span style="margin: 0 10px; font-size: 16px; display: inline-block; width: 20px; text-align: center; position: relative; top: -1px;">
+					<span *ngIf="!closet" style="margin: 0 10px; font-size: 16px; display: inline-block; width: 20px; text-align: center; position: relative; top: -1px;">
 						{{quantity}}
 					</span>
 
-					<ion-icon fix-top name="add-circle" (click)="addQ()"></ion-icon>
+					<span *ngIf="closet" style ="font-size: 16px; display: inline-block; width: 20px; text-align: center; position: relative; top: -1px;">
+						{{quantity}}
+					</span>
+
+					<ion-icon *ngIf="!closet" fix-top name="add-circle" (click)="addQ()"></ion-icon>
+
+
 
 					<span style="font-size: 18px;position: absolute;right: 6px;bottom: 6px; color: #a365b8">{{quantity*16.00}}€</span>
 				</div>
 			</ion-col>
 		</ion-row>
 
-		<ion-button class="an-button" (click)="nav.back()">
+		<ion-button class="an-button" [disabled]="quantity == 0" *ngIf="!closet" (click)="pagar()">
     		Pagar
+    	</ion-button>
+
+    	<ion-button class="an-button" *ngIf="closet" [routerLink]="['/tabs/perfil/pedidos']">
+    		Ir a mis pedidos
     	</ion-button>
 
 	</div>

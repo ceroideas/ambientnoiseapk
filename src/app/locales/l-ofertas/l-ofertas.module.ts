@@ -8,11 +8,14 @@ import { LOfertasPageRoutingModule } from './l-ofertas-routing.module';
 
 import { LOfertasPage } from './l-ofertas.page';
 
+import { PipesModule } from '../../pipes/pipes.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     LOfertasPageRoutingModule
   ],
   declarations: [LOfertasPage]

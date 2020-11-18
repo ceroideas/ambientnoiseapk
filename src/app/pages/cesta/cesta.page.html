@@ -16,60 +16,47 @@
 
 	<br>
 
-	<ion-row style="background-color: #373333; border-radius: 20px; padding: 10px; margin-bottom: 20px;">
-		<ion-col size="4">
-			<div class="profile-pic" style="background-image: url(assets/wine.jpg)">
-				
+	<section *ngFor="let e of establishments; let i = index">
+
+		<div *ngIf="e.products.length > 0">
+			
+			<span class="menu-type" (click)="collapse(i)">{{e.establishment.title}} </span>
+			<div class="menu-items" [id]="'cart_items-'+i">
+				<div class="menu-item" *ngFor="let plate of e.products; let j = index">
+					<ion-row style="background-color: #373333; border-radius: 20px; padding: 10px;">
+						<ion-col size="4">
+							<div class="profile-pic" [ngStyle]="{'background-image': 'url('+plate.product.avatar+')'}">
+								
+							</div>
+						</ion-col>
+						<ion-col size="8" class="info-ropero">
+							<label>{{plate.product.title}}</label>
+							<small [innerHtml]="plate.product.description"></small>
+
+							<div style="margin-top: 16px;">
+								<ion-icon fix-top [ngClass]="plate.quantity == 0 ? 'disabled' : '' " (click)="subQ(i,j)" name="remove-circle"></ion-icon>
+
+								<span style="margin: 0 10px; font-size: 16px; display: inline-block; width: 20px; text-align: center; position: relative; top: -1px;">
+									{{plate.quantity}}
+								</span>
+
+								<ion-icon fix-top name="add-circle" (click)="addQ(i,j)"></ion-icon>
+
+								<span style="font-size: 18px;position: absolute;right: 6px;bottom: 6px; color: #a365b8">{{plate.quantity*plate.price}}€</span>
+							</div>
+						</ion-col>
+					</ion-row>
+				</div>
+
+				<span class="total">Total: <span>{{ e | cartTotal }}€</span></span>
+
+				<ion-button class="an-button" (click)="pagar(e.id)">
+					Pagar
+				</ion-button>
 			</div>
-		</ion-col>
-		<ion-col size="8" class="info-ropero">
-			<label>Botella de Chivas</label>
-			<small>Botella de Chivas...</small>
 
-			<div style="margin-top: 16px;">
-				<ion-icon fix-top [ngClass]="quantity0 == 0 ? 'disabled' : '' " (click)="subQ(0)" name="remove-circle"></ion-icon>
-
-				<span style="margin: 0 10px; font-size: 16px; display: inline-block; width: 20px; text-align: center; position: relative; top: -1px;">
-					{{quantity0}}
-				</span>
-
-				<ion-icon fix-top name="add-circle" (click)="addQ(0)"></ion-icon>
-
-				<span style="font-size: 18px;position: absolute;right: 6px;bottom: 6px; color: #a365b8">{{quantity0*12.00}}€</span>
-			</div>
-		</ion-col>
-	</ion-row>
-
-	<ion-row style="background-color: #373333; border-radius: 20px; padding: 10px; margin-bottom: 20px;">
-		<ion-col size="4">
-			<div class="profile-pic" style="background-image: url(assets/cup.jpg)">
-				
-			</div>
-		</ion-col>
-		<ion-col size="8" class="info-ropero">
-			<label>Copa de Chivas</label>
-			<small>Copa de Chivas...</small>
-
-			<div style="margin-top: 16px;">
-				<ion-icon fix-top [ngClass]="quantity1 == 0 ? 'disabled' : '' " (click)="subQ(1)" name="remove-circle"></ion-icon>
-
-				<span style="margin: 0 10px; font-size: 16px; display: inline-block; width: 20px; text-align: center; position: relative; top: -1px;">
-					{{quantity1}}
-				</span>
-
-				<ion-icon fix-top name="add-circle" (click)="addQ(1)"></ion-icon>
-
-				<span style="font-size: 18px;position: absolute;right: 6px;bottom: 6px; color: #a365b8">{{quantity1*7.50}}€</span>
-			</div>
-		</ion-col>
-	</ion-row>
-
-	<span id="total">Total: <b>{{(quantity0*12.00)+(quantity1*7.50)}}€</b></span>
-
-	<br>
-
-	<ion-button class="an-button" (click)="nav.back()">
-		Pagar
-	</ion-button>
+		</div>
+		
+	</section>
 
 </ion-content>

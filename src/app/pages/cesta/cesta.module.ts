@@ -8,11 +8,14 @@ import { CestaPageRoutingModule } from './cesta-routing.module';
 
 import { CestaPage } from './cesta.page';
 
+import { PipesModule } from '../../pipes/pipes.module'
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     CestaPageRoutingModule
   ],
   declarations: [CestaPage]

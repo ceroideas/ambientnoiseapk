@@ -6,221 +6,111 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4>
+		<!-- <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon> -->
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
 	</h4>
 
-	<h3>Pedidos</h3>
+	<h3 style="margin-bottom: 0">Pedidos</h3>
 
 	<!-- <br *ngIf="step < 4"> -->
 
-	<span class="topsite">Todos</span> | <span class="topsite pink">Servidos</span> | <span class="topsite">No servidos</span>
+	<ion-list class="ion-no-padding">
+		<ion-item>
+			<ion-label stacked>Local</ion-label>
+			<ion-select [(ngModel)]="local_id" (ionChange)="retrieveOrders()">
+				<ion-select-option *ngFor="let l of locals" [value]="l.id">{{l.title}}</ion-select-option>	
+			</ion-select>
+		</ion-item>
+	</ion-list>
 
 	<br>
-	<br>
 
-	<div >
-		<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
-			
-		  <ion-card-content>
-		    <!-- Add card content here! -->
-		    <ion-list class="ion-no-padding">
-		    	<ion-item lines="none">
-		    		<label class="no-p-b">
-			    		<span class="menu-type" (click)="collapse(1)">Nombre de usuario 1 <br> <span>19/09/2020 - 23:45</span> <small> <ion-icon name="arrow-down"></ion-icon> </small></span>
-			    		<div class="menu-items" id="items-1">
-			    			<div class="menu-item">
+	<div *ngIf="pedidos.length > 0">
+		
+		<span (click)="selected = 0" [ngClass]="selected == 0 ? 'topsite pink' : 'topsite'">Todos</span> |
+		<span (click)="selected = 1" [ngClass]="selected == 1 ? 'topsite pink' : 'topsite'">No servidos</span> |
+		<span (click)="selected = 2" [ngClass]="selected == 2 ? 'topsite pink' : 'topsite'">Servidos</span>
 
-			    				<!-- // -->
+		<br>
 
-			    				<ion-row>
-			    					<ion-col size="8" class="ion-no-padding">
-			    						
-			    						<ion-list class="ion-no-padding">
-			    							<ion-item class="item ion-no-padding">
-			    								Botella de chivas
-			    							</ion-item>
-			    							<ion-item class="total ion-no-padding">
-			    								<b>Total</b>
+		<br>
 
-			    								<span slot="end">24.00€</span>
-			    							</ion-item>
-			    						</ion-list>
+		<div>
+			<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;" *ngIf="(pedidos | pedidos:'carrito':selected).length > 0">
+				
+			  <ion-card-content>
+			    <!-- Add card content here! -->
+			    <ion-list class="ion-no-padding">
+			    	<ion-item lines="none" *ngFor="let o of pedidos | pedidos:'carrito':selected; let i = index">
+			    		<label class="no-p-b">
+				    		<span class="menu-type" (click)="collapse(i)">{{o.user.name+' '+o.user.last_name}} <br> <span>{{o.created_at | expired:'hour'}}</span> <small> <ion-icon name="arrow-down"></ion-icon> </small></span>
+				    		<div class="menu-items" [id]="'items-'+i">
+				    			<div class="menu-item">
 
-			    					</ion-col>
-			    					<ion-col size="4">
-			    						<img src="assets/qr.svg" alt="" style="width: 90%; margin: auto; display: block; margin-top: 4px;">
-			    					</ion-col>
+				    				<!-- // -->
 
-			    					<ion-col size="8" class="ion-no-padding">
+				    				<ion-row>
+				    					<ion-col size="8" class="ion-no-padding">
+				    						
+				    						<ion-list class="ion-no-padding">
+				    							<ion-item class="item ion-no-padding" *ngFor="let p of o.products">
+				    								<label>{{p.product.title}} <small>{{p.price}}€</small> x{{p.quantity}} <br>
+				    									<span style="float: right">{{p.price*p.quantity}}€ </span>
+				    								</label>
+				    							</ion-item>
+				    							<!-- <ion-item class="item ion-no-padding">
+				    								Cerveza x1
+				    							</ion-item> -->
+				    							<ion-item class="total ion-no-padding">
+				    								<b>Total</b>
 
-	    								<span class="white">Estado del pedido</span>
-	    								<small class="pink">El pedido ha sido servido</small> <br>
+				    								<span slot="end" style="font-size: 18px; color: #a365b8">{{o.payment_total}}€</span>
+				    							</ion-item>
+				    						</ion-list>
 
-	    								<span class="gray">19/09/2020 - 23:55</span>
-			    					</ion-col>
+				    					</ion-col>
+				    					<ion-col size="4">
+				    						<img src="assets/qr.svg" (click)="servir(o.id)" alt="" style="width: 90%;position: absolute;right: 0;top: 0;">
+				    					</ion-col>
 
-			    					<ion-col size="4" class="ion-no-padding">
-			    						<ion-icon name="happy-outline"></ion-icon>
-			    					</ion-col>
-			    				</ion-row>
+				    					<ion-col size="8" class="ion-no-padding">
 
-			    			</div>
-			    		</div>
-		    		</label>
-		    	</ion-item>
+		    								<span class="white">Estado del pedido</span>
+		    								<small class="crimson" *ngIf="o.status == 1">El pedido no ha sido servido</small> <br>
+		    								<small class="pink" *ngIf="o.status == 2">El pedido ha sido servido</small> <br>
 
-		    	<ion-item lines="none">
-		    		<label class="no-p-b">
-			    		<span class="menu-type" (click)="collapse(2)">Nombre de usuario 2 <br> <span>19/09/2020 - 23:45</span> <small> <ion-icon name="arrow-down"></ion-icon> </small></span>
-			    		<div class="menu-items" id="items-2">
-			    			<div class="menu-item">
+		    								<span class="gray">{{o.updated_at | expired:'hour'}}</span>
+				    					</ion-col>
 
-			    				<!-- // -->
+				    					<ion-col size="4" class="ion-no-padding">
+				    						<ion-icon *ngIf="o.status == 2" name="happy-outline"></ion-icon>
+				    					</ion-col>
+				    				</ion-row>
 
-			    				<ion-row>
-			    					<ion-col size="8" class="ion-no-padding">
-			    						
-			    						<ion-list class="ion-no-padding">
-			    							<ion-item class="item ion-no-padding">
-			    								Racion de gambas al ajillo
-			    							</ion-item>
-			    							<ion-item class="total ion-no-padding">
-			    								<b>Total</b>
+				    			</div>
+				    		</div>
+			    		</label>
+			    	</ion-item>
 
-			    								<span slot="end">12.00€</span>
-			    							</ion-item>
-			    						</ion-list>
+			    </ion-list>
+			  </ion-card-content>
+				
+			</ion-card>
+		</div>
 
-			    					</ion-col>
-			    					<ion-col size="4">
-			    						<img src="assets/qr.svg" alt="" style="width: 90%; margin: auto; display: block; margin-top: 4px;">
-			    					</ion-col>
-
-			    					<ion-col size="8" class="ion-no-padding">
-
-	    								<span class="white">Estado del pedido</span>
-	    								<small class="pink">El pedido ha sido servido</small> <br>
-
-	    								<span class="gray">19/09/2020 - 23:55</span>
-			    					</ion-col>
-
-			    					<ion-col size="4" class="ion-no-padding">
-			    						<ion-icon name="happy-outline"></ion-icon>
-			    					</ion-col>
-			    				</ion-row>
-
-			    			</div>
-			    		</div>
-		    		</label>
-		    	</ion-item>
-
-		    	<ion-item lines="none">
-		    		<label class="no-p-b">
-			    		<span class="menu-type" (click)="collapse(3)">Nombre de usuario 3 <br> <span>19/09/2020 - 23:45</span> <small> <ion-icon name="arrow-down"></ion-icon> </small></span>
-			    		<div class="menu-items" id="items-3">
-			    			<div class="menu-item">
-
-			    				<!-- // -->
-
-			    				<ion-row>
-			    					<ion-col size="8" class="ion-no-padding">
-			    						
-			    						<ion-list class="ion-no-padding">
-			    							<ion-item class="item ion-no-padding">
-			    								Pizza de carabinero
-			    							</ion-item>
-
-			    							<ion-item class="item ion-no-padding">
-			    								Copa de chivas
-			    							</ion-item>
-
-			    							<ion-item class="total ion-no-padding">
-			    								<b>Total</b>
-
-			    								<span slot="end">34.00€</span>
-			    							</ion-item>
-			    						</ion-list>
-
-			    					</ion-col>
-			    					<ion-col size="4">
-			    						<img src="assets/qr.svg" alt="" style="width: 90%; margin: auto; display: block; margin-top: 4px;">
-			    					</ion-col>
-
-			    					<ion-col size="8" class="ion-no-padding">
-
-	    								<span class="white">Estado del pedido</span>
-	    								<small class="pink">El pedido ha sido servido</small> <br>
-
-	    								<span class="gray">19/09/2020 - 23:55</span>
-			    					</ion-col>
-
-			    					<ion-col size="4" class="ion-no-padding">
-			    						<ion-icon name="happy-outline"></ion-icon>
-			    					</ion-col>
-			    				</ion-row>
-
-			    			</div>
-			    		</div>
-		    		</label>
-		    	</ion-item>
-
-		    	<ion-item lines="none">
-		    		<label class="no-p-b">
-			    		<span class="menu-type" (click)="collapse(4)">Nombre de usuario 4 <br> <span>19/09/2020 - 23:45</span> <small> <ion-icon name="arrow-down"></ion-icon> </small></span>
-			    		<div class="menu-items" id="items-4">
-			    			<div class="menu-item">
-
-			    				<!-- // -->
-
-			    				<ion-row>
-			    					<ion-col size="8" class="ion-no-padding">
-			    						
-			    						<ion-list class="ion-no-padding">
-			    							<ion-item class="item ion-no-padding">
-			    								Steak tartar
-			    							</ion-item>
-
-			    							<ion-item class="item ion-no-padding">
-			    								Copa de Vino
-			    							</ion-item>
-
-			    							<ion-item class="total ion-no-padding">
-			    								<b>Total</b>
-
-			    								<span slot="end">28.00€</span>
-			    							</ion-item>
-			    						</ion-list>
-
-			    					</ion-col>
-			    					<ion-col size="4">
-			    						<img src="assets/qr.svg" alt="" style="width: 90%; margin: auto; display: block; margin-top: 4px;">
-			    					</ion-col>
-
-			    					<ion-col size="8" class="ion-no-padding">
-
-	    								<span class="white">Estado del pedido</span>
-	    								<small class="pink">El pedido ha sido servido</small> <br>
-
-	    								<span class="gray">19/09/2020 - 23:55</span>
-			    					</ion-col>
-
-			    					<ion-col size="4" class="ion-no-padding">
-			    						<ion-icon name="happy-outline"></ion-icon>
-			    					</ion-col>
-			    				</ion-row>
-
-			    			</div>
-			    		</div>
-		    		</label>
-		    	</ion-item>
-		    </ion-list>
-		  </ion-card-content>
-			
-		</ion-card>
 	</div>
+
+	<div *ngIf="pedidos.length == 0 && local_id">
+		<span class="topsite">No hay pedidos que mostrar</span>
+	</div>
+
+	<div *ngIf="pedidos.length == 0 && !local_id">
+		<span class="topsite">Seleccione un local</span>
+	</div>
+
 
 
 </ion-content>

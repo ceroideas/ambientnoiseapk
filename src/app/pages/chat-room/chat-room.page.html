@@ -1,0 +1,58 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4>
+		<!-- <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon> -->
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3>Salas de chat</h3>
+
+<!-- 	<ion-row style="margin-top: 16px;">
+		<ion-col size="4">
+			<span style="background-image: url(assets/restaurant.jpg)" class="logo-restaurante"></span>
+		</ion-col>
+		<ion-col size="8">
+			<h2 class="title-tactic">Brooklyn River Bar</h2>
+		</ion-col>
+	</ion-row> -->
+
+	<br>
+
+	<div>
+
+		<div *ngFor="let u of aprobedUsers">
+			<ion-row style="background-color: #373333; border-radius: 20px; margin-bottom: 20px">
+				<ion-col size="3" (click)="openChat(u)">
+					<div class="profile-pic" [ngStyle]="{'background-image': 'url('+(u.avatar || 'assets/user.jpg')+')'}">
+					</div>
+				</ion-col>
+				<ion-col size="6" style="display: flex;" (click)="openChat(u)">
+					<h5 style="position: relative; margin: auto; text-align: center;">{{u.name}} <br> <small style="color: #a365b8">25 Años</small></h5>
+				</ion-col>
+
+				<ion-col size="3">
+					<h5 style="position: relative; display: block; text-align: center;">
+						<!-- <img src="assets/ig.svg" alt="" style="margin: auto; height: 50px;"> -->
+						<ion-icon (click)="verGaleria(u)" name="image-outline" style="font-size: 50px"></ion-icon>
+					</h5>
+				</ion-col>
+			</ion-row>
+		</div>
+
+		<div *ngIf="aprobedUsers?.length == 0">
+			<h4>
+				No hay usuarios con los que chatear, busca alguno en los locales
+			</h4>
+		</div>
+
+	</div>
+
+</ion-content>

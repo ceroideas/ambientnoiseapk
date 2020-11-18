@@ -1,0 +1,116 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3>Mis Pedidos</h3>
+
+	<div *ngIf="pedidos.length > 0">
+		<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
+			
+		  <ion-card-content>
+
+		    <ion-list class="ion-no-padding" *ngFor="let e of pedidos; let i = index">
+		    	<ion-item lines="none">
+		    		<label class="no-p-b">
+			    		<span class="menu-type" (click)="collapse(i)">{{e.establishment.title}} <br> <span>{{e.updated_at | expired:'hour'}}</span> <small> <ion-icon name="arrow-down"></ion-icon> </small></span>
+			    		<div class="menu-items" [id]="'items-orders-'+i">
+			    			<div class="menu-item-order">
+
+			    				<ion-row>
+			    					<ion-col size="8" class="ion-no-padding">
+			    						
+			    						<ion-list class="ion-no-padding">
+			    							<ion-item class="item ion-no-padding" *ngFor="let p of e.products">
+			    								<label>{{p.product.title}} <small>{{p.price}}€</small> x{{p.quantity}} <br>
+			    									<span style="float: right">{{p.price*p.quantity}}€ </span>
+			    								</label>
+			    							</ion-item>
+			    							<!-- <ion-item class="item ion-no-padding">
+			    								Cerveza x1
+			    							</ion-item> -->
+			    							<ion-item class="total ion-no-padding">
+			    								<b>Total</b>
+
+			    								<span slot="end" style="font-size: 18px; color: #a365b8">{{e.payment_total}}€</span>
+			    							</ion-item>
+			    						</ion-list>
+
+			    					</ion-col>
+			    					<ion-col size="4">
+			    						<img src="assets/qr.svg" (click)="openModal(e.qr)" alt="" style="width: 90%; position: absolute; top: 0; right: 0">
+			    					</ion-col>
+
+			    					<ion-col size="8" class="ion-no-padding">
+
+	    								<span class="white">Estado del pedido</span>
+	    								<small class="crimson" *ngIf="e.status == 1">El pedido no ha sido servido</small> <br>
+		    							<small class="pink" *ngIf="e.status == 2">El pedido ha sido servido</small> <br>
+
+	    								<span class="gray">{{e.updated_at | expired:'hour'}}</span>
+			    					</ion-col>
+
+			    					<ion-col size="4" class="ion-no-padding">
+			    						<!-- <ion-icon name="happy-outline"></ion-icon> -->
+			    					</ion-col>
+			    				</ion-row>
+
+			    			</div>
+			    		</div>
+		    		</label>
+		    	</ion-item>
+		    </ion-list>
+
+		  </ion-card-content>
+		</ion-card>
+	</div>
+
+	<h3>Ropero</h3>
+
+	<div *ngIf="roperos.length > 0">
+		
+		<ion-row style="background-color: #373333; border-radius: 20px; padding: 10px; margin-bottom: 20px" *ngFor="let r of roperos">
+			<ion-col size="4">
+				<div class="profile-pic" style="background-image: url(assets/clothes-hanger.svg)">
+					
+				</div>
+			</ion-col>
+			<ion-col size="8" class="info-ropero">
+				<label>{{r.establishment.title}}</label>
+				<small>1 percha reservada</small>
+
+				<div style="margin-top: 8px;">
+					
+					<small style="display: inline;" *ngIf="r.status != 2">Nº de percha: </small>
+					<small style="display: inline;" *ngIf="r.status == 2"> &nbsp; </small>
+					<span *ngIf="r.status == 0" style="display: inline; color: crimson"> <br> Por asignar</span>
+					<span *ngIf="r.status == 1" style="display: inline; color: #a365b8"> <br> {{r.percha}}</span>
+					<span *ngIf="r.status == 2" style="display: inline; color: #0a0"> <br> Prendas entregadas</span>
+
+					<!-- <span style="font-size: 18px;position: absolute;right: 6px;bottom: 6px; color: #a365b8">16.00€</span> -->
+
+					<img src="assets/qr.svg" (click)="openModal(r.qr)" alt="" style="
+					    position: absolute;
+					    right: 0;
+					    width: 70px;
+					    margin: auto;
+					    top: 0;
+					    bottom: 0;
+					">
+				</div>
+			</ion-col>
+		</ion-row>
+
+	</div>
+
+
+</ion-content>

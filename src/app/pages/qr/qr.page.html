@@ -1,0 +1,31 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>qr</ion-title>
+  </ion-toolbar>
+</ion-header>
+ -->
+<ion-content class="ion-padding">
+
+	<div class="overqr">
+		
+		<div class="qrclass">
+			
+			<qrcode [qrdata]="data" [width]="300" [errorCorrectionLevel]="'M'"></qrcode>
+
+		</div>
+
+		<h3>Generando QR</h3>
+
+		<br>
+		<br>
+
+		<ion-row>
+			<ion-col size="4">
+				<ion-button class="an-button opaque" (click)="modal.dismiss()"> <span *ngIf="!reserva">Volver a <br> Pedidos</span> <span *ngIf="reserva">Volver a <br> Reservas</span></ion-button>
+			</ion-col>
+			<ion-col size="8">
+				<ion-button class="an-button" (click)="cerrar()">Listo</ion-button>
+			</ion-col>
+		</ion-row>
+	</div>
+</ion-content>

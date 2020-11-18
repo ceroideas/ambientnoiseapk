@@ -8,11 +8,14 @@ import { LEventosPageRoutingModule } from './l-eventos-routing.module';
 
 import { LEventosPage } from './l-eventos.page';
 
+import { PipesModule } from '../../pipes/pipes.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     LEventosPageRoutingModule
   ],
   declarations: [LEventosPage]

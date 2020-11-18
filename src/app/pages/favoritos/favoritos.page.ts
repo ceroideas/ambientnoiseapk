@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { EventsService } from '../../services/events.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-favoritos',
@@ -7,17 +9,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FavoritosPage implements OnInit {
 
-  favoritos;
+  favoritos:any;
   tutorialValue = parseInt(localStorage.getItem('tutorial')) || 0;
+  user = JSON.parse(localStorage.getItem('ANuser'));
 
-  constructor() { }
+  constructor(public api: ApiService, public events: EventsService) { }
 
   ngOnInit() {
+
+    this.events.destroy('reloadFavorites');
+    this.events.subscribe('reloadFavorites',()=>{
+      this.getFavorites();
+    });
+    this.events.destroy('restoreCourseFv');
+    this.events.subscribe('restoreCourseFv',()=>{
+      this.tutorialValue = parseInt(localStorage.getItem('tutorial')) || 0;
+    });
+    this.getFavorites();
   }
 
-  viewFavoritos()
+  getLocal(l)
   {
-  	this.favoritos = 1;
+    localStorage.setItem('actualLocal',JSON.stringify(l));
+  }
+
+  getFavorites()
+  {
+    this.api.getFavorites(this.user.id).subscribe(data=>{
+      this.favoritos = data;
+
+      console.log(data);
+    })
   }
 
 }

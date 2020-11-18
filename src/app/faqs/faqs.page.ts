@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-faqs',
@@ -10,10 +10,20 @@ import { NavController } from '@ionic/angular';
 export class FaqsPage implements OnInit {
 
   lorem;
+  title;
 
-  constructor(public nav: NavController) { }
+  faqs;
+
+  query:any;
+
+  constructor(public nav: NavController, public api: ApiService) { }
 
   ngOnInit() {
+  	this.api.getFaqs().subscribe(data=>{
+  		this.faqs = data;
+
+  		console.log(data);
+  	})
   }
 
 }

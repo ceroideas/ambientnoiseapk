@@ -8,7 +8,8 @@
 
 	<div class="header-box ion-padding">
 		
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4>
+		<!-- <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon> -->
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -30,7 +31,7 @@
 						<ion-icon name="search"></ion-icon>
 					</span>
 
-					<input type="text">
+					<input type="text" [(ngModel)]="query">
 				</div>
 
 			</ion-item>
@@ -46,35 +47,23 @@
 	<div class="ion-padding">
 
 		<div *ngIf="!lorem">
-			
-			<label class="faq-title">Pagos y descuentos</label>
 
-			<ul class="faqs" (click)="lorem = 1">
-				<li><ion-icon name="arrow-forward"></ion-icon> Totam rem aperiam</li>
-				<li><ion-icon name="arrow-forward"></ion-icon> Sed quia consequuntur magni</li>
-				<li><ion-icon name="arrow-forward"></ion-icon> Neque porro quisquam est</li>
-				<li><ion-icon name="arrow-forward"></ion-icon> Aliquam quaerat voluptatem</li>
-			</ul>
+			<div *ngFor="let s of faqs | search:query">
+				
+				<label class="faq-title">{{s.title}}</label>
 
-			<label class="faq-title">Información</label>
-
-			<ul class="faqs" (click)="lorem = 1">
-				<li><ion-icon name="arrow-forward"></ion-icon> Totam rem aperiam</li>
-				<li><ion-icon name="arrow-forward"></ion-icon> Sed quia consequuntur magni</li>
-				<li><ion-icon name="arrow-forward"></ion-icon> Neque porro quisquam est</li>
-				<li><ion-icon name="arrow-forward"></ion-icon> Aliquam quaerat voluptatem</li>
-			</ul>
+				<ul class="faqs" >
+					<li (click)="lorem = faq.answer; title = faq.title" *ngFor="let faq of s.questions | search:query"><ion-icon name="arrow-forward"></ion-icon> {{faq.title}}</li>
+				</ul>
+			</div>
 
 		</div>
 
 		<div *ngIf="lorem">
 			
-			<label (click)="lorem = null" class="faq-title"><ion-icon name="arrow-back"></ion-icon> Lorem ipsum</label>
+			<label (click)="lorem = null" class="faq-title"><ion-icon name="arrow-back"></ion-icon> {{title}}</label>
 
-			<p class="p-faq">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima optio voluptatum neque itaque illum, facilis possimus soluta nihil? Modi placeat perferendis aspernatur amet reiciendis enim similique aperiam praesentium, eligendi accusantium. <br> <br>
-
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure vero, exercitationem aliquid perferendis deserunt quas. Eligendi, veritatis nesciunt alias nihil placeat illo culpa sapiente! Quaerat aperiam repellat autem, ad ipsum?
+			<p class="p-faq" [innerHtml]="lorem">
 			</p>
 
 		</div>

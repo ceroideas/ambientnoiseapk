@@ -10,15 +10,15 @@ ion-menu.md ion-content {
 }
 
 ion-menu.md ion-list {
-  padding: 20px 0;
+  padding: 20px 0px;
   background: transparent;
   margin: auto;
   position: absolute;
   left: 16px;
   vertical-align: middle;
-  right: 0;
+  right: 0px;
   height: fit-content;
-  bottom: 0;
+  bottom: 0px;
   top: -20%;
 }
 
@@ -83,15 +83,15 @@ ion-menu.ios ion-content {
 }
 
 ion-menu.ios ion-list {
-  padding: 20px 0 0 0;
+  padding: 20px 0px 0px 0px;
   background: transparent;
   margin: auto;
   position: absolute;
   left: 16px;
   vertical-align: middle;
-  right: 0;
+  right: 0px;
   height: fit-content;
-  bottom: 0;
+  bottom: 0px;
   top: -20%;
 }
 
@@ -114,7 +114,7 @@ ion-menu.ios ion-item.selected ion-icon {
 
 ion-menu.ios ion-item ion-icon {
   font-size: 24px;
-  color: #73849a;
+  color: #fff;
 }
 
 ion-menu.ios ion-list#labels-list ion-list-header {

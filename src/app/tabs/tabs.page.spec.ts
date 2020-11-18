@@ -1,5 +1,5 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
 
 import { TabsPage } from './tabs.page';
 
@@ -10,7 +10,7 @@ describe('TabsPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ TabsPage ],
-      imports: [IonicModule.forRoot()]
+      imports: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TabsPage);

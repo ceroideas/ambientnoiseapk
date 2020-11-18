@@ -17,28 +17,35 @@
 
 	</h4>
 
-	<h3>Sala Brooklyn River Bar</h3>
+	<h3>Listas <br> {{local?.title}}</h3>
 
 	<br>
 
-	<span style="background-image: url(assets/restaurant.jpg)" class="logo-restaurante"></span>
+	<span [ngStyle]="{'background-image': 'url('+local.avatar+')'}" class="logo-restaurante"></span>
 
-	<ion-card class="list-card">
+	<ion-card class="list-card" *ngFor="let list of lists; let i = index" [ngClass]="{'full': (list | percent) == 100 && !(list | guests:user.id:'guest')}">
 		
 		<ion-card-content>
 			<ion-row>
-				<ion-col size="2" style="display: flex;">
-					<ion-icon name="checkbox" style="color: lightgreen;"></ion-icon>
+				<ion-col size="2" style="display: flex;" >
+					<div style="display: flex;" *ngIf="(list | percent) != 100 || ((list | percent) == 100 && (list | guests:user.id:'guest'))" (click)="addGuess(list,i)">
+						<ion-icon *ngIf="list | guests:user.id:'guest'" name="checkbox" style="color: lightgreen;"></ion-icon>
+						<ion-icon *ngIf="!(list | guests:user.id:'guest')" name="square-outline"></ion-icon>
+					</div>
+					<div style="display: flex;" *ngIf="(list | percent) == 100 && !(list | guests:user.id:'guest')">
+						<ion-icon name="close-circle-outline" style="color: crimson;"></ion-icon>
+					</div>
 				</ion-col>
 				<ion-col size="8">
-					<h5>Nombre de la lista 1</h5>
+					<h5>{{list.title}}</h5>
 
-					<h6>
-						La lista está al:
-						<span>80%</span>
+					<h6 *ngIf="list.participations > 0">
+						<span *ngIf="(list | percent) != 100">La lista está al:</span>
+						<span *ngIf="(list | percent) == 100">La lista está llena:</span>
+						<span>{{list | percent}}%</span>
 					</h6>
 				</ion-col>
-				<ion-col size="2" style="display: flex;">
+				<ion-col size="2" style="display: flex;" *ngIf="(list | percent) > 50">
 					<img src="assets/fire.svg" alt="">
 				</ion-col>
 			</ion-row>
@@ -46,7 +53,7 @@
 
 	</ion-card>
 
-	<ion-card class="list-card">
+	<!-- <ion-card class="list-card">
 		
 		<ion-card-content>
 			<ion-row>
@@ -74,7 +81,6 @@
 		<ion-card-content>
 			<ion-row>
 				<ion-col size="2" style="display: flex;">
-					<!-- <ion-icon name="checkbox"></ion-icon> -->
 				</ion-col>
 				<ion-col size="8">
 					<h5>Nombre de la lista 3</h5>
@@ -90,7 +96,7 @@
 			</ion-row>
 		</ion-card-content>
 
-	</ion-card>
+	</ion-card> -->
 	
 	</div>
 

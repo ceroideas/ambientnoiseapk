@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { NavparamsService } from '../../services/navparams.service';
+import { EventsService } from '../../services/events.service';
 
 @Component({
   selector: 'app-filtros',
@@ -9,20 +11,20 @@ import { NavController } from '@ionic/angular';
 export class FiltrosPage implements OnInit {
 
   ambientes = [
-	"Todos",
-	"Discoteca",
-	"Cócteles",
-	"Irlandés",
-	"Karaoke",
-	"Cafés",
-	"Teterías"
+	// "Todos",
+	// "Discoteca",
+	// "Cócteles",
+	// "Irlandés",
+	// "Karaoke",
+	// "Cafés",
+	// "Teterías"
   ];
 
   tmusica = [
-	"Todos",
-	"Bachata",
-	"Cumbia",
-	"Salsa"
+	// "Todos",
+	// "Bachata",
+	// "Cumbia",
+	// "Salsa"
   ];
 
   locupacion = [
@@ -38,9 +40,20 @@ export class FiltrosPage implements OnInit {
 
   range = {lower:20,upper:80};
 
-  constructor(public nav: NavController) { }
+  constructor(public nav: NavController, public navparams: NavparamsService, public events: EventsService) { }
 
   ngOnInit() {
+    let data = this.navparams.getParam();
+
+    this.ambientes = data.ambientes;
+    this.tmusica = data.tmusica;
+
+    this.ambiente = data.ambiente;
+    this.musica = data.musica;
+    this.ocupacion = data.ocupacion;
+    this.range = data.range;
+
+    console.log(data);
   }
 
   back()
@@ -54,6 +67,19 @@ export class FiltrosPage implements OnInit {
 	this.musica = null;
 	this.ocupacion = null;
 	this.range = {lower:20,upper:80};
+
+  this.filtrar();
+  }
+
+  filtrar()
+  {
+    let data = {ambientes:this.ambientes,tmusica:this.tmusica,ocupacion:this.ocupacion,range:this.range, ambiente: this.ambiente, musica:this.musica};
+    this.navparams.setParam(data);
+
+    this.back();
+
+    this.events.publish('filterEstablishments');
+    this.events.publish('filterMapEstablishments');
   }
 
 }

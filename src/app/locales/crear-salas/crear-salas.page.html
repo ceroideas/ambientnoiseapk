@@ -1,0 +1,63 @@
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+		<ion-button class="an-button" [routerLink]="['/local/locales/nueva-sala/'+local?.id]" routerDirection="forward">Crear sala</ion-button>
+
+	</h4>
+
+	<h3>Salas <br> {{local?.title}}</h3>
+
+	<br>
+
+	<div>
+		<label>Bosquejo del local</label>
+		
+		<div class="croquis" (click)="loadImage()">
+			<div class="uploaded" [ngStyle]="{'background-image':'url('+local?.rooms+')'}">
+			</div>
+		</div>
+
+	</div>
+
+	<br>
+
+	<div *ngIf="rooms.length > 0">
+		
+		<label>Salas</label>
+		<br>
+		<ion-row style="margin-bottom: 12px;" *ngFor="let r of rooms">
+			<ion-col size="12">
+				<div class="rooms">
+					<ion-row>
+						<ion-col size="4">
+							<div class="rest-pic" [ngStyle]="{'background-image': 'url('+r.avatar+')'}">
+								
+							</div>
+						</ion-col>
+						<ion-col size="8">
+							<div class="rest-info" style="height: 70px;">
+								<label class="title">{{r.title}}</label>
+
+								<small>{{r.description}}</small>
+							</div>
+
+							<ion-row>
+								<ion-col size="4" style="text-align: right">
+									<ion-icon (click)="editRoom(r)" name="create-outline"></ion-icon>
+								</ion-col>
+								<ion-col size="8" [routerLink]="['/local/locales/reservas/'+r?.id]" style="text-align: right">
+									Añadir reserva
+								</ion-col>
+							</ion-row>	
+						</ion-col>
+					</ion-row>
+				</div>
+			</ion-col>
+		</ion-row>
+	</div>
+
+</ion-content>

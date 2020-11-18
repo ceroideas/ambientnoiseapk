@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { LoadingController, NavController, AlertController } from '@ionic/angular'
 import { ApiService } from '../services/api.service';
+import { SocketService } from '../services/socket.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginPage implements OnInit {
 
   show_password_0 = 'password';
 
-  constructor(public navCtrl: NavController, private formBuilder: FormBuilder, public loadingCtrl: LoadingController, public api: ApiService, public alertCtrl: AlertController) { }
+  constructor(public navCtrl: NavController, private formBuilder: FormBuilder, public loadingCtrl: LoadingController, public api: ApiService, public alertCtrl: AlertController, public socket: SocketService) { }
 
   ngOnInit() {
     this.validation_messages = {
@@ -42,6 +43,12 @@ export class LoginPage implements OnInit {
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
     });
+  }
+
+  ionViewDidEnter()
+  {
+    localStorage.removeItem('ANuser');
+    localStorage.removeItem('carrito');
   }
 
   // changeLocal()
@@ -73,11 +80,28 @@ export class LoginPage implements OnInit {
 
         a.dismiss();
 
-        localStorage.setItem('ANuser',JSON.stringify(data));
+        localStorage.setItem('ANuser',JSON.stringify(data[0]));
 
-        if (data.role == 2) {
+
+        if (localStorage.getItem('onesignal_id')) {
+          
+          let user = data[0];
+          let onesignal_id = localStorage.getItem('onesignal_id');
+
+          this.api.saveOneSignalId({id:user.id,onesignal_id:onesignal_id})
+          .subscribe(
+            data => {console.log('ok');},
+            err => {console.log(err);}
+          );
+        }
+
+        // this.socket.startConnection();
+
+        if (data[0].role == 2) {
           this.navCtrl.navigateRoot('tabs');
-        }else if(data.role == 3){
+
+          localStorage.setItem('carrito',JSON.stringify(data[1]));
+        }else if(data[0].role == 3){
           this.navCtrl.navigateRoot('local');
         }
 

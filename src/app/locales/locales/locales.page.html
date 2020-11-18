@@ -6,11 +6,12 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon [routerLink]="['/login']" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4>
+		<!-- <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon> -->
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
-		<ion-button class="an-button" [routerLink]="['/local/locales/nuevo']" routerDirection="root">Nuevo Local</ion-button>
+		<ion-button class="an-button" [routerLink]="['/local/locales/nuevo']" (click)="clearNv()" routerDirection="forward">Nuevo Local</ion-button>
 
 	</h4>
 
@@ -20,25 +21,25 @@
 
 	<div>
 		
-		<div class="local">
+		<div class="local" *ngFor="let l of locales" >
 			<ion-row>
 				<ion-col size="3">
-					<div class="rest-pic" style="background-image: url('../assets/fondo-restaurante-01.jpg')">
+					<div class="rest-pic" [ngStyle]="{'background-image': 'url('+l.main+')'}">
 						
 					</div>
 				</ion-col>
 				<ion-col size="9">
 					<div class="rest-info">
-						<label class="title">Brooklyn River Bar</label>
+						<label class="title">{{l.title}}</label>
 
-						<small>Marbella, Málaga</small>
+						<small style="text-overflow: ellipsis; white-space: nowrap;">{{l.locality.name}}</small>
 
 						<div class="opciones">
-							<img src="assets/locales/borrar.svg" alt="">
-							<img src="assets/locales/editar.svg" alt="">
-							<img src="assets/locales/fuego.svg" alt="" (click)="presentModal()">
+							<img src="assets/locales/borrar.svg" alt="" (click)="deleteLocal(l.id)">
+							<img src="assets/locales/editar.svg" alt="" (click)="editLocal(l)">
+							<img src="assets/locales/fuego.svg" alt="" (click)="presentModal(l.id,l.ocupation)">
 							<img src="assets/locales/moda.svg" alt="" [routerLink]="['/local/locales/ropero']">
-							<img src="assets/locales/silla.svg" alt="">
+							<img src="assets/locales/silla.svg" alt="" (click)="verSalas(l)">
 						</div>
 
 						<!-- <label class="label-1">4.3</label>
@@ -49,63 +50,12 @@
 			</ion-row>
 		</div>
 
-		<div class="local">
-			<ion-row>
-				<ion-col size="3">
-					<div class="rest-pic" style="background-image: url('../assets/fondo-restaurante-01.jpg')">
-						
-					</div>
-				</ion-col>
-				<ion-col size="9">
-					<div class="rest-info">
-						<label class="title">Brooklyn River Bar</label>
-
-						<small>Marbella, Málaga</small>
-
-						<div class="opciones">
-							<img src="assets/locales/borrar.svg" alt="">
-							<img src="assets/locales/editar.svg" alt="">
-							<img src="assets/locales/fuego.svg" alt="" (click)="presentModal()">
-							<img src="assets/locales/moda.svg" alt="" [routerLink]="['/local/locales/ropero']">
-							<img src="assets/locales/silla.svg" alt="">
-						</div>
-
-						<!-- <label class="label-1">4.3</label>
-
-						<ion-icon name="heart-outline"></ion-icon> -->
-					</div>
-				</ion-col>
-			</ion-row>
-		</div>
-
-		<div class="local">
-			<ion-row>
-				<ion-col size="3">
-					<div class="rest-pic" style="background-image: url('../assets/fondo-restaurante-01.jpg')">
-						
-					</div>
-				</ion-col>
-				<ion-col size="9">
-					<div class="rest-info">
-						<label class="title">Brooklyn River Bar</label>
-
-						<small>Marbella, Málaga</small>
-
-						<div class="opciones">
-							<img src="assets/locales/borrar.svg" alt="">
-							<img src="assets/locales/editar.svg" alt="">
-							<img src="assets/locales/fuego.svg" alt="" (click)="presentModal()">
-							<img src="assets/locales/moda.svg" alt="" [routerLink]="['/local/locales/ropero']">
-							<img src="assets/locales/silla.svg" alt="">
-						</div>
-
-						<!-- <label class="label-1">4.3</label>
-
-						<ion-icon name="heart-outline"></ion-icon> -->
-					</div>
-				</ion-col>
-			</ion-row>
-		</div>
+		<ion-infinite-scroll threshold="100px" (ionInfinite)="getMoreLocals($event)">
+		    <ion-infinite-scroll-content
+		      loadingSpinner="bubbles"
+		      loadingText="Cargando locales...">
+		    </ion-infinite-scroll-content>
+		</ion-infinite-scroll>
 
 	</div>
 

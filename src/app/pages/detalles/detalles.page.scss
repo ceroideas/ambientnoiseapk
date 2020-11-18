@@ -2,6 +2,9 @@ ion-content {
 	--background-size: cover;
 	--background-position: center;
 }
+* {
+	z-index: 9;
+}
 
 h2 {
 	color: #fff;
@@ -23,6 +26,7 @@ h4 {
 	margin-top: 30px;
 	margin-bottom: 0px;
 	font-size: 24px;
+	position: relative;
 }
 
 h5 {
@@ -78,13 +82,18 @@ h5 {
 	background-size: cover;
 	background-position: center;
 	right: 12px;
-	top: 12px;
+	top: 36px;
+	border: 1px solid #acacac;
+}
+
+.tactic {
 	border: 8px solid #a365b8;
 }
 
 #title-restaurant {
 	text-align: left;
-	margin-top: 100px;
+	margin-top: 70px;
+	position: relative;
 	div {
 		margin-top: 16px;
 		span {
@@ -119,6 +128,7 @@ h5 {
 		clear: both;
 		display: block;
 	}
+	position: relative;
 	background-color: #516cd0;
 	padding: 8px;
 	border-radius: 12px;
@@ -150,14 +160,15 @@ h5 {
 	}
 }
 
-.bottom-information{
+.bottom-informationD{
 
 	position: fixed;
 	width: 100%;
-	// bottom: -500px;
+	bottom: 0px;
+	overflow: hidden;
 	transition: all 300ms;
 
-	.handler {
+	.handlerD {
 		width: 100px;
 		background-color: #1c1c1c;
 		color: #a365b8;
@@ -201,6 +212,7 @@ h5 {
 		font-size: 13px;
 		--background: transparent !important;
 		--inner-padding-end: 0;
+		--inner-padding-start: 0;
 		color: #b3b3b3;
 		label {
 			padding-top: 17px;
@@ -263,4 +275,17 @@ label {
 		color: #e9a12f;
 		font-size: 14px;
 	}
+}
+
+.mini-image {
+	width: 40px;
+	height: 40px;
+	border-radius: 3px;
+	margin-right: 10px;
+	background-size: cover;
+	background-position: center;
+}
+
+.loquesea {
+	display: flex;
 }

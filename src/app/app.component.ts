@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, NavController, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { EventsService } from './services/events.service';
+import { ApiService } from './services/api.service';
+import { SocketService } from './services/socket.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Component({
   selector: 'app-root',
@@ -15,13 +20,21 @@ export class AppComponent implements OnInit {
 
 
   public appPages = [];
+  public extras = [];
+  user;
   // public labels = ['Política de privacidad', 'Soporte y FAQs'];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public events: EventsService
+    public events: EventsService,
+    public socket: SocketService,
+    private geolocation: Geolocation,
+    private oneSignal: OneSignal,
+    private api: ApiService,
+    public alertCtrl: AlertController,
+    public nav: NavController,
   ) {
     this.initializeApp();
   }
@@ -30,10 +43,48 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      if (localStorage.getItem('ANuser')) {
+
+        this.user = JSON.parse(localStorage.getItem('ANuser'))
+        
+        // this.socket.startConnection();
+
+      }
+
+      let watch = this.geolocation.watchPosition();
+      watch.subscribe((data:any) => {
+       // data can be a set of coordinates, or an error (if an error occurred).
+       // data.coords.latitude
+       // data.coords.longitude
+
+       this.api.getCloser({lat:data.coords.latitude,lon:data.coords.longitude}).subscribe((data:any)=>{
+         console.log(data);
+         if (data) {
+           localStorage.setItem('closer',JSON.stringify(data.id));
+
+           this.events.publish('activateTactic',data.id);
+         }else{
+           localStorage.removeItem('closer');
+
+         }
+       })
+      });
+
+      this.initializeOnesignal();
     });
   }
 
   ngOnInit() {
+
+    this.geolocation.getCurrentPosition().then((resp) => {
+      localStorage.setItem('lat',resp.coords.latitude.toString());
+      localStorage.setItem('lon',resp.coords.longitude.toString());
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+
+
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
@@ -63,7 +114,7 @@ export class AppComponent implements OnInit {
       },
       {
         title: 'MIS PEDIDOS',
-        url: '/tabs/cesta',
+        url: '/tabs/perfil/pedidos',
         icon: 'clipboard'
       },
       {
@@ -76,11 +127,21 @@ export class AppComponent implements OnInit {
         url: '/contacto',
         icon: 'chatbox'
       },
-      {
+      /*{
         title: 'LOGOUT',
         url: '/login',
         icon: 'exit'
-      }];
+      }*/];
+
+      this.extras = [
+        {
+          title: 'Política de privacidad',
+          url: '/tabs/politica'
+        },{
+          title: 'Soporte y FAQs',
+          url: '/tabs/faqs'
+        }
+      ];
     })
 
     this.events.subscribe('showLocalMenu',()=>{
@@ -120,11 +181,71 @@ export class AppComponent implements OnInit {
         url: '/contacto',
         icon: 'chatbox'
       },
-      {
+      /*{
         title: 'LOGOUT',
         url: '/login',
         icon: 'exit'
-      }];
+      }*/];
+
+      this.extras = [
+        {
+          title: 'Política de privacidad',
+          url: '/local/politica'
+        },{
+          title: 'Soporte y FAQs',
+          url: '/local/faqs'
+        }
+      ];
     })
+  }
+
+  logout()
+  {
+    this.alertCtrl.create({header:"Desea cerrar la sesión?",buttons:[
+    {
+      text: "Si",
+      handler:()=>{
+        this.nav.navigateRoot('login');
+        localStorage.removeItem('ANuser');
+      }
+    },{
+      text: "No"
+    }
+    ]}).then(a=>a.present());
+  }
+
+  initializeOnesignal()
+  {
+    this.oneSignal.startInit('e4495339-60e1-4a99-84a7-a2119469b570', '54999905802');
+
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+
+    this.oneSignal.handleNotificationReceived().subscribe(() => {
+     // do something when notification is received saveOneSignalId
+    });
+
+    this.oneSignal.handleNotificationOpened().subscribe((jsondata) => {
+      // do something when a notification is opened
+      // if (jsondata.notification.payload.additionalData.type == 1) {
+      //   // this.verGanadores();
+      // }
+    });
+
+    this.oneSignal.endInit();
+
+    this.oneSignal.getIds().then((ids)=> {
+      localStorage.setItem('onesignal_id',ids.userId);
+
+      if (localStorage.getItem('ANuser')) {
+        let onesignal_id = localStorage.getItem('onesignal_id');
+
+        this.api.saveOneSignalId({id:this.user.id,onesignal_id:onesignal_id})
+        .subscribe(
+          data => {console.log('ok');},
+          err => {console.log(err);}
+        );
+      }
+
+    });
   }
 }

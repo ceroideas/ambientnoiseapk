@@ -1,0 +1,102 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3>Nueva Reserva</h3>
+
+	<!-- <br *ngIf="step < 4"> -->
+
+	<div class="central-block">
+		<ion-list>
+
+			<form class="form" [formGroup]="validations_form1">
+
+				<ion-item class="ion-no-padding">
+					<ion-label position="floating">Fecha de reserva</ion-label>
+					<ion-datetime
+					formControlName="date"
+					monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, oct, Nov, Dec"
+					displayFormat="D MMM, YYYY"></ion-datetime>
+
+					<span slot="end">
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.date">
+			            <div class="error-message" *ngIf="validations_form1.get('date').hasError(validation.type) && (validations_form1.get('date').dirty || validations_form1.get('date').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+			    <ion-item class="ion-no-padding">
+					<ion-label position="floating">Reserva desde</ion-label>
+					<ion-datetime formControlName="from" style="padding-left: 0" displayFormat="HH:mm"></ion-datetime>
+
+					<span slot="end">
+						<!-- <ion-icon description="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.from">
+			            <div class="error-message" *ngIf="validations_form1.get('from').hasError(validation.type) && (validations_form1.get('from').dirty || validations_form1.get('from').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+				<ion-item class="ion-no-padding">
+					<ion-label position="floating">Reserva hasta</ion-label>
+					<ion-datetime formControlName="to" style="padding-left: 0" displayFormat="HH:mm"></ion-datetime>
+
+					<span slot="end">
+						<!-- <ion-icon description="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.to">
+			            <div class="error-message" *ngIf="validations_form1.get('to').hasError(validation.type) && (validations_form1.get('to').dirty || validations_form1.get('to').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+			    <ion-item class="ion-no-padding">
+					<ion-label position="floating">Precio de Reserva</ion-label>
+					<ion-input formControlName="price" type="number" step="0.01" min="0"></ion-input>
+
+					<span slot="end">
+						<!-- <ion-icon description="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.price">
+			            <div class="error-message" *ngIf="validations_form1.get('price').hasError(validation.type) && (validations_form1.get('price').dirty || validations_form1.get('price').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+			    <div style="position: relative; z-index: 9999;">
+					<ion-button (click)="publishReserve()" [disabled]="!validations_form1.valid" class="an-button">Guardar</ion-button>
+				</div>
+
+			</form>
+
+		</ion-list>
+
+	</div>
+
+
+</ion-content>

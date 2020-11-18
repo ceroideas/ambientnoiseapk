@@ -13,40 +13,48 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../pages/home/home.module#HomePageModule'
+            loadChildren: ()=> import('../pages/home/home.module').then(m=>m.HomePageModule)
           },{
             path: 'map',
-            loadChildren: '../pages/map/map.module#MapPageModule'
+            loadChildren: ()=> import('../pages/map/map.module').then(m=>m.MapPageModule)
           },{
             path: 'filtros',
-            loadChildren: '../pages/filtros/filtros.module#FiltrosPageModule'
-          },{
-            path: 'detalles',
-            loadChildren: '../pages/detalles/detalles.module#DetallesPageModule'
-          },{
+            loadChildren: ()=> import('../pages/filtros/filtros.module').then(m=>m.FiltrosPageModule)
+          },
+          {path: 'detalles',loadChildren: ()=> import('../pages/detalles/detalles.module').then(m=>m.DetallesPageModule)},
+          {path: 'detalles/:id',loadChildren: ()=> import('../pages/detalles/detalles.module').then(m=>m.DetallesPageModule)},
+          {path: 'reservar/:id',loadChildren: ()=> import('../pages/reservar/reservar.module').then(m=>m.ReservarPageModule)},
+          {path: 'mis-reservas/:id',loadChildren: ()=> import('../pages/mis-reservas/mis-reservas.module').then(m=>m.MisReservasPageModule)},
+          {
             path: 'tactic',
-            loadChildren: '../pages/tactic/tactic.module#TacticPageModule'
+            loadChildren: ()=> import('../pages/tactic/tactic.module').then(m=>m.TacticPageModule)
           },{
             path: 't-ofertas',
-            loadChildren: '../pages/t-ofertas/t-ofertas.module#TOfertasPageModule'
+            loadChildren: ()=> import('../pages/t-ofertas/t-ofertas.module').then(m=>m.TOfertasPageModule)
           },{
             path: 'sala',
-            loadChildren: '../pages/sala/sala.module#SalaPageModule'
+            loadChildren: ()=> import('../pages/sala/sala.module').then(m=>m.SalaPageModule)
           },{
             path: 'sala-detalle',
-            loadChildren: '../pages/sala-detalle/sala-detalle.module#SalaDetallePageModule'
+            loadChildren: ()=> import('../pages/sala-detalle/sala-detalle.module').then(m=>m.SalaDetallePageModule)
           },{
             path: 'eventos',
-            loadChildren: '../pages/eventos/eventos.module#EventosPageModule'
+            loadChildren: ()=> import('../pages/eventos/eventos.module').then(m=>m.EventosPageModule)
           },{
             path: 'ropero',
-            loadChildren: '../pages/ropero/ropero.module#RoperoPageModule'
+            loadChildren: ()=> import('../pages/ropero/ropero.module').then(m=>m.RoperoPageModule)
           },{
-            path: 'lista',
-            loadChildren: '../pages/lista/lista.module#ListaPageModule'
+            path: 'lista/:id',
+            loadChildren: ()=> import('../pages/lista/lista.module').then(m=>m.ListaPageModule)
           },{
             path: 'carrito',
-            loadChildren: '../pages/cesta/cesta.module#CestaPageModule'
+            loadChildren: ()=> import('../pages/cesta/cesta.module').then(m=>m.CestaPageModule)
+          },{
+            path: 'galeria-local',
+            loadChildren: ()=> import('../pages/gallery/gallery.module').then(m=>m.GalleryPageModule)
+          },{
+            path: 'galeria/:id',
+            loadChildren: ()=> import('../pages/gallery/gallery.module').then(m=>m.GalleryPageModule)
           }
         ]
       },{
@@ -54,13 +62,19 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../pages/perfil/perfil.module#PerfilPageModule'
+            loadChildren: ()=> import('../pages/perfil/perfil.module').then(m=>m.PerfilPageModule)
           },{
             path: 'ajustes',
-            loadChildren: '../pages/ajustes/ajustes.module#AjustesPageModule'
+            loadChildren: ()=> import('../pages/ajustes/ajustes.module').then(m=>m.AjustesPageModule)
           },{
             path: 'carrito',
-            loadChildren: '../pages/cesta/cesta.module#CestaPageModule'
+            loadChildren: ()=> import('../pages/cesta/cesta.module').then(m=>m.CestaPageModule)
+          },{
+            path: 'pedidos',
+            loadChildren: ()=> import('../pages/pedidos/pedidos.module').then(m=>m.PedidosPageModule)
+          },{
+            path: 'galeria',
+            loadChildren: ()=> import('../pages/gallery/gallery.module').then(m=>m.GalleryPageModule)
           }
         ]
       },{
@@ -68,7 +82,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../pages/ofertas/ofertas.module#OfertasPageModule'
+            loadChildren: ()=> import('../pages/ofertas/ofertas.module').then(m=>m.OfertasPageModule)
           }
         ]
       },{
@@ -76,10 +90,10 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../pages/ev-destacados/ev-destacados.module#EvDestacadosPageModule'
+            loadChildren: ()=> import('../pages/ev-destacados/ev-destacados.module').then(m=>m.EvDestacadosPageModule)
           },{
             path: 'lista',
-            loadChildren: '../pages/lista/lista.module#ListaPageModule'
+            loadChildren: ()=> import('../pages/lista/lista.module').then(m=>m.ListaPageModule)
           }
         ]
       },{
@@ -87,15 +101,21 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../pages/favoritos/favoritos.module#FavoritosPageModule'
+            loadChildren: ()=> import('../pages/favoritos/favoritos.module').then(m=>m.FavoritosPageModule)
           }
         ]
       },{
-        path: 'chat',
+        path: 'chat-room',
         children: [
           {
             path: '',
-            loadChildren: '../pages/chat/chat.module#ChatPageModule'
+            loadChildren: ()=> import('../pages/chat-room/chat-room.module').then(m=>m.ChatRoomPageModule)
+          },{
+            path: ':id',
+            loadChildren: ()=> import('../pages/chat/chat.module').then(m=>m.ChatPageModule)
+          },{
+            path: 'galeria/:id',
+            loadChildren: ()=> import('../pages/gallery/gallery.module').then(m=>m.GalleryPageModule)
           }
         ]
       },{
@@ -103,7 +123,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../pages/cesta/cesta.module#CestaPageModule'
+            loadChildren: ()=> import('../pages/cesta/cesta.module').then(m=>m.CestaPageModule)
           }
         ]
       },{
@@ -111,7 +131,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../faqs/faqs.module#FaqsPageModule'
+            loadChildren: ()=> import('../faqs/faqs.module').then(m=>m.FaqsPageModule)
           }
         ]
       },{
@@ -119,7 +139,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../politica/politica.module#PoliticaPageModule'
+            loadChildren: ()=> import('../politica/politica.module').then(m=>m.PoliticaPageModule)
           }
         ]
       },

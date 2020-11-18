@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { LoadingController, NavController, AlertController } from '@ionic/angular'
+import { LoadingController, NavController, AlertController, ToastController } from '@ionic/angular'
 
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 // import { File } from '@ionic-native/file';
 
 import { ApiService } from '../../services/api.service';
+import { EventsService } from '../../services/events.service';
+import { NavparamsService } from '../../services/navparams.service';
 import * as $ from 'jquery';
 import * as moment from 'moment';
 
@@ -24,7 +26,7 @@ export class NuevoPage implements OnInit {
   todo:any = {};
   step = 1;
   autocomplete;
-  latlng:any;
+  latlng:any = {lat:null,lng:null};
 
   ambients = [];
   musics = [];
@@ -42,17 +44,20 @@ export class NuevoPage implements OnInit {
   address;
   province;
 
-  logo = "https://s3-us-west-2.amazonaws.com/lasaga-blog/media/original_images/grupo_imagen.jpg";
-  main = "https://s3-us-west-2.amazonaws.com/lasaga-blog/media/original_images/grupo_imagen.jpg";
+  logo = "";
+  main = "";
 
   user = JSON.parse(localStorage.getItem('ANuser'));
 
-  constructor(public nav: NavController, public alert: AlertController, public loading: LoadingController, public api: ApiService, private formBuilder: FormBuilder, private camera: Camera, private transfer: FileTransfer) { }
+  edit = null;
+
+  constructor(public nav: NavController, public alert: AlertController, public loading: LoadingController, public api: ApiService, private formBuilder: FormBuilder,
+    private camera: Camera, private transfer: FileTransfer, public toast: ToastController, public events: EventsService, public navparams: NavparamsService) { }
 
   ngOnInit() {
     this.api.getCategories().subscribe(data=>{
-      this.ambients = data[1];
-      this.musics = data[0];
+      this.ambients = data[0];
+      this.musics = data[1];
 
       console.log(data);
     })
@@ -118,6 +123,68 @@ export class NuevoPage implements OnInit {
         Validators.required
       ])),
     });
+
+    /**/
+
+    let data = this.navparams.getParam();
+
+    if (data && data.type && data.type == 'edit-local') {
+
+      data = data.data;
+
+      console.log(data);
+
+      this.edit = data.id;
+
+      this.address = data.address;
+      this.province = data.locality.name;
+      
+      this.validations_form1.patchValue({
+        'name':data.title,
+        'address':data.address,
+        'description':data.description,
+      })
+
+      let m = [];
+      let a = [];
+
+      data.musics.forEach((v)=>{
+        m.push(v.music.title);
+      })
+      data.ambients.forEach((v)=>{
+        a.push(v.ambient.title);
+      })
+
+      this.validations_form2.patchValue({
+        'ambients':a,
+        'musics':m,
+        'minumum':data.min_buy,
+        'average':data.min_time,
+        'capacity':data.capacity,
+      })
+
+      this.logo = data.avatar;
+      this.main = data.main;
+      
+      let days = [];
+
+      data.schedule.forEach((v)=>{
+        console.log(moment(`2000-01-01 ${v.hour_from}:${v.minutes_from}`).format("YYYY-MM-DDThh:mm:ssTZD"))
+        days.push({
+          day:v.day.toString(),
+          from:moment(`2000-01-01 ${v.hour_from}:${v.minutes_from}`).format("HH:mm"),
+          to:moment(`2000-01-01 ${v.hour_to}:${v.minutes_to}`).format("HH:mm")
+        });
+      })
+
+      this.days = days;
+
+      console.log(this.days);
+
+      this.latlng.lat = data.lt;
+      this.latlng.lng = data.ln;
+
+    }
   }
 
   ionViewDidEnter()
@@ -128,13 +195,16 @@ export class NuevoPage implements OnInit {
   nextStep(h = null)
   {
     if (h) {
+
+      console.log(this.days);
+
       for(let i in this.days)
       {
         let day = this.days[i].day;
-        let from = moment(this.days[i].from).format('HH:mm');
-        let to = moment(this.days[i].to).format('HH:mm');
+        let from = this.days[i].from;
+        let to = this.days[i].to;
 
-        if (!day || from == 'Invalid date' || to == 'Invalid date') {
+        if (!day || !from || !to) {
           return this.alert.create({message:"Complete todos los campos en el horario"}).then(a=>{a.present()});
         }
       }
@@ -147,17 +217,34 @@ export class NuevoPage implements OnInit {
         for (let i in this.days)
         {
           let day = this.days[i].day;
-          
-          let from_hour = moment(this.days[i].from).format('HH');
-          let from_min = moment(this.days[i].from).format('mm');
 
-          let to_hour = moment(this.days[i].to).format('HH');
-          let to_min = moment(this.days[i].to).format('mm');
+          let from_hour;
+          let from_min;
+          let to_hour;
+          let to_min;
+
+          if (this.edit) {
+            from_hour = this.days[i].from;
+            from_min = this.days[i].from;
+
+            to_hour = this.days[i].to;
+            to_min = this.days[i].to;
+
+          }else{
+
+
+            from_hour = moment(this.days[i].from).format('HH');
+            from_min = moment(this.days[i].from).format('mm');
+
+            to_hour = moment(this.days[i].to).format('HH');
+            to_min = moment(this.days[i].to).format('mm');
+          }
 
           newDays.push({day:day,from_hour:from_hour,to_hour:to_hour,from_min:from_min,to_min:to_min});
         }
 
         let data = {
+          edit: this.edit,
           user_id:this.user.id,
           name:this.validations_form1.value.name,
           address:this.address,
@@ -175,12 +262,20 @@ export class NuevoPage implements OnInit {
           lng: this.latlng.lng,
         }
 
-      this.api.saveStablishment(data).subscribe(data=>{
-        
-        this.nav.back();
-
-        this.alert.create({message:"Local creado (prueba)"}).then(a=>{
-          a.present();
+      this.loading.create().then(l=>{
+        l.present();
+        this.api.saveStablishment(data).subscribe(data=>{
+          l.dismiss();
+          this.nav.back();
+          this.events.publish('reloadLocals');
+          this.alert.create({message:"El nuevo local ha sido creado, debe esperar a que un administrador lo active"}).then(a=>{
+            a.present();
+          })
+        },e=>{
+          l.dismiss();
+          this.alert.create({message:"Ha ocurrido un error al intentar publicar el local"}).then(a=>{
+            a.present();
+          })
         })
       })
 
@@ -247,9 +342,11 @@ export class NuevoPage implements OnInit {
   {
     const options: CameraOptions = {
       quality: 100,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.NATIVE_URI,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      allowEdit: true
     }
 
     this.camera.getPicture(options).then((imageData) => {
@@ -265,6 +362,10 @@ export class NuevoPage implements OnInit {
 
   uploadImage(uri,type)
   {
+    this.toast.create({message: "Subiendo imagen, espere un momento", duration: 4000}).then(t=>{
+      t.present();
+    });
+
     const fileTransfer: FileTransferObject = this.transfer.create();
 
     let options: FileUploadOptions = {
@@ -294,7 +395,7 @@ export class NuevoPage implements OnInit {
         if (addressType) {
             if (addressType == 'locality') {
               // console.log(arr[i].address_components[0].short_name);
-              this.province = arr[i].address_components[1].short_name;
+              this.province = arr[i].address_components[1].long_name;
 
               console.log(this.province);
               // $('#postal_code_here').text(arr[i].address_components[0].short_name);

@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon [routerLink]="['/tabs/perfil']" routerDirection="back" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.back()" routerDirection="back" name="chevron-back"></ion-icon>
 
 	</h4>
 
@@ -16,12 +16,12 @@
 
 	<ion-row style="background-color: #373333; border-radius: 20px;">
 		<ion-col size="3">
-			<div class="profile-pic" style="background-image: url(assets/face.jpg)">
+			<div class="profile-pic" [ngStyle]="{'background-image': 'url('+(user.avatar ? user.avatar : 'assets/user.jpg')+')'}">
 				
 			</div>
 		</ion-col>
 		<ion-col size="9">
-			<h5 style="position: relative; top: 12px;">Cambiar imagen de Avatar</h5>
+			<h5 style="position: relative; top: 12px;" (click)="loadImage()">Cambiar imagen de Avatar</h5>
 		</ion-col>
 	</ion-row>
 
@@ -35,49 +35,86 @@
 	
 	  <ion-card-content>
 	    <!-- Add card content here! -->
-	    <ion-list class="ion-no-padding">
-	    	<ion-item class="ion-no-padding">
-	    		<ion-label position="floating">
-		    		Nombre
-	    		</ion-label>
-	    		<ion-input type="text" ></ion-input>
-	    	</ion-item>
+	    <form class="form" [formGroup]="validations_form">
+		    <ion-list class="ion-no-padding">
+		    	<ion-item class="ion-no-padding">
+		    		<ion-label position="floating">
+			    		Nombre
+		    		</ion-label>
+		    		<ion-input formControlName="name" type="text" ></ion-input>
+		    	</ion-item>
+		    		<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.name">
+			            <div class="error-message" *ngIf="validations_form.get('name').hasError(validation.type) && (validations_form.get('name').dirty || validations_form.get('name').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-	    	<ion-item class="ion-no-padding">
-	    		<ion-label position="floating">
-		    		Apellidos
-	    		</ion-label>
-	    		<ion-input type="text" ></ion-input>
-	    	</ion-item>
+		    	<ion-item class="ion-no-padding">
+		    		<ion-label position="floating">
+			    		Apellidos
+		    		</ion-label>
+		    		<ion-input formControlName="last_name" type="text" ></ion-input>
+		    	</ion-item>
+		    		<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.last_name">
+			            <div class="error-message" *ngIf="validations_form.get('last_name').hasError(validation.type) && (validations_form.get('last_name').dirty || validations_form.get('last_name').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-	    	<ion-item class="ion-no-padding">
-	    		<ion-label position="floating">
-		    		E-mail
-	    		</ion-label>
-	    		<ion-input type="text" ></ion-input>
-	    	</ion-item>
+		    	<ion-item class="ion-no-padding">
+		    		<ion-label position="floating">
+			    		E-mail
+		    		</ion-label>
+		    		<ion-input formControlName="email" disabled type="text" ></ion-input>
+		    	</ion-item>
+		    		<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.email">
+			            <div class="error-message" *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-	    	<ion-item class="ion-no-padding">
-	    		<ion-label position="floating">
-		    		Cambiar contraseña
-	    		</ion-label>
-	    		<ion-input type="password" ></ion-input>
-	    	</ion-item>
+		    	<ion-item class="ion-no-padding">
+		    		<ion-label position="floating">
+			    		Cambiar contraseña
+		    		</ion-label>
+		    		<ion-input formControlName="password" type="password" ></ion-input>
+		    	</ion-item>
+		    		<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.password">
+			            <div class="error-message" *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-	    	<ion-item class="ion-no-padding">
-	    		<ion-label position="floating">
-		    		Repetir contraseña
-	    		</ion-label>
-	    		<ion-input type="password" ></ion-input>
-	    	</ion-item>
+		    	<ion-item class="ion-no-padding">
+		    		<ion-label position="floating">
+			    		Repetir contraseña
+		    		</ion-label>
+		    		<ion-input formControlName="repeat_password" type="password" ></ion-input>
+		    	</ion-item>
+		    		<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.repeat_password">
+			            <div class="error-message" *ngIf="validations_form.get('repeat_password').hasError(validation.type) && (validations_form.get('repeat_password').dirty || validations_form.get('repeat_password').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
 
-	    </ion-list>
+		    </ion-list>
+		</form>
 	  </ion-card-content>
 	
 	</ion-card>
 
 	<br>
 
-	<ion-button class="an-button" [routerLink]="['/tabs/perfil/ajustes']">Guardar</ion-button>
+	<ion-button class="an-button" [disabled]="!validations_form.valid" (click)="updateUser()">Guardar</ion-button>
 
 </ion-content>

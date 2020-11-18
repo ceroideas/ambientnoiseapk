@@ -1,0 +1,87 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3 *ngIf="edit">Editar Sala</h3>
+	<h3 *ngIf="!edit">Nueva Sala</h3>
+
+	<!-- <br *ngIf="step < 4"> -->
+
+	<div class="central-block">
+		<ion-list>
+
+			<form class="form" [formGroup]="validations_form1">
+
+				<ion-item class="ion-no-padding">
+					<ion-label position="floating">NOMBRE DE LA SALA</ion-label>
+					<ion-input formControlName="name" type="text" ></ion-input>
+
+					<span slot="end">
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.name">
+			            <div class="error-message" *ngIf="validations_form1.get('name').hasError(validation.type) && (validations_form1.get('name').dirty || validations_form1.get('name').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+			    <ion-item class="ion-no-padding">
+					<ion-label position="floating">DESCRIPCIÓN DE LA SALA</ion-label>
+					<ion-input formControlName="description" type="text" ></ion-input>
+
+					<span slot="end">
+						<!-- <ion-icon description="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.description">
+			            <div class="error-message" *ngIf="validations_form1.get('description').hasError(validation.type) && (validations_form1.get('description').dirty || validations_form1.get('description').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+				<ion-item class="ion-no-padding" lines="none">
+					<ion-label position="stacked">IMAGEN DE LA SALA</ion-label>
+					
+					<span class="adicional-info">Carga la imagen de la sala haciendo clic en el icono</span>
+
+					<div style="width: 100%">
+						
+						<div class="logotipo" (click)="loadImage()">
+							<div class="uploaded" [ngStyle]="{'background-image':'url('+validations_form1.value.image+')'}">
+							</div>
+						</div>
+
+						<div style="position: relative; z-index: 9999;">
+							<ion-button (click)="publishRoom()" [disabled]="!validations_form1.valid" class="an-button">Guardar</ion-button>
+						</div>
+
+					</div>
+
+					<!-- <span slot="end">
+						<ion-icon name="checkmark"></ion-icon>
+					</span> -->
+				</ion-item>
+
+			</form>
+
+		</ion-list>
+
+	</div>
+
+
+</ion-content>

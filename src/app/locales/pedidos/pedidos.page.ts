@@ -1,19 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, LoadingController, AlertController } from '@ionic/angular';
+import { ApiService } from '../../services/api.service';
+import { EventsService } from '../../services/events.service';
 
 @Component({
-  selector: 'app-pedidos',
+  selector: 'app-pedidos-local',
   templateUrl: './pedidos.page.html',
   styleUrls: ['./pedidos.page.scss'],
 })
 export class PedidosPage implements OnInit {
 
-  constructor(public nav: NavController) { }
+  selected = 0;
+  pedidos:any = []
+  locals;
+  local_id;
+  user = JSON.parse(localStorage.getItem('ANuser'));
+
+  constructor(public nav: NavController, public api: ApiService, public events: EventsService, public loading: LoadingController, public alertCtrl: AlertController) { }
 
   ngOnInit() {
+    this.api.getMyStablishments(this.user.id,1).subscribe((data:any)=>{
+      this.locals = data.data;
+    })
   }
 
-    collapse(e)
+  retrieveOrders()
+  {
+    this.loading.create().then(l=>{
+      l.present();
+      this.api.retrieveOrders({id:this.local_id}).subscribe((data)=>{
+        this.pedidos = data;
+        l.dismiss();
+      })
+    })
+  }
+
+  collapse(e)
   {
     let h = (document.getElementById('items-'+e) as HTMLElement).offsetHeight;
 
@@ -32,6 +54,29 @@ export class PedidosPage implements OnInit {
       (document.getElementById('items-'+e) as HTMLElement).style.height = h+"px";
     }
 
+  }
+
+  servir(id)
+  {
+    this.alertCtrl.create({message:"Desea marcar el pedido como servido?", buttons: [
+    {
+      text: "Si",
+      handler: ()=>{
+
+        this.loading.create().then(l=>{
+          l.present();
+
+          this.api.servir({id:id}).subscribe(data=>{
+            l.dismiss();
+
+            this.pedidos = data;
+          })
+        })
+      }
+    },{
+      text: "No"
+    }
+    ]}).then(a=>a.present());
   }
 
 }

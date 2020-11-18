@@ -23,7 +23,7 @@
 	    <div>
 			<h5>Ambientes</h5>
 
-			<div [ngClass]="ambiente == a ? 'type actual' : 'type'" *ngFor="let a of ambientes" (click)="ambiente = a">{{a}}</div>
+			<div [ngClass]="ambiente == a.id ? 'type actual' : 'type'" *ngFor="let a of ambientes" (click)="ambiente = a.id">{{a.title}}</div>
 
 			<br>
 
@@ -35,7 +35,7 @@
 		<div>
 			<h5>Tipo de música</h5>
 
-			<div [ngClass]="musica == m ? 'type actual' : 'type'" *ngFor="let m of tmusica" (click)="musica = m">{{m}}</div>
+			<div [ngClass]="musica == m.id ? 'type actual' : 'type'" *ngFor="let m of tmusica" (click)="musica = m.id">{{m.title}}</div>
 
 			<br>
 
@@ -90,7 +90,7 @@
 				</ion-button>
 		</ion-col>
 		<ion-col size="7">
-			<ion-button class="an-button" (click)="back()">Aplicar</ion-button>
+			<ion-button class="an-button" (click)="filtrar()">Aplicar</ion-button>
 		</ion-col>
 	</ion-row>
 

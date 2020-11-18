@@ -1,0 +1,62 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+		<ion-button class="an-button" (click)="newMenu()" routerDirection="root">Nuevo menú</ion-button>
+
+	</h4>
+
+	<h3>Carta</h3>
+
+	<ion-row style="margin-top: 16px;">
+		<ion-col size="4">
+			<span [ngStyle]="{'background-image': 'url('+(local.avatar ? local.avatar : 'assets/logo.svg')+')'}" class="logo-restaurante"></span>
+		</ion-col>
+		<ion-col size="8">
+			<h2 class="title-tactic">{{local.title}}</h2>
+		</ion-col>
+	</ion-row>
+
+	<br>
+
+	<ion-label style="margin-bottom: 12px; display: block;">Menús disponibles</ion-label>
+
+	<ion-list *ngFor="let m of menus" class="ion-no-padding">
+
+		<ion-item>
+			{{m.title}}
+			<span slot="end"> <ion-button size="small" style="font-size: 10px" (click)="newPlate(m.id)">Nuevo plato</ion-button>
+			<ion-button *ngIf="m.plates.length == 0" size="small" style="font-size: 10px" (click)="deleteMenu(m.id)" color="danger">x</ion-button> </span>
+		</ion-item>
+
+		<ion-list style="--background: #464040" class="ion-no-padding">
+			<ion-item *ngFor="let p of m.plates" class="ion-no-padding" style="--background: #464040; font-size: 12px;">
+				<span>
+					<div class="mini-image" [ngStyle]="{'background-image':'url('+p.avatar+')'}"></div>
+				</span>
+				<ion-label style="padding-left:16px;">
+					{{p.title}} <br>
+
+					<div class="description" style="margin: 4px 0; color: #767070; white-space: normal;" [innerHtml]="p.description"></div>
+
+					<span style="color: #a365b8;">{{p.price}}€</span>
+				</ion-label>
+
+				<span slot="end"> <ion-button size="small" style="font-size: 10px" (click)="deletePlate(p.id)" color="danger">x</ion-button> </span>
+			</ion-item>
+		</ion-list>
+
+	</ion-list>
+
+	<!-- <ion-button class="an-button">Ajustes</ion-button> -->
+	<!-- <ion-button class="an-button" [routerLink]="['/local/perfil/ajustes']">Ajustes</ion-button> -->
+
+</ion-content>

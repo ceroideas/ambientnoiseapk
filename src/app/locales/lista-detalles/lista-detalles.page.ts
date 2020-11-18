@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
+import { ApiService } from '../../services/api.service';
+import { NavparamsService } from '../../services/navparams.service';
 
 @Component({
   selector: 'app-lista-detalles',
@@ -8,35 +10,57 @@ import { NavController } from '@ionic/angular';
 })
 export class ListaDetallesPage implements OnInit {
 
-  name = localStorage.getItem('listName');
+  list;
 
-  guests = [1];
-
-  list = [
-  {name:"Jorge Solano"},
-  {name:"Illya Albarado"},
-  {name:"Cesar Gutierrez"},
-  {name:"Karla Arteta"},
-  {name:"Ibai Llanos"}
+  users = [
+  // {name:"Jorge Solano"},
+  // {name:"Illya Alvarado"},
+  // {name:"Cesar Gutierrez"},
+  // {name:"Karla Arteta"},
+  // {name:"Ibai Llanos"}
   ];
 
   query;
+  timeout;
 
-  constructor(public nav: NavController, public cdr: ChangeDetectorRef) { }
-
-  ngOnInit() {
+  constructor(public nav: NavController, public cdr: ChangeDetectorRef, public api: ApiService, public navparams: NavparamsService, public alertCtrl: AlertController) {
+    this.list = this.navparams.getParam();
   }
 
-  addGuest(i)
-  {
-  	let h = this.guests.findIndex(x=>x==i);
+  ngOnInit() {
+    this.api.getListUsers(this.list.id).subscribe((data:any)=>{
+      this.users = data;
+    })
+  }
 
-  	if (h == -1) {
-  		this.guests.push(i);
-  	}else{
-  		this.guests.splice(h,1);
-  	}
-  	this.cdr.detectChanges();
+  saveRosterUser(guest,i)
+  {
+    this.api.saveRosterUser({list_id:this.list.id,user_id:guest.id}).subscribe(data=>{
+      this.users.splice(i,1,data);
+      let aux = this.users;
+      this.users = [];
+      setTimeout(()=>{
+        this.users = aux;
+      },100)
+    },e => {
+      this.alertCtrl.create({message:"La lista está llena!"}).then(a=>{a.present()});
+    })
+  }
+
+  searchUsers()
+  {
+    clearTimeout(this.timeout);
+
+    this.timeout = setTimeout(()=>{
+      this.api.filterUsers({list_id:this.list.id,_query:this.query}).subscribe((data:any)=>{
+        this.users = data;
+      })
+    },1000)
+  }
+
+  saveUsers()
+  {
+    this.nav.navigateRoot('local/listas');
   }
 
 }

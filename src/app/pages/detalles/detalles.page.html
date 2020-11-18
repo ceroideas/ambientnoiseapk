@@ -9,7 +9,10 @@
 	<app-detalles-tutorial *ngIf="tutorialValue < 14"></app-detalles-tutorial>
 
 	<div *ngIf="tutorialValue >= 14">
-		<div class="ion-padding" style="background-image: url(assets/fondo-restaurante-01.jpg); background-size: cover; background-position: center; height: fit-content; min-height: 100%;">
+		<div class="ion-padding" [ngStyle]="{'background-image': 'url('+local.main+')', 'background-size': 'cover', 'background-position': 'center', 'height': 'fit-content', 'min-height': '100%', 'position': 'relative'}">
+			<div style="background: rgba(0,0,0,.3); position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: 1">
+				
+			</div>
 			
 
 		<h4> <ion-icon (click)="back()" name="chevron-back"></ion-icon>
@@ -20,17 +23,18 @@
 
 		</h4>
 
-		<span [routerLink]="['/tabs/home/tactic']" routerDirection="forward" style="background-image: url(assets/restaurant.jpg)" class="logo-restaurante"></span>
+		<span (click)="canTactic()" [ngStyle]="{'background-image': 'url('+local.avatar+')'}" class="logo-restaurante"
+		[ngClass]="{'tactic':isTactic}"></span>
 
 
 		
 		<div id="title-restaurant">
 			
 			<h2 style="width: calc(100% - 50px); float: left;">
-				Brooklin River Bar (50 m)
+				{{local.title}} (50 m)
 			</h2>
-			<span style="width: 50px; float: right; font-size: 40px; color: #808080; text-align: right; top: 6px; position: relative;">
-				<ion-icon name="heart-outline"></ion-icon>
+			<span style="width: 50px; float: right; font-size: 40px; color: #fff; text-align: right; top: 6px; position: relative;" (click)="addFavorite()">
+				<ion-icon [name]="'heart'+(favorite ? '' : '-outline')"></ion-icon>
 			</span>
 			<div>
 			    <span>
@@ -44,8 +48,8 @@
 			    <ion-icon name="star-outline"></ion-icon>
 		    </div>
 
-		    <p>
-		    	Famosa y exclusiva terraza de Verano ubicada en el cauce histórico del río Guadalquivir justo en plen corazón histórico de la ciudad. Disfruta con nosotrs de las mejores puestas de sol y tardeos de la capital.
+		    <p style="min-height: 100px">
+		    	{{local.description}}
 		    </p>
 
 		</div>
@@ -59,7 +63,7 @@
 	    		<div>
 	    			
 		    		Ocupación ahora: <br>
-		    		<span>80-100%</span>
+		    		<span>{{local.ocupation}}%</span>
 	    		
 	    		</div>
 	    	</div>
@@ -76,25 +80,25 @@
 	    <ion-row>
 	    	
 	    	<ion-col size="6">
-	    		<ion-button class="an-button">
+	    		<ion-button class="an-button" (click)="verReservas()">
 	    			Reservar Mesa
 	    		</ion-button>
 	    	</ion-col>
 
 	    	<ion-col size="6">
-	    		<ion-button class="an-button" [routerLink]="['/tabs/home/lista']">
+	    		<ion-button class="an-button" (click)="verListas()" [routerLink]="['/tabs/home/lista/'+local?.id]">
 	    			Inscribirse en Lista
 	    		</ion-button>
 	    	</ion-col>
 
 	    	<ion-col size="6">
-	    		<ion-button class="an-button">
+	    		<ion-button class="an-button" (click)="misReservas()">
 	    			Reservados
 	    		</ion-button>
 	    	</ion-col>
 
 	    	<ion-col size="6">
-	    		<ion-button class="an-button">
+	    		<ion-button class="an-button" (click)="verGaleria()">
 	    			Galeria de Fotos
 	    		</ion-button>
 	    	</ion-col>
@@ -115,9 +119,9 @@
 
 		</div>
 
-		<div class="bottom-information" style="bottom: -480px;">
+		<div class="bottom-informationD" style="height: 28px;">
 			
-			<div class="handler" (click)="changeBottom()">
+			<div class="handlerD" (click)="changeBottom()">
 				<ion-icon name="chevron-up"></ion-icon>
 			</div>
 			<div class="information-box">
@@ -135,76 +139,18 @@
 					  <ion-card-content>
 					    <!-- Add card content here! -->
 					    <ion-list class="ion-no-padding">
-					    	<ion-item lines="none">
+					    	<ion-item lines="none" *ngFor="let mm of menus; let i = index">
 					    		<label class="no-p-b">
-						    		<span class="menu-type" (click)="collapse(1)">Platos <small>3</small></span>
-						    		<div class="menu-items" id="items-1">
-						    			<div class="menu-item">
-						    				<div>Spaghetti Bolognaise <br> <span>15,00€</span>
-						    				<ion-icon name="add"></ion-icon>
-						    				</div>
-						    			</div>
-						    			<div class="menu-item">
-						    				<div>Sandwish Club <br> <span>17,00€</span>
-						    				<ion-icon name="add"></ion-icon>
-						    				</div>
-						    			</div>
-						    			<div class="menu-item">
-						    				<div>Burguer Málaga <br> <span>12,00€</span>
-						    				<ion-icon name="add"></ion-icon>
-						    				</div>
-						    			</div>
-						    		</div>
-					    		</label>
-					    	</ion-item>
-
-					    	<ion-item lines="none">
-					    		<label class="no-p-b">
-						    		<span class="menu-type" (click)="collapse(2)">Cervezas <small>3</small></span>
-						    		<div class="menu-items" id="items-2">
-						    			<div class="menu-item">
-						    				<div>Pilsener <br> <span>5,00€</span>
-						    				<ion-icon name="add"></ion-icon>
-						    				</div>
-						    			</div>
-						    			<div class="menu-item">
-						    				<div>Artesanal <br> <span>6,00€</span>
-						    				<ion-icon name="add"></ion-icon>
-						    				</div>
-						    			</div>
-						    			<div class="menu-item">
-						    				<div>Light <br> <span>4,00€</span>
-						    				<ion-icon name="add"></ion-icon>
-						    				</div>
-						    			</div>
-						    		</div>
-					    		</label>
-					    	</ion-item>
-
-					    	<ion-item lines="none">
-					    		<label class="no-p-b">
-						    		<span class="menu-type">Combinados <small>0</small></span>
-					    		</label>
-					    	</ion-item>
-
-					    	<ion-item lines="none">
-					    		<label class="no-p-b">
-						    		<span class="menu-type">Combinados sin alcohol <small>0</small></span>
-					    		</label>
-					    	</ion-item>
-
-					    	<ion-item lines="none">
-					    		<label class="no-p-b">
-						    		<span class="menu-type" (click)="collapse(3)">Refrescos <small>2</small></span>
-						    		<div class="menu-items" id="items-3">
-						    			<div class="menu-item">
-						    				<div>Coca Cola <br> <span>2,00€</span>
-						    				<ion-icon name="add"></ion-icon>
-						    				</div>
-						    			</div>
-						    			<div class="menu-item">
-						    				<div>Pepsi Cola <br> <span>2,00€</span>
-						    				<ion-icon name="add"></ion-icon>
+						    		<span class="menu-type" (click)="collapse(i)">{{mm.title}} <small>{{mm.plates.length}}</small></span>
+						    		<div class="menu-items" [id]="'items-'+i">
+						    			<div class="menu-item" *ngFor="let pl of mm.plates">
+						    				<div class="loquesea">
+							    				<div (click)="openDetails(pl)" class="mini-image" [ngStyle]="{'background-image':'url('+pl.avatar+')'}">
+							    				</div>
+							    				<div> <span (click)="openDetails(pl)">{{pl.title}} <br> <span>{{pl.price}}€</span></span>
+							    					<ion-icon name="add" (click)="addToCart(pl)"></ion-icon>
+							    				</div>
+						    					<div style="clear: both;"></div>
 						    				</div>
 						    			</div>
 						    		</div>
@@ -224,28 +170,32 @@
 					    	<ion-item>
 					    		<label>
 						    		Compra Mínima
-						    		<span>15,00€</span>
+						    		<span>{{local.min_buy}}€</span>
 					    		</label>
 					    	</ion-item>
 
 					    	<ion-item>
 					    		<label>
 						    		Tiempo Medio
-						    		<span>45 min</span>
+						    		<span>{{local.min_time}} min</span>
 					    		</label>
 					    	</ion-item>
 
 					    	<ion-item>
 					    		<label>
 						    		Capacidad
-						    		<span>30 PAX</span>
+						    		<span>{{local.capacity}} PAX</span>
 					    		</label>
 					    	</ion-item>
 
 					    	<ion-item lines="none">
 					    		<label>
 						    		Horario
-						    		<span>10:00 - 23:00</span>
+
+						    		<div *ngFor="let sc of schedule">
+						    			<div>{{dias[sc.day]}}: {{ sc.hour_from+':'+sc.minutes_from }} - {{sc.hour_to+':'+sc.minutes_to}}</div>
+						    		</div>
+						    		<!-- <span>10:00 - 23:00</span> -->
 					    		</label>
 					    	</ion-item>
 					    </ion-list>
