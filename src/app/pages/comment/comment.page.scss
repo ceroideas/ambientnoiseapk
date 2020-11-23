@@ -1,5 +1,5 @@
 ion-content {
-	--background: url(../../assets/fondo-02.png) 0 0/100% 100% no-repeat;
+	--background: url(../../../assets/fondo-02.png) 0 0/100% 100% no-repeat;
 	--background-size: cover;
 	--background-position: center;
 
@@ -35,7 +35,7 @@ h4 {
 }
 .central-block 
 {
-	top: 40px;
+	top: 20px;
 	position: relative;
 	ion-input {
 		--padding-top: 16px !important;
@@ -97,4 +97,12 @@ ion-item {
 	width: 15%;
 	margin-left: 20px;
 	img {height: 40px;}
+}
+
+.star-radio {
+	display: none;
+	& + label {
+		font-size: 40px;
+		color: gold;
+	}
 }

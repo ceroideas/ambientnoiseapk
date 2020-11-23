@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ContactPageRoutingModule } from './contact-routing.module';
+import { CommentPageRoutingModule } from './comment-routing.module';
 
-import { ContactPage } from './contact.page';
+import { CommentPage } from './comment.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { ContactPage } from './contact.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    ContactPageRoutingModule
+    CommentPageRoutingModule
   ],
-  declarations: [ContactPage]
+  declarations: [CommentPage]
 })
-export class ContactPageModule {}
+export class CommentPageModule {}

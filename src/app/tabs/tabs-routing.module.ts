@@ -55,6 +55,9 @@ const routes: Routes = [
           },{
             path: 'galeria/:id',
             loadChildren: ()=> import('../pages/gallery/gallery.module').then(m=>m.GalleryPageModule)
+          },{
+            path: 'comment/:id',
+            loadChildren: ()=> import('../pages/comment/comment.module').then(m=>m.CommentPageModule)
           }
         ]
       },{
@@ -140,6 +143,14 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: ()=> import('../politica/politica.module').then(m=>m.PoliticaPageModule)
+          }
+        ]
+      },{
+        path: 'contacto',
+        children: [
+          {
+            path: '',
+            loadChildren: ()=> import('../contact/contact.module').then(m=>m.ContactPageModule)
           }
         ]
       },

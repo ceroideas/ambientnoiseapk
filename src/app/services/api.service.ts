@@ -325,4 +325,22 @@ export class ApiService {
     return this.http.post(this.url+'/getCloser',data);
   }
 
+
+  comment(data)
+  {
+    return this.http.post(this.url+'/comment',data);
+  }
+  
+  myComment(id,local_id)
+  {
+    return this.http.get(this.url+'/myComment/'+id+'/'+local_id);
+  }
+
+  //
+
+  contact(data)
+  {
+    return this.http.post(this.url+'/contact',data);
+  }
+
 }

@@ -124,7 +124,7 @@ export class AppComponent implements OnInit {
       },
       {
         title: 'CONTACTO',
-        url: '/contacto',
+        url: '/tabs/contacto',
         icon: 'chatbox'
       },
       /*{
@@ -178,7 +178,7 @@ export class AppComponent implements OnInit {
       },
       {
         title: 'CONTACTO',
-        url: '/contacto',
+        url: '/tabs/contacto',
         icon: 'chatbox'
       },
       /*{

@@ -151,102 +151,10 @@ const routes: Routes = [
     path: 'qr-scanner',
     loadChildren: () => import('./locales/qr-scanner/qr-scanner.module').then( m => m.QrScannerPageModule)
   },
-  // {
-  //   path: 'locales',
-  //   loadChildren: () => import('./locales/locales.module').then( m => m.LocalesPageModule)
-  // },
-  // {
-  //   path: 'home-tutorial',
-  //   loadChildren: () => import('./tutoriales/home-tutorial/home-tutorial.module').then( m => m.HomeTutorialPageModule)
-  // },
-  // {
-  //   path: 'nuevo',
-  //   loadChildren: () => import('./locales/nuevo/nuevo.module').then( m => m.NuevoPageModule)
-  // },
-  // {
-  //   path: 'l-home',
-  //   loadChildren: () => import('./locales/l-home/l-home.module').then( m => m.LHomePageModule)
-  // },
-  // {
-  //   path: 'l-ofertas',
-  //   loadChildren: () => import('./locales/l-ofertas/l-ofertas.module').then( m => m.LOfertasPageModule)
-  // },
-  // {
-  //   path: 'l-perfil',
-  //   loadChildren: () => import('./locales/l-perfil/l-perfil.module').then( m => m.LPerfilPageModule)
-  // },
-  // {
-  //   path: 'home',
-  //   loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
-  // },
-  // {
-  //   path: 'perfil',
-  //   loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
-  // },
-  // {
-  //   path: 'ofertas',
-  //   loadChildren: () => import('./pages/ofertas/ofertas.module').then( m => m.OfertasPageModule)
-  // },
-  // {
-  //   path: 'locales',
-  //   loadChildren: () => import('./locales/locales/locales.module').then( m => m.LocalesPageModule)
-  // },
-  // {
-  //   path: 'pedidos',
-  //   loadChildren: () => import('./locales/pedidos/pedidos.module').then( m => m.PedidosPageModule)
-  // },
-  // {
-  //   path: 'faqs',
-  //   loadChildren: () => import('./faqs/faqs.module').then( m => m.FaqsPageModule)
-  // },
-  // {
-  //   path: 'politica',
-  //   loadChildren: () => import('./politica/politica.module').then( m => m.PoliticaPageModule)
-  // },
-  // {
-  //   path: 'map',
-  //   loadChildren: () => import('./pages/map/map.module').then( m => m.MapPageModule)
-  // },
-  // {
-  //   path: 'filtros',
-  //   loadChildren: () => import('./pages/filtros/filtros.module').then( m => m.FiltrosPageModule)
-  // },
-  // {
-  //   path: 'detalles',
-  //   loadChildren: () => import('./pages/detalles/detalles.module').then( m => m.DetallesPageModule)
-  // },
-  // {
-  //   path: 'ajustes',
-  //   loadChildren: () => import('./pages/ajustes/ajustes.module').then( m => m.AjustesPageModule)
-  // },
-  // {
-  //   path: 'tactic',
-  //   loadChildren: () => import('./pages/tactic/tactic.module').then( m => m.TacticPageModule)
-  // },
-  // {
-  //   path: 'home',
-  //   loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
-  // },
-  // {
-  //   path: 'perfil',
-  //   loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
-  // },
-  // {
-  //   path: 'ofertas',
-  //   loadChildren: () => import('./pages/ofertas/ofertas.module').then( m => m.OfertasPageModule)
-  // },
-  // {
-  //   path: 'favoritos',
-  //   loadChildren: () => import('./pages/favoritos/favoritos.module').then( m => m.FavoritosPageModule)
-  // },
-  // {
-  //   path: 'chat',
-  //   loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
-  // },
-  // {
-  //   path: 'cesta',
-  //   loadChildren: () => import('./pages/cesta/cesta.module').then( m => m.CestaPageModule)
-  // }
+  {
+    path: 'comment',
+    loadChildren: () => import('./pages/comment/comment.module').then( m => m.CommentPageModule)
+  },
 ];
 
 @NgModule({

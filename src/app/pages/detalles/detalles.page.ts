@@ -5,6 +5,7 @@ import { EventsService } from '../../services/events.service';
 import { NavparamsService } from '../../services/navparams.service';
 import { ApiService } from '../../services/api.service';
 import { VerPage } from './ver/ver.page';
+import { CommentPage } from '../comment/comment.page';
 
 @Component({
   selector: 'app-detalles',
@@ -41,6 +42,8 @@ export class DetallesPage implements OnInit {
 
   isTactic = false;
 
+  comments:any = [];
+
   constructor(public nav: NavController, public events: EventsService, private route: ActivatedRoute, public api: ApiService, public alertCtrl: AlertController,
     public toast: ToastController, public modalController: ModalController, public navparams: NavparamsService) {
 
@@ -56,6 +59,7 @@ export class DetallesPage implements OnInit {
       this.api.getMenusAndH(this.local.id).subscribe(data=>{
         this.menus = data[0];
         this.schedule = data[1];
+        this.comments = data[2];
 
         console.log(data);
       })
@@ -215,6 +219,11 @@ export class DetallesPage implements OnInit {
     }
     });
     return await modal.present();
+  }
+
+  openComment()
+  {
+    this.nav.navigateForward('/tabs/home/comment/'+this.local.id)
   }
 
   verReservas()

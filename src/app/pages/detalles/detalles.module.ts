@@ -10,12 +10,15 @@ import { DetallesPage } from './detalles.page';
 
 import { ComponentModule } from '../../component.module';
 
+import { PipesModule } from '../../pipes/pipes.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     ComponentModule,
+    PipesModule,
     DetallesPageRoutingModule
   ],
   declarations: [DetallesPage]

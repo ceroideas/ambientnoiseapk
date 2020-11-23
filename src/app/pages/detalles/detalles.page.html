@@ -204,62 +204,32 @@
 					</ion-card>
 				</div>
 				<div style="margin-bottom: 51px;" *ngIf="type == 'Comentarios'">
+
+					<ion-button class="an-button" (click)="openComment()" style="height: 36px;margin-bottom: 12px;">
+		    			Escribe una opinión
+		    		</ion-button>
+
+
 					<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
 						
 					  <ion-card-content>
 					    <!-- Add card content here! -->
 					    <ion-list class="ion-no-padding">
-					    	<ion-item>
+					    	<ion-item *ngFor="let comment of comments">
 					    		<label class="comment">
-						    		Illya Alvarado
-						    		<p>
-						    			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi iusto recusandae obcaecati neque enim omnis ipsum quos quis unde dolore necessitatibus, quas numquam fugit, amet perspiciatis! Iusto in quos autem.
+						    		{{comment.user.name+' '+comment.user.last_name}} <br> <small>{{comment.modified_at | expired:'hour'}}</small>
+						    		<p [innerHtml]="comment.comment">
 						    		</p>
-						    		<ion-icon name="star"></ion-icon>
-								    <ion-icon name="star"></ion-icon>
-								    <ion-icon name="star"></ion-icon>
-								    <ion-icon name="star-half"></ion-icon>
-								    <ion-icon name="star-outline"></ion-icon>
+						    		<ion-icon [name]="comment.stars > 0 ? 'star' : 'star-outline'"></ion-icon>
+								    <ion-icon [name]="comment.stars > 1 ? 'star' : 'star-outline'"></ion-icon>
+								    <ion-icon [name]="comment.stars > 2 ? 'star' : 'star-outline'"></ion-icon>
+								    <ion-icon [name]="comment.stars > 3 ? 'star' : 'star-outline'"></ion-icon>
+								    <ion-icon [name]="comment.stars > 4 ? 'star' : 'star-outline'"></ion-icon>
+								    <!-- <ion-icon name="star-half"></ion-icon> -->
+								    <!-- <ion-icon name="star-outline"></ion-icon> -->
 					    		</label>
 					    	</ion-item>
 
-					    	<ion-item>
-					    		<label class="comment">
-						    		Jorge Solano
-						    		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id obcaecati ad facilis molestias impedit porro, neque reiciendis itaque optio, ullam, deleniti est natus eum quod repellendus consequuntur quidem? Quam, laborum.</p>
-						    		<ion-icon name="star"></ion-icon>
-								    <ion-icon name="star"></ion-icon>
-								    <ion-icon name="star-outline"></ion-icon>
-								    <ion-icon name="star-outline"></ion-icon>
-								    <ion-icon name="star-outline"></ion-icon>
-					    		</label>
-					    	</ion-item>
-
-					    	<ion-item>
-					    		<label class="comment">
-						    		Ricardo Vaz
-						    		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ut dolorum soluta quam eveniet dicta perferendis, voluptatum et deleniti repellat, adipisci voluptatibus nihil ipsum aperiam, cupiditate saepe explicabo itaque porro?</p>
-						    		
-						    		<ion-icon name="star"></ion-icon>
-								    <ion-icon name="star"></ion-icon>
-								    <ion-icon name="star"></ion-icon>
-								    <ion-icon name="star-half"></ion-icon>
-								    <ion-icon name="star-outline"></ion-icon>
-					    		</label>
-					    	</ion-item>
-
-					    	<ion-item lines="none">
-					    		<label class="comment">
-						    		Jose María Sanz
-						    		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero doloribus dolores soluta aliquid nobis illo laboriosam incidunt tempore odio repudiandae, natus esse, ea sequi ex ipsa expedita neque minus cumque!</p>
-
-						    		<ion-icon name="star"></ion-icon>
-								    <ion-icon name="star"></ion-icon>
-								    <ion-icon name="star"></ion-icon>
-								    <ion-icon name="star"></ion-icon>
-								    <ion-icon name="star-outline"></ion-icon>
-					    		</label>
-					    	</ion-item>
 					    </ion-list>
 					  </ion-card-content>
 						

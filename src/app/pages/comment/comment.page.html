@@ -1,0 +1,103 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.back()" routerDirection="back" name="chevron-back"></ion-icon> </h4>
+
+	<h3>Tu opinión</h3>
+
+	<div class="central-block">
+
+		<form class="form" [formGroup]="validations_form" (ngSubmit)="saveComment(validations_form.value)">
+		
+			<ion-list>
+
+				
+				<ion-item class="ion-no-padding">
+					<ion-label position="stacked">Puntuación</ion-label>
+
+					<br>
+
+					<ion-row style="width: 100%;">
+						<ion-col>
+							<input formControlName="stars" type="radio" id="stars-1" value="1" class="star-radio">
+							
+							<label for="stars-1" class="star-bg">
+								<ion-icon name="star" *ngIf="validations_form.value.stars > 0"></ion-icon>
+								<ion-icon name="star-outline" *ngIf="validations_form.value.stars <= 0"></ion-icon>
+							</label>	
+						</ion-col>
+
+						<ion-col>
+							<input formControlName="stars" type="radio" id="stars-2" value="2" class="star-radio">
+							
+							<label for="stars-2" class="star-bg">
+								<ion-icon name="star" *ngIf="validations_form.value.stars > 1"></ion-icon>
+								<ion-icon name="star-outline" *ngIf="validations_form.value.stars <= 1"></ion-icon>
+							</label>
+						</ion-col>
+
+						<ion-col>
+							<input formControlName="stars" type="radio" id="stars-3" value="3" class="star-radio">
+							
+							<label for="stars-3" class="star-bg">
+								<ion-icon name="star" *ngIf="validations_form.value.stars > 2"></ion-icon>
+								<ion-icon name="star-outline" *ngIf="validations_form.value.stars <= 2"></ion-icon>
+							</label>
+						</ion-col>
+
+						<ion-col>
+							<input formControlName="stars" type="radio" id="stars-4" value="4" class="star-radio">
+							
+							<label for="stars-4" class="star-bg">
+								<ion-icon name="star" *ngIf="validations_form.value.stars > 3"></ion-icon>
+								<ion-icon name="star-outline" *ngIf="validations_form.value.stars <= 3"></ion-icon>
+							</label>
+						</ion-col>
+
+						<ion-col>
+							<input formControlName="stars" type="radio" id="stars-5" value="5" class="star-radio">
+							
+							<label for="stars-5" class="star-bg">
+								<ion-icon name="star" *ngIf="validations_form.value.stars > 4"></ion-icon>
+								<ion-icon name="star-outline" *ngIf="validations_form.value.stars <= 4"></ion-icon>
+							</label>
+						</ion-col>
+					</ion-row>
+
+				</ion-item>
+				
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.stars">
+			            <div class="error-message" *ngIf="validations_form.get('stars').hasError(validation.type) && (validations_form.get('stars').dirty || validations_form.get('stars').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+				<ion-item class="ion-no-padding">
+					<ion-label position="floating">Comentario</ion-label>
+					<!-- <ion-input  type="text" ></ion-input> -->
+					<ion-textarea formControlName="comment" rows="6"></ion-textarea>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.comment">
+			            <div class="error-message" *ngIf="validations_form.get('comment').hasError(validation.type) && (validations_form.get('comment').dirty || validations_form.get('comment').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+			</ion-list>
+
+			<ion-button type="submit" [disabled]="!validations_form.valid" class="an-button">Guardar opinión</ion-button>
+
+		</form>
+
+	</div>
+
+</ion-content>
