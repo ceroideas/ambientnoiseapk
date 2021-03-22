@@ -24,8 +24,8 @@ export class LOfertasPage implements OnInit {
   ngOnInit() {
   	this.getMyOffers();
 
-  	this.events.destroy('reloadLocals');
-  	this.events.subscribe('reloadLocals',()=>{
+  	this.events.destroy('reloadOffers');
+  	this.events.subscribe('reloadOffers',()=>{
       this.page = 1;
   		this.getMyOffers();
   	});
@@ -38,7 +38,8 @@ export class LOfertasPage implements OnInit {
   getMyOffers(event = null)
   {
   	this.api.getMyOffers(this.user.id,this.page).subscribe((data:any)=>{
-  		this.offers = this.offers.concat(data.data);
+  		// this.offers = this.offers.concat(data.data);
+      this.offers = data.data;
   	  
       if (event) {
         event.target.complete();

@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: RoperoPage
+  },
+  {
+    path: 'pagar-r/:id/:quantity',
+    loadChildren: () => import('./pagar-r/pagar-r.module').then( m => m.PagarRPageModule)
   }
 ];
 

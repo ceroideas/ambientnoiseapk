@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -89,17 +89,15 @@
 
 				<ion-item *ngIf="validations_form1.value.type == 2" class="ion-no-padding">
 					
-					<ion-label>Seleccione la cantidad</ion-label>
+					<ion-label>(Ejemplo 2 por 1)</ion-label>
 
-					<ion-select formControlName="quantity">
-						<ion-select-option>2</ion-select-option>
-						<ion-select-option>3</ion-select-option>
-						<ion-select-option>4</ion-select-option>
-						<ion-select-option>5</ion-select-option>
-						<ion-select-option>6</ion-select-option>
-						<ion-select-option>7</ion-select-option>
-						<ion-select-option>8</ion-select-option>
-					</ion-select>
+					<ion-input formControlName="quantity" style="text-align: center;"></ion-input>
+					Por
+					<ion-input formControlName="quantityOff" style="text-align: center;"></ion-input>
+
+					<!-- <ion-select formControlName="quantity">
+						<ion-select-option></ion-select-option>
+					</ion-select> -->
 
 				</ion-item>
 

@@ -13,7 +13,7 @@
 
 	<h3>Condiciones de uso</h3>
 
-	<div>
+	<div style="min-height: 65vh">
 		
 		<ion-card class="ion-no-margin card-disclaimer" style="border-radius: 18px;">
 		
@@ -24,20 +24,20 @@
 		  <ion-card-content>
 		    <!-- Add card content here! -->
 		    <ion-list class="ion-no-padding">
-		    	<ion-item>
+		    	<ion-item *ngFor="let d of disclaimers; let i = index">
 		    		<label>
-			    		Ejemplo de condiciones de uso 01
-			    		<input type="checkbox" id="check1" [(ngModel)]="options[0]" style="display: none;">
+			    		{{d.text}}
+			    		<input type="checkbox" [id]="'check'+i" [(ngModel)]="options[i]" (click)="accept()" style="display: none;">
 		    		</label>
 			    		<span slot="end">
 			    			<label for="check1">
-				    			<ion-icon *ngIf="!options[0]" name="square"></ion-icon>
-				    			<ion-icon *ngIf="options[0]" name="checkbox"></ion-icon>
+				    			<ion-icon *ngIf="!options[i]" name="square"></ion-icon>
+				    			<ion-icon *ngIf="options[i]" name="checkbox"></ion-icon>
 			    			</label>
 			    		</span>
 		    	</ion-item>
 
-		    	<ion-item>
+		    	<!-- <ion-item>
 		    		<label>
 			    		Ejemplo de condiciones de uso 02
 			    		<input type="checkbox" id="check2" [(ngModel)]="options[1]" style="display: none;">
@@ -74,7 +74,7 @@
 				    			<ion-icon *ngIf="options[3]" name="checkbox"></ion-icon>
 				    		</label>
 			    		</span>
-		    	</ion-item>
+		    	</ion-item> -->
 		    </ion-list>
 		  </ion-card-content>
 		
@@ -88,7 +88,7 @@
 
 
 	<div id="bottom-part">
-		<ion-button class="an-button" [disabled]="!options[0] || !options[1] || !options[2] || !options[3]" [routerLink]="['/login']">Siguiente</ion-button>
+		<ion-button class="an-button" [disabled]="disabled" [routerLink]="['/login']">Siguiente</ion-button>
 	</div>
 
 

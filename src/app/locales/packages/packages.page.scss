@@ -1,0 +1,57 @@
+ion-content {
+	--background: url(../../../assets/fondo-02.png) 0 0/100% 100% no-repeat;
+}
+
+h3 {
+	color: #767070;
+	font-weight: 700;
+	font-size: 32px;
+	margin-top: 35px;
+	
+}
+
+h4 {
+	color: #fff;
+	margin-top: 30px;
+	margin-bottom: 0px;
+	font-size: 24px;
+}
+
+.package-div {
+	margin: auto;
+	position: relative;
+	width: 95%;
+	background-color: #373634;
+	padding: 20px 10px;
+	border-radius: 18px;
+	text-align: center;
+	h6 {
+		margin-top: 0;
+		color: #fff;
+		font-size: 18px;
+		height: 42px;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	h4 {
+		margin-top: 8px;
+		margin-bottom: 8px;
+		color: #a365b8;
+		font-size: 24px;
+	}
+	small {
+		display: block;
+		margin-bottom: 8px;
+		font-size: 11px;
+		color: #757575;
+
+	}
+}
+
+.disclaimer {
+	text-align: center;
+	margin: 20px;
+}

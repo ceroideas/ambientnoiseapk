@@ -44,8 +44,17 @@ export class DetallesPage implements OnInit {
 
   comments:any = [];
 
+  fake = localStorage.getItem('fakeUser');
+
   constructor(public nav: NavController, public events: EventsService, private route: ActivatedRoute, public api: ApiService, public alertCtrl: AlertController,
     public toast: ToastController, public modalController: ModalController, public navparams: NavparamsService) {
+
+    this.events.destroy('realOcupation');
+    this.events.subscribe('realOcupation',()=>{
+      this.api.realOcupation(this.local.id).subscribe(data=>{
+        this.local.real_ocupation = data;
+      })
+    });
 
     if (localStorage.getItem('carrito')) {
       this.carrito = JSON.parse(localStorage.getItem('carrito'));
@@ -126,7 +135,7 @@ export class DetallesPage implements OnInit {
 
   back()
   {
-    this.nav.back();
+    this.nav.pop();
   }
 
   collapse(e)
@@ -152,6 +161,7 @@ export class DetallesPage implements OnInit {
 
   addFavorite()
   {
+    if (this.fake) {return this.fakeAlert();}
     this.api.addRemoveFavorite({establishment_id:this.local.id, user_id: this.user.id}).subscribe((data:any)=>{
       if (data.action == 'deleted') {
         this.favorite = false;
@@ -167,16 +177,34 @@ export class DetallesPage implements OnInit {
   {
 
     let a = 0;
+    let b = 0;
     let establishment = this.carrito.find(x=>x.establishment_id == this.local.id);
+
+    console.log(establishment);
 
     if (establishment) {
       if (establishment.products.find(x=>x.plate_id == pl.id)) {
         a++;
       }
+
+      if (establishment.offer) {
+        if (establishment.offer.type == 2) {
+          return this.alertCtrl.create({message: "El carrito posee una oferta de un único producto"}).then(a=>{a.present(); setTimeout(()=>{a.dismiss()},3000);})
+        }
+      }
     }
 
     if (a > 0) {
-      this.alertCtrl.create({message: "Ya en el carrito"}).then(a=>a.present())
+      this.alertCtrl.create({message: "Ya en el carrito", buttons: [
+      {
+        text:"Seguir Comprando"
+      },{
+        text:"Ir al carrito",
+        handler: ()=>{
+          this.nav.navigateForward('tabs/perfil/carrito');
+        }
+      }
+      ]}).then(a=>a.present())
     }else{
       this.alertCtrl.create({header: "Añadir al carrito", message: "Quieres añadir "+pl.title+" al carrito?", buttons: [
       {
@@ -200,7 +228,18 @@ export class DetallesPage implements OnInit {
             this.events.publish('reloadCarrito');
           })
 
-          this.toast.create({message: pl.title+" añadido al carrito!", duration: 3000}).then(t=>t.present());
+          this.alertCtrl.create({message:pl.title+" añadido al carrito!", buttons: [
+          {
+            text:"Seguir Comprando"
+          },{
+            text:"Ir al carrito",
+            handler: ()=>{
+              this.nav.navigateForward('tabs/perfil/carrito');
+            }
+          }
+          ]}).then(a=>a.present());
+
+          // this.toast.create({message: , duration: 3000}).then(t=>t.present());
         }
       },{
         text: "Cancelar"
@@ -223,24 +262,29 @@ export class DetallesPage implements OnInit {
 
   openComment()
   {
+    if (this.fake) {return this.fakeAlert();}
     this.nav.navigateForward('/tabs/home/comment/'+this.local.id)
   }
 
   verReservas()
   {
+    if (this.fake) {return this.fakeAlert();}
     this.navparams.setParam(this.local);
     this.nav.navigateForward('tabs/home/reservar/'+this.local.id);
   }
 
   misReservas()
   {
+    if (this.fake) {return this.fakeAlert();}
     this.navparams.setParam(this.local);
     this.nav.navigateForward('tabs/home/mis-reservas/'+this.local.id);
   }
 
   verListas()
   {
+    if (this.fake) {return this.fakeAlert();}
     this.navparams.setParam(this.local);
+    this.nav.navigateForward('tabs/home/lista/'+this.local.id);
   }
 
   verGaleria()
@@ -253,9 +297,17 @@ export class DetallesPage implements OnInit {
 
   canTactic()
   {
-    if (this.isTactic) {
+    if (this.fake) {return this.fakeAlert();}
+    this.api.addRecord({user_id:this.user.id,establishment_id:this.local.id,action:1}).subscribe(data=>{
+      console.log(data);
+    })
+    // if (this.isTactic) {
       this.nav.navigateForward('/tabs/home/tactic');
-    }
+    // }
+  }
+
+  fakeAlert() {
+    this.alertCtrl.create({message:"Función solo válida para usuarios registrados!"}).then(a=>{a.present(); setTimeout(()=>{a.dismiss()},2000);});
   }
 
 }

@@ -57,9 +57,9 @@ export class CommentPage implements OnInit {
 			console.log('saved');
 			l.dismiss();
 
-			this.nav.back();
+			this.nav.pop();
 
-  			this.alertCtrl.create({message:"Se ha publicado tu comentario!", buttons: [{text:'Ok!'}]}).then(a=>a.present());
+  			this.alertCtrl.create({message:"Se ha publicado tu comentario!"}).then(a=>{a.present(); setTimeout(()=>{a.dismiss()},3000);});
   		})
   	})
   }

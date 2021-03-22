@@ -80,7 +80,7 @@ export class NuevaSalaPage implements OnInit {
     const options: CameraOptions = {
       quality: 100,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true
@@ -132,7 +132,7 @@ export class NuevaSalaPage implements OnInit {
         l.present();
         this.api.saveRoom(this.validations_form1.value).subscribe(data=>{
           l.dismiss();
-          this.nav.back();
+          this.nav.pop();
           this.events.publish('reloadRooms');
 
           let msg = "La nueva sala ha sido creada";
@@ -141,12 +141,12 @@ export class NuevaSalaPage implements OnInit {
           	msg = "La sala ha sido actualizada";
           }
           this.alert.create({message:msg}).then(a=>{
-            a.present();
+            a.present(); setTimeout(()=>{a.dismiss()},2000);
           })
         },e=>{
           l.dismiss();
           this.alert.create({message:"Ha ocurrido un error al intentar publicar la sala"}).then(a=>{
-            a.present();
+            a.present(); setTimeout(()=>{a.dismiss()},2000);
           })
         })
     })

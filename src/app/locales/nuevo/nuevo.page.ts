@@ -43,13 +43,27 @@ export class NuevoPage implements OnInit {
 
   address;
   province;
+  municipio;
+
+  // https://i.ytimg.com/vi/AXdKckpQf_E/maxresdefault.jpg
 
   logo = "";
+  marker = "";
   main = "";
 
   user = JSON.parse(localStorage.getItem('ANuser'));
 
   edit = null;
+
+  weekDays = [
+    "domingo",
+    "lunes",
+    "martes",
+    "miércoles",
+    "jueves",
+    "viernes",
+    "sábado"
+  ];
 
   constructor(public nav: NavController, public alert: AlertController, public loading: LoadingController, public api: ApiService, private formBuilder: FormBuilder,
     private camera: Camera, private transfer: FileTransfer, public toast: ToastController, public events: EventsService, public navparams: NavparamsService) { }
@@ -66,6 +80,9 @@ export class NuevoPage implements OnInit {
       'name': [
         { type: 'required', message: 'El campo nombre es requerido' },
       ],
+      'place_id': [
+        { type: 'required', message: 'El campo "place id" es requerido' },
+      ],
       'address': [
         { type: 'required', message: 'El campo dirección es requerido' },
       ],
@@ -78,9 +95,13 @@ export class NuevoPage implements OnInit {
       name: new FormControl(null, Validators.compose([
         Validators.required
       ])),
+      place_id: new FormControl(null, Validators.compose([
+        Validators.required
+      ])),
       address: new FormControl(null, Validators.compose([
         Validators.required
       ])),
+      rrpp: new FormControl(null),
       description: new FormControl(null, Validators.compose([
         Validators.required
       ])),
@@ -137,11 +158,14 @@ export class NuevoPage implements OnInit {
       this.edit = data.id;
 
       this.address = data.address;
-      this.province = data.locality.name;
+      this.province = data.locality ? data.locality.name : '';
+      this.municipio = data.city;
       
       this.validations_form1.patchValue({
         'name':data.title,
         'address':data.address,
+        'place_id':data.place_id,
+        'rrpp':data.rrpp,
         'description':data.description,
       })
 
@@ -164,6 +188,7 @@ export class NuevoPage implements OnInit {
       })
 
       this.logo = data.avatar;
+      this.marker = data.marker;
       this.main = data.main;
       
       let days = [];
@@ -192,6 +217,11 @@ export class NuevoPage implements OnInit {
     this.initAutocomplete();
   }
 
+  prevStep()
+  {
+    this.step-=1;
+  }
+
   nextStep(h = null)
   {
     if (h) {
@@ -205,7 +235,7 @@ export class NuevoPage implements OnInit {
         let to = this.days[i].to;
 
         if (!day || !from || !to) {
-          return this.alert.create({message:"Complete todos los campos en el horario"}).then(a=>{a.present()});
+          return this.alert.create({message:"Complete todos los campos en el horario"}).then(a=>{a.present(), setTimeout(()=>{a.dismiss()},2000); });
         }
       }
     }
@@ -223,15 +253,16 @@ export class NuevoPage implements OnInit {
           let to_hour;
           let to_min;
 
-          if (this.edit) {
-            from_hour = this.days[i].from;
-            from_min = this.days[i].from;
+          if (moment(this.days[i].from).format() == 'Invalid date') {
+            console.log(this.days);
 
-            to_hour = this.days[i].to;
-            to_min = this.days[i].to;
+            from_hour = moment("2020-01-01 "+this.days[i].from).format('HH');
+            from_min = moment("2020-01-01 "+this.days[i].from).format('mm');
+
+            to_hour = moment("2020-01-01 "+this.days[i].to).format('HH');
+            to_min = moment("2020-01-01 "+this.days[i].to).format('mm');
 
           }else{
-
 
             from_hour = moment(this.days[i].from).format('HH');
             from_min = moment(this.days[i].from).format('mm');
@@ -247,8 +278,11 @@ export class NuevoPage implements OnInit {
           edit: this.edit,
           user_id:this.user.id,
           name:this.validations_form1.value.name,
+          rrpp:this.validations_form1.value.rrpp,
+          place_id:this.validations_form1.value.place_id,
           address:this.address,
           province:this.province,
+          municipio:this.municipio,
           description:this.validations_form1.value.description,
           ambients:this.validations_form2.value.ambients,
           musics:this.validations_form2.value.musics,
@@ -256,6 +290,7 @@ export class NuevoPage implements OnInit {
           average:this.validations_form2.value.average,
           capacity:this.validations_form2.value.capacity,
           logo:this.logo,
+          marker:this.marker,
           main:this.main,
           days: newDays,
           lat: this.latlng.lat,
@@ -266,15 +301,21 @@ export class NuevoPage implements OnInit {
         l.present();
         this.api.saveStablishment(data).subscribe(data=>{
           l.dismiss();
-          this.nav.back();
+          this.nav.pop();
           this.events.publish('reloadLocals');
-          this.alert.create({message:"El nuevo local ha sido creado, debe esperar a que un administrador lo active"}).then(a=>{
-            a.present();
-          })
+          if (this.edit) {
+            this.alert.create({message:"El local ha sido modificado. Espere a que un administrador lo reactive."}).then(a=>{
+              a.present(); setTimeout(()=>{a.dismiss()},2000);
+            })
+          }else{
+            this.alert.create({message:"El nuevo local ha sido creado. Debe esperar a que un administrador lo active."}).then(a=>{
+              a.present(); setTimeout(()=>{a.dismiss()},2000);
+            })
+          }
         },e=>{
           l.dismiss();
           this.alert.create({message:"Ha ocurrido un error al intentar publicar el local"}).then(a=>{
-            a.present();
+            a.present(); setTimeout(()=>{a.dismiss()},2000);
           })
         })
       })
@@ -291,7 +332,7 @@ export class NuevoPage implements OnInit {
     var input = document.getElementById('searchTextField');
     var countryRestrict = {'country': ['es','it']};
     var options = {
-      types: ['geocode']
+      types: ['geocode','establishment']
     };
 
     this.autocomplete = new google.maps.places.Autocomplete(input, options);
@@ -302,6 +343,45 @@ export class NuevoPage implements OnInit {
     let fillInAddress = ()=> {
       // Get the place details from the autocomplete object.
       var arr = this.autocomplete.getPlace();
+      console.log(arr);
+
+      this.validations_form1.patchValue({
+        'name': (arr['name'] ? arr['name'] : this.validations_form1.value.name),
+        'place_id':arr.place_id
+      })
+
+      if (arr['opening_hours']) {
+
+        this.days = [];
+
+        for( let i in arr['opening_hours']['weekday_text'] ) {
+          let d = arr['opening_hours']['weekday_text'][i];
+
+          let day = d.split(': ');
+
+          if (day[1] == "Abierto las 24 horas") {
+            this.days.push({
+                day: this.weekDays.findIndex(x=>x==day[0]).toString(),
+                from: '00:00',
+                to: '23:59'});
+          }else{
+
+          if (day[1] != 'Cerrado') {
+            let hours = day[1].split('–');
+
+              this.days.push({
+                day: this.weekDays.findIndex(x=>x==day[0]).toString(),
+                from: hours[0].split(', ')[0],
+                to: hours[1].split(', ')[0]});
+            }
+          }
+        }
+
+        console.log(this.days);
+      }
+
+      // this.validations_form1.patchValue({
+      // })
       // (document.getElementById('searchTextField') as HTMLInputElement).value = "";
 
       this.latlng = {lat:arr.geometry.location.lat(),lng:arr.geometry.location.lng()};
@@ -310,7 +390,9 @@ export class NuevoPage implements OnInit {
           if (status === 'OK') {
             if (results[0]) {
               // $('.local span').text(results[0].formatted_address).attr('title', results[0].formatted_address);
+              // if (!this.address) {
               this.address = results[0].formatted_address;
+              // }
               // (document.getElementById('searchTextField') as HTMLInputElement).value = results[0].formatted_address;
 
               // console.log(this.validations_form1.value.address);
@@ -343,7 +425,7 @@ export class NuevoPage implements OnInit {
     const options: CameraOptions = {
       quality: 100,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true
@@ -395,10 +477,19 @@ export class NuevoPage implements OnInit {
         if (addressType) {
             if (addressType == 'locality') {
               // console.log(arr[i].address_components[0].short_name);
+              this.municipio = arr[i].address_components[0].long_name;
               this.province = arr[i].address_components[1].long_name;
 
+              console.log(this.municipio);
               console.log(this.province);
-              // $('#postal_code_here').text(arr[i].address_components[0].short_name);
+            }else if(addressType == 'administrative_area_level_2'){
+              this.province = arr[i].address_components[0].long_name;
+
+              console.log(this.province);
+            }else if(addressType == 'administrative_area_level_4'){
+              this.municipio = arr[i].address_components[0].long_name;
+
+              console.log(this.municipio);
             }
             // if (addressType == 'country') {
             //   // console.log(arr[i].address_components[0].short_name);

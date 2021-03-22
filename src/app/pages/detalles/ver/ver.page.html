@@ -37,6 +37,6 @@
 
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="!fake">
 	<ion-button (click)="addToCart()" class="an-button" routerDirection="root">Agregar al carrito</ion-button>
 </ion-footer>

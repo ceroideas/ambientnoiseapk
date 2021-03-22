@@ -19,7 +19,7 @@ export class SocketService {
   startConnection()
   {
   	this.socket.on('conectado',data=>{
-      console.log(data.msg);
+      // console.log(data.msg);
     })
 
     this.socket.on('newMessage',data=>{

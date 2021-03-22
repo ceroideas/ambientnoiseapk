@@ -1,9 +1,25 @@
-<ion-header>
+<!-- <ion-header hidden>
   <ion-toolbar>
-    <ion-title>politica</ion-title>
+    <ion-title>login</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content>
+<ion-content class="ion-padding">
+
+	<h4>
+		<!-- <ion-icon [routerLink]="['/login']" routerDirection="back" name="chevron-back"></ion-icon> -->
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+	</h4>
+
+	<h3>Política de Privacidad</h3>
+
+	<div class="central-block">
+
+		<div [innerHtml]="page?.content">
+			
+		</div>
+
+	</div>
 
 </ion-content>

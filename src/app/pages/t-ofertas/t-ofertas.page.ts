@@ -10,6 +10,7 @@ import { ApiService } from '../../services/api.service';
 export class TOfertasPage implements OnInit {
 
   local = JSON.parse(localStorage.getItem('actualLocal'));
+  user = JSON.parse(localStorage.getItem('ANuser'));
 
   offers:any;
 

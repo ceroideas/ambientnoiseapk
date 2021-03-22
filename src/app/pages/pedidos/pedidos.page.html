@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -42,6 +42,9 @@
 			    							<!-- <ion-item class="item ion-no-padding">
 			    								Cerveza x1
 			    							</ion-item> -->
+			    							<ion-item class="total ion-no-padding" *ngIf="e.offer">
+			    								<small>Has aplicado la oferta: {{e.offer.title}}</small>
+			    							</ion-item>
 			    							<ion-item class="total ion-no-padding">
 			    								<b>Total</b>
 

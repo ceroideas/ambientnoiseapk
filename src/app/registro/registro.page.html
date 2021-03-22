@@ -48,6 +48,27 @@
 			          </ng-container>
 			        </div>
 
+			    <ion-item class="ion-no-padding">
+					<ion-label position="floating">FECHA DE NACIMIENTO</ion-label>
+					<!-- <ion-input  type="text" ></ion-input> -->
+					<ion-datetime formControlName="birthday" displayFormat="DD MMM, YYYY" 
+					monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic"
+					cancelText="Cancelar"
+					doneText="Ok"
+					></ion-datetime>
+
+					<span slot="end" *ngIf="validation_messages.birthday.length == 0">
+						<ion-icon name="checkmark"></ion-icon>
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.birthday">
+			            <div class="error-message" *ngIf="validations_form.get('birthday').hasError(validation.type) && (validations_form.get('birthday').dirty || validations_form.get('birthday').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
 				<ion-item class="ion-no-padding">
 					<ion-label position="floating">PASSWORD</ion-label>
 					<ion-input formControlName="password" [type]="show_password_0" ></ion-input>
@@ -113,22 +134,6 @@
 			<ion-button type="submit" [disabled]="!validations_form.valid" class="an-button">Sign Up</ion-button>
 
 		</form>
-
-		<div>
-			
-
-		<ion-button class="an-button apple">
-			<img src="assets/apple.svg" alt="">
-		</ion-button>
-
-		<ion-button class="an-button fb">
-			<img src="assets/facebook.svg" alt="">
-		</ion-button>
-
-		</div>
-
-
-		<div style="clear: both;"></div>
 
 
 		<br>

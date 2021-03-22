@@ -96,7 +96,7 @@ export class NuevoEventoPage implements OnInit {
     const options: CameraOptions = {
       quality: 100,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true
@@ -155,15 +155,21 @@ export class NuevoEventoPage implements OnInit {
         l.present();
         this.api.saveEvent(this.validations_form1.value).subscribe(data=>{
           l.dismiss();
-          this.nav.back();
+          this.nav.pop();
           this.events.publish('reloadEvents');
-          this.alert.create({message:"El nuevo evento ha sido creado, debe esperar a que un administrador lo active"}).then(a=>{
+          this.alert.create({message:"El nuevo evento ha sido creado."}).then(a=>{
             a.present();
+            setTimeout(()=>{
+              a.dismiss();
+            },3000)
           })
         },e=>{
           l.dismiss();
           this.alert.create({message:"Ha ocurrido un error al intentar publicar el evento"}).then(a=>{
             a.present();
+            setTimeout(()=>{
+              a.dismiss();
+            },3000)
           })
         })
     })

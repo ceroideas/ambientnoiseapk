@@ -1,15 +1,18 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NavController, IonSlides } from '@ionic/angular';
+import { NavController, IonSlides, LoadingController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ApiService } from '../../services/api.service';
 import { EventsService } from '../../services/events.service';
 import { NavparamsService } from '../../services/navparams.service';
+
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 declare var google;
 @Component({
   selector: 'app-map',
   templateUrl: './map.page.html',
   styleUrls: ['./map.page.scss'],
+  providers: [InAppBrowser]
 })
 export class MapPage implements OnInit {
 
@@ -51,7 +54,7 @@ export class MapPage implements OnInit {
 
   province:any;
 
-  public user;
+  public user = JSON.parse(localStorage.getItem('ANuser'));
   public locations: any[] = [];
 
   buscar;
@@ -62,7 +65,12 @@ export class MapPage implements OnInit {
   lat
   lon
 
-  constructor(private geolocation: Geolocation, public api: ApiService, public events: EventsService, public nav: NavController, public navparams: NavparamsService) {
+  markers:any = [];
+
+  infoWindow = new google.maps.InfoWindow;
+
+  constructor(private geolocation: Geolocation, public api: ApiService, private iab: InAppBrowser, public loading: LoadingController,
+    public events: EventsService, public nav: NavController, public navparams: NavparamsService) {
   }
 
   ngOnInit() {
@@ -92,13 +100,13 @@ export class MapPage implements OnInit {
     this.page = data.page;
 
     this.establishments = data.establishments;
-    this.province = data.establishments;
 
     this.ambiente = data.ambiente;
     this.musica = data.musica;
     this.ocupacion = data.ocupacion;
     this.range = data.range;
     this.province = data.province;
+    this.city = data.city;
 
     console.log(data);
   }
@@ -119,6 +127,8 @@ export class MapPage implements OnInit {
     }
   	// let h = (document.getElementsByClassName('information-box1')[0] as HTMLElement).offsetHeight;
   	(document.getElementsByClassName('bottom-information1')[0] as HTMLElement).style.height = "28px";
+
+    this.initAutocomplete();
   }
 
   changeBottom(e)
@@ -153,11 +163,31 @@ export class MapPage implements OnInit {
     },100)
   }
 
-  cargarMas()
+  close()
   {
+    // this.ambientes = null;
+    // this.tmusica = null;
+    this.page = 1;
+    this.buscar = null;
+    this.province = null;
+    this.city = null;
+
+    this.ambiente = null;
+    // this.establishments = null;
+    this.musica = null;
+    this.ocupacion = null;
+    this.range = {lower:20,upper:80};
+
+    this.filterEstablishment(true);
+  }
+
+  /*cargarMas()
+  {
+    this.changeSlide();
+
     this.slides.length().then(i=>{
       this.page+=1;
-      this.api.getEstablishments({province:this.province,ambient:this.ambiente,music:this.musica,lat:this.lat, lon:this.lon},this.page).subscribe((request:any)=>{
+      this.api.getEstablishments({id:this.user.id,province:this.province,city:this.city,ambient:this.ambiente,music:this.musica,lat:this.lat, lon:this.lon},this.page).subscribe((request:any)=>{
         this.establishments = this.establishments.concat(request.data);
 
         setTimeout(()=>{
@@ -170,9 +200,61 @@ export class MapPage implements OnInit {
         if (!request.data.length) {
 
         }
+
+        //
+
+        for (let i in request.data) {
+          let e = request.data[i];
+          let _marker = new google.maps.Marker({
+            map: this.map,
+            animation: google.maps.Animation.DROP,
+            icon: {url: (e.marker ? e.marker :'assets/locales.svg'), scaledSize: new google.maps.Size(60, 60)},
+            position: new google.maps.LatLng(e.lt, e.ln)
+          });
+         
+          google.maps.event.addListener(_marker, 'click', () => {
+            this.infoWindow.setContent(this.getHTMLContent(e,i))
+            this.infoWindow.open(this.map, _marker);
+            setTimeout(()=>{
+              document.querySelectorAll('.button-infowindow').forEach((v)=>{
+                console.log(v);
+                v.removeEventListener('click',(element)=>{
+                  let ds = (element.target as HTMLElement).dataset;
+                  localStorage.setItem('actualLocal',JSON.stringify(this.establishments[i]));
+                  this.nav.navigateForward('/tabs/home/detalles/'+ds.local_id);
+                });
+                v.addEventListener('click', (element)=>{
+                  let ds = (element.target as HTMLElement).dataset;
+                  localStorage.setItem('actualLocal',JSON.stringify(this.establishments[i]));
+                  this.nav.navigateForward('/tabs/home/detalles/'+ds.local_id);
+                })
+              })
+
+              document.querySelectorAll('.button-goTo').forEach((v)=>{
+                console.log(v);
+                v.removeEventListener('click',(element)=>{
+                  let ds = (element.target as HTMLElement).dataset;
+                  const browser = this.iab.create(
+                  'https://www.google.com/maps/dir/'+localStorage.getItem('lat')+','+localStorage.getItem('lon')+'/'+ds.lat+','+ds.lon+'/'
+                  );
+                });
+                v.addEventListener('click', (element)=>{
+                  let ds = (element.target as HTMLElement).dataset;
+                  const browser = this.iab.create(
+                  'https://www.google.com/maps/dir/'+localStorage.getItem('lat')+','+localStorage.getItem('lon')+'/'+ds.lat+','+ds.lon+'/'
+                  );
+                })
+              })
+            },500);
+          });
+
+          this.markers.push(_marker);
+        }
+
+        //
       });
     })
-  }
+  }*/
 
   cerrar()
   {
@@ -187,6 +269,8 @@ export class MapPage implements OnInit {
   }
 
   loadMap(){
+
+    console.log('loadMap');
  
     let latLng = new google.maps.LatLng(localStorage.getItem('lat'), localStorage.getItem('lon'));
 
@@ -396,7 +480,64 @@ export class MapPage implements OnInit {
       position: this.map.getCenter()
     });
 
-    console.log(marker);
+    // console.log(marker);
+
+    for (let i in this.establishments) {
+      let e = this.establishments[i];
+      let _marker = new google.maps.Marker({
+        map: this.map,
+        animation: google.maps.Animation.DROP,
+        icon: {url: (e.marker ? e.marker :'assets/locales.svg'), scaledSize: new google.maps.Size(60, 60)},
+        position: new google.maps.LatLng(e.lt, e.ln)
+      });
+     
+      google.maps.event.addListener(_marker, 'click', () => {
+        this.infoWindow.setContent(this.getHTMLContent(e,i));
+        this.infoWindow.open(this.map, _marker);
+        setTimeout(()=>{
+          document.querySelectorAll('.button-infowindow').forEach((v)=>{
+            console.log(v);
+            v.removeEventListener('click',(element)=>{
+              let ds = (element.target as HTMLElement).dataset;
+              localStorage.setItem('actualLocal',JSON.stringify(this.establishments[i]));
+              this.nav.navigateForward('/tabs/home/detalles/'+ds.local_id);
+            });
+            v.addEventListener('click', (element)=>{
+              let ds = (element.target as HTMLElement).dataset;
+              localStorage.setItem('actualLocal',JSON.stringify(this.establishments[i]));
+              this.nav.navigateForward('/tabs/home/detalles/'+ds.local_id);
+            })
+          })
+
+          document.querySelectorAll('.button-goTo').forEach((v)=>{
+            console.log(v);
+            v.removeEventListener('click',(element)=>{
+              let ds = (element.target as HTMLElement).dataset;
+              const browser = this.iab.create(
+              'https://www.google.com/maps/dir/'+localStorage.getItem('lat')+','+localStorage.getItem('lon')+'/'+ds.lat+','+ds.lon+'/'
+              );
+            });
+            v.addEventListener('click', (element)=>{
+              let ds = (element.target as HTMLElement).dataset;
+              const browser = this.iab.create(
+              'https://www.google.com/maps/dir/'+localStorage.getItem('lat')+','+localStorage.getItem('lon')+'/'+ds.lat+','+ds.lon+'/'
+              );
+            })
+          })
+        },500);
+      });
+
+      this.markers.push(_marker);
+
+    }
+
+    this.slides.getActiveIndex().then(i=>{
+      let a = this.establishments[i];
+
+      this.map.setCenter({lat: parseFloat(a.lt),lng: parseFloat(a.ln)});
+    })
+
+    console.log(this.markers);
    
     // let content = JSON.parse(localStorage.getItem('user'))['name'];
    
@@ -425,11 +566,136 @@ export class MapPage implements OnInit {
     // }
   }
 
+  reload()
+  {
+    this.loading.create().then(l=>{
+      l.present();
+      this.geolocation.getCurrentPosition().then((resp) => {
+        l.dismiss();
+        localStorage.setItem('lat',resp.coords.latitude.toString());
+        localStorage.setItem('lon',resp.coords.longitude.toString());
+
+        this.lat = resp.coords.latitude.toString()
+        this.lon = resp.coords.longitude.toString()
+        this.loadMap();
+      }).catch((error) => {
+        l.dismiss();
+        console.log('Error getting location', error);
+      });
+    })
+  }
+
+  changeSlide()
+  {
+    this.slides.getActiveIndex().then(i=>{
+      console.log(i);
+      if (this.map) {
+        let a = this.establishments[i];
+
+        this.map.setCenter({lat: parseFloat(a.lt),lng: parseFloat(a.ln)});
+      }
+    })
+  }
+
   filterEstablishment(close = null)
   {
+    this.page = 1;
     console.log('filter')
-    this.api.getEstablishments({province:this.province,ambient:this.ambiente,music:this.musica},this.page).subscribe(data=>{
+    this.api.getEstablishments({id:this.user.id,province:this.province,city:this.city,ambient:this.ambiente,music:this.musica,lat:this.lat, lon:this.lon},this.page).subscribe((request:any)=>{
+      
+      let data = request.data;
+
+      if (request._) {
+
+          for(let i = 1; i < data.length; i++)
+          {
+              for(let j = 0; j < data.length-i; j++)
+              {
+                  if (request.type == 'desc') {
+                      
+                      if(data[j][request.order] < data[j+1][request.order])
+                      {
+                          let k = data[j+1];
+
+                          data[j+1] = data[j];
+
+                          data[j] = k;
+                      }
+
+                  }else{
+
+                      if(data[j][request.order] > data[j+1][request.order])
+                      {
+                          let k = data[j+1];
+
+                          data[j+1] = data[j];
+
+                          data[j] = k;
+                      }
+                  }
+              }
+          }
+      }
+
       this.establishments = data;
+
+      for(let i in this.markers) {
+        this.markers[i].setMap(null);
+      }
+
+      for (let i in this.establishments) {
+        let e = this.establishments[i];
+        let _marker = new google.maps.Marker({
+          map: this.map,
+          animation: google.maps.Animation.DROP,
+          icon: {url: (e.marker ? e.marker :'assets/locales.svg'), scaledSize: new google.maps.Size(60, 60)},
+          position: new google.maps.LatLng(e.lt, e.ln)
+        });
+       
+        google.maps.event.addListener(_marker, 'click', () => {
+          this.infoWindow.setContent(this.getHTMLContent(e,i));
+          this.infoWindow.open(this.map, _marker);
+          setTimeout(()=>{
+            document.querySelectorAll('.button-infowindow').forEach((v)=>{
+              console.log(v);
+              v.removeEventListener('click',(element)=>{
+                let ds = (element.target as HTMLElement).dataset;
+                localStorage.setItem('actualLocal',JSON.stringify(this.establishments[i]));
+                this.nav.navigateForward('/tabs/home/detalles/'+ds.local_id);
+              });
+              v.addEventListener('click', (element)=>{
+                let ds = (element.target as HTMLElement).dataset;
+                localStorage.setItem('actualLocal',JSON.stringify(this.establishments[i]));
+                this.nav.navigateForward('/tabs/home/detalles/'+ds.local_id);
+              })
+            })
+
+            document.querySelectorAll('.button-goTo').forEach((v)=>{
+              console.log(v);
+              v.removeEventListener('click',(element)=>{
+                let ds = (element.target as HTMLElement).dataset;
+                const browser = this.iab.create(
+                'https://www.google.com/maps/dir/'+localStorage.getItem('lat')+','+localStorage.getItem('lon')+'/'+ds.lat+','+ds.lon+'/'
+                );
+              });
+              v.addEventListener('click', (element)=>{
+                let ds = (element.target as HTMLElement).dataset;
+                const browser = this.iab.create(
+                'https://www.google.com/maps/dir/'+localStorage.getItem('lat')+','+localStorage.getItem('lon')+'/'+ds.lat+','+ds.lon+'/'
+                );
+              })
+            })
+          },500);
+        });
+
+        this.markers.push(_marker);
+      }
+
+      this.slides.getActiveIndex().then(i=>{
+        let a = this.establishments[i];
+
+        this.map.setCenter({lat: parseFloat(a.lt),lng: parseFloat(a.ln)});
+      })
 
       if (close) {
         this.changeBottom(null);
@@ -467,9 +733,127 @@ export class MapPage implements OnInit {
 
   selectProvince(id,name)
   {
+    (document.querySelector('#searchM') as HTMLInputElement).blur();
+
     this.openDialog = false;
     this.buscar = name;
     this.province = id;
+
+    this.filterEstablishment(true);
+  }
+
+  getHTMLContent(e,i)
+  {
+    let html = `<div style="color: #000; text-align: center;">
+    <h5 style="margin-top: 0"> ${e.title} </h5>
+    <span style="background-image: url(${e.avatar})" class="logo-restaurante-map tactic"></span>
+    <br>
+    <button class="button-infowindow" data-local_id="${e.id}" data-index="${i}">Acceder</button></div>
+    <br>
+    <button class="button-goTo" data-lat="${e.lt}" data-lon="${e.ln}" data-index="${i}">Cómo llegar</button></div>`;
+    return html;
+  }
+
+
+  goTo(e,a)
+  {
+    e.stopPropagation();
+    e.preventDefault();
+    this.map.setCenter({lat: parseFloat(a.lt),lng: parseFloat(a.ln)});
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /**/
+
+  /**/
+
+  autocomplete
+  latlng:any = {lat:null,lng:null};
+
+  initAutocomplete()
+  {
+    var geocoder = new google.maps.Geocoder;
+    
+    var input = document.getElementById('searchM');
+    var countryRestrict = {'country': ['es','it']};
+    var options = {
+      types: ['(cities)']
+    };
+
+    this.autocomplete = new google.maps.places.Autocomplete(input, options);
+
+    this.autocomplete.setComponentRestrictions(
+          {'country': ['es', 'it']});
+
+    let fillInAddress = ()=> {
+      // Get the place details from the autocomplete object.
+      var arr = this.autocomplete.getPlace();
+      console.log(arr);
+
+      this.latlng = {lat:arr.geometry.location.lat(),lng:arr.geometry.location.lng()};
+
+      geocoder.geocode({'location': this.latlng}, (results, status) => {
+          if (status === 'OK') {
+            if (results[0]) {
+              
+              // this.address = results[0].formatted_address;
+              
+              this.getAddress(results);
+            } else {
+              window.alert('No results found');
+            }
+          } else {
+            window.alert('Geocoder failed due to: ' + status);
+          }
+        });
+
+    }
+
+    this.autocomplete.addListener('place_changed', fillInAddress);
+  }
+
+  city:string;
+
+  getAddress(arr)
+  {
+    console.log(arr);
+    for (var i = 0; i < arr.length; i++) {
+        var addressType = arr[i].types[0];
+        if (addressType) {
+            if (addressType == 'locality') {
+              // console.log(arr[i].address_components[0].short_name);
+              this.city = arr[i].address_components[0].long_name;
+              this.province = arr[i].address_components[1].long_name;
+
+              console.log(this.city);
+              console.log(this.province);
+            }else if(addressType == 'administrative_area_level_2'){
+              this.province = arr[i].address_components[0].long_name;
+
+              console.log(this.province);
+            }else if(addressType == 'administrative_area_level_4'){
+              this.city = arr[i].address_components[0].long_name;
+
+              console.log(this.city);
+            }
+        }
+    }
 
     this.filterEstablishment(true);
   }

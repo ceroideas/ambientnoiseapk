@@ -19,6 +19,11 @@ export class RoperoPage implements OnInit {
   constructor(public nav: NavController, public api: ApiService, public alertCtrl: AlertController, public loading: LoadingController, public events: EventsService) { }
 
   ngOnInit() {
+
+    this.events.destroy('reloadCloset');
+    this.events.subscribe('reloadCloset',(data)=>{
+      this.closet = data;
+    });
     this.api.getCloset({id:this.local.id,user_id:this.user.id}).subscribe((data:any)=>{
       console.log(data);
       if (data) {
@@ -46,18 +51,21 @@ export class RoperoPage implements OnInit {
       {
         text:"Pagar",
         handler:()=>{
-          this.loading.create().then(l=>{
-            l.present();
-            this.api.payCloset({user_id:this.user.id, local_id:this.local.id,quantity:this.quantity}).subscribe(data=>{
 
-              this.closet = data;
+          this.nav.navigateForward('tabs/home/ropero/pagar-r/'+this.local.id+'/'+this.quantity);
 
-              this.alertCtrl.create({message:"Gracias por su compra! Se ha generado un código QR que deberá mostrar cuando entregue sus prendas."}).then(a=>a.present());
+          // this.loading.create().then(l=>{
+          //   l.present();
+          //   this.api.payCloset({user_id:this.user.id, local_id:this.local.id,quantity:this.quantity}).subscribe(data=>{
 
-              l.dismiss();
+          //     this.closet = data;
 
-            })
-          })
+          //     this.alertCtrl.create({message:"Gracias por su compra! Se ha generado un código QR que deberá mostrar cuando entregue sus prendas."}).then(a=>a.present());
+
+          //     l.dismiss();
+
+          //   })
+          // })
         }
       },{
         text: "Cancelar"

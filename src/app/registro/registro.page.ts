@@ -5,6 +5,8 @@ import { ApiService } from '../services/api.service';
 
 import { ConfirmedValidator } from './confirmed';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.page.html',
@@ -31,6 +33,10 @@ export class RegistroPage implements OnInit {
         { type: 'required', message: 'El campo de apellido es requerido' },
         { type: 'minlength', message: 'La apellido debe tener al menos 4 caracteres' }
       ],
+      'birthday': [
+        { type: 'required', message: 'El campo de fecha de nacimiento es requerido' },
+        { type: 'minlength', message: 'La apellido debe tener al menos 4 caracteres' }
+      ],
       'password': [
         { type: 'required', message: 'El campo contraseña es requerido' },
         { type: 'minlength', message: 'La contraseña debe tener al menos 8 caracteres' },
@@ -55,6 +61,9 @@ export class RegistroPage implements OnInit {
         Validators.minLength(4),
         Validators.required,
       ])),
+      birthday: new FormControl(null, Validators.compose([
+        Validators.required,
+      ])),
       password: new FormControl(null, Validators.compose([
         Validators.minLength(8),
         Validators.pattern('\^.*(?=.{8,})((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$'),
@@ -65,7 +74,7 @@ export class RegistroPage implements OnInit {
       ])),
       email: new FormControl(null, Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
       ])),
       business: new FormControl(null)
     },{
@@ -84,6 +93,18 @@ export class RegistroPage implements OnInit {
 
   registerUser(values)
   {
+
+    let age = (Math.ceil(moment().diff(moment(this.validations_form.value.birthday),'days')/365.5));
+
+    if (age < 18) {
+      this.alertCtrl.create({message:"Debes tener más de 18 años de edad para utilizar Ambient Noise!",buttons: [{
+        text:"Ok"
+      }]}).then(a=>{
+        a.present();
+      });
+
+      return false;
+    }
     
     this.loadingCtrl.create().then(a=>{
 
@@ -104,13 +125,14 @@ export class RegistroPage implements OnInit {
 
         this.alertCtrl.create({message:msg}).then(a=>{
           a.present();
+          setTimeout(()=>{a.dismiss()},3000)
         })
 
       },err=>{
         console.log(err);
         var arr = Object.keys(err.error.errors).map(function(k) { return err.error.errors[k] });
         this.errorMessage = arr[0][0];
-        this.alertCtrl.create({message:this.errorMessage}).then(al=>{al.present()});
+        this.alertCtrl.create({message:this.errorMessage}).then(al=>{al.present(); setTimeout(()=>{a.dismiss()},3000)});
         a.dismiss();
       })
 

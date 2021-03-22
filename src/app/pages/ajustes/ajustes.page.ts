@@ -11,6 +11,8 @@ import { EventsService } from '../../services/events.service';
 
 import { ConfirmedValidator } from '../../registro/confirmed';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-ajustes',
   templateUrl: './ajustes.page.html',
@@ -24,12 +26,36 @@ export class AjustesPage implements OnInit {
 
   errorMessage:any;
 
+  categories:any;
+  music:any;
+
   user = JSON.parse(localStorage.getItem('ANuser'));
+
+  preferences = this.user.preferences;
+
+  ocupation = this.user.preferences ? this.user.preferences.ocupation : { lower: 0, upper: 100};
 
   constructor(public nav: NavController, public alert: AlertController, public loading: LoadingController, public api: ApiService, private formBuilder: FormBuilder,
     private camera: Camera, private transfer: FileTransfer, public toast: ToastController, public events: EventsService) { }
 
   ngOnInit() {
+
+    this.api.getAll().subscribe((data:any)=>{
+      this.categories = data.ambients;
+      this.music = data.music;
+
+      // for (let i in this.ambients) {
+      //   this.ambientes.push({id:this.ambients[i].id, title:this.ambients[i].title});
+      // }
+      // for (let i in this.music) {
+      //   this.tmusica.push({id:this.music[i].id, title:this.music[i].title});
+      // }
+
+      console.log(data);
+      
+    })
+
+
   	this.validation_messages = {
       'name': [
         { type: 'required', message: 'El campo de nombre es requerido' },
@@ -37,6 +63,10 @@ export class AjustesPage implements OnInit {
       ],
       'last_name': [
         { type: 'required', message: 'El campo de apellido es requerido' },
+        { type: 'minlength', message: 'La apellido debe tener al menos 4 caracteres' }
+      ],
+      'birthday': [
+        { type: 'required', message: 'El campo de fecha de nacimiento es requerido' },
         { type: 'minlength', message: 'La apellido debe tener al menos 4 caracteres' }
       ],
       'password': [
@@ -63,6 +93,9 @@ export class AjustesPage implements OnInit {
         Validators.minLength(4),
         Validators.required,
       ])),
+      birthday: new FormControl(this.user.birthday, Validators.compose([
+        Validators.required,
+      ])),
       password: new FormControl(null, Validators.compose([
         Validators.minLength(8),
         Validators.pattern('\^.*(?=.{8,})((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$'),
@@ -79,8 +112,9 @@ export class AjustesPage implements OnInit {
       ])),
       email: new FormControl(this.user.email, Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ]))
+        Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+      ])),
+      preferences: new FormControl(null),
     },{
       validator: ConfirmedValidator('password', 'repeat_password')
     });
@@ -88,10 +122,11 @@ export class AjustesPage implements OnInit {
 
   loadImage()
   {
+    console.log('seleccionar imagen')
     const options: CameraOptions = {
       quality: 100,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true
@@ -141,9 +176,25 @@ export class AjustesPage implements OnInit {
 
   updateUser()
   {
+    let age = (Math.ceil(moment().diff(moment(this.validations_form.value.birthday),'days')/365.5));
+
+    if (age < 18) {
+      this.alert.create({message:"Debes tener más de 18 años de edad para utilizar Ambient Noise!",buttons: [{
+        text:"Ok"
+      }]}).then(a=>{
+        a.present();
+      });
+
+      return false;
+    }
+
   	this.loading.create().then(a=>{
 
       a.present();
+
+      this.validations_form.patchValue({
+        'preferences':this.preferences
+      })
 
       this.api.updateUser(this.validations_form.value).subscribe((data:any)=>{
 
@@ -151,7 +202,7 @@ export class AjustesPage implements OnInit {
 
         localStorage.setItem('ANuser', JSON.stringify(data));
 
-        this.nav.back();
+        this.nav.pop();
 
         let msg = 'Usuario actualizado satisfactoriamente';
 
@@ -171,5 +222,31 @@ export class AjustesPage implements OnInit {
 
     })
   }
+
+  addAmbiente(id)
+  {
+    let i = this.preferences.categories.findIndex(x=>x==id);
+    if (i == -1) {
+      this.preferences.categories.push(id);
+    }else{
+      this.preferences.categories.splice(i,1);
+    }
+  }
+
+  addMusica(id)
+  {
+    let i = this.preferences.musics.findIndex(x=>x==id);
+    if (i == -1) {
+      this.preferences.musics.push(id);
+    }else{
+      this.preferences.musics.splice(i,1);
+    }
+  }
+
+  updateOcupation()
+  {
+    this.preferences.ocupation = this.ocupation;
+  }
+
 
 }

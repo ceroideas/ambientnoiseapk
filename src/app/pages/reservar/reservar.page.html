@@ -2,7 +2,7 @@
 <ion-content class="ion-padding">
 
 	<h4>
-		<ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+		<ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -23,13 +23,13 @@
 
 	<div *ngFor="let room of rooms">
 
-		<div *ngIf="room?.reserves?.length > 0">
+		<div *ngIf="(room?.reserves | expired:'filter_reserve')?.length > 0">
 		
 			<label style="display: block; margin-bottom: 8px" for="">Reservas {{room.title}}</label>
 			
 			<ion-row style="margin-bottom: 12px;">
 				<ion-col size="12" class="all-rooms">
-					<div class="rooms" [ngClass]="{'only': reserves?.length == 1}" *ngFor="let r of room?.reserves">
+					<div class="rooms" [ngClass]="{'only': (room?.reserves | expired:'filter_reserve')?.length == 1}" *ngFor="let r of (room?.reserves | expired:'filter_reserve')">
 						<ion-row>
 							<ion-col size="4">
 								<div class="rest-pic" [ngStyle]="{'background-image': 'url('+room.avatar+')'}">

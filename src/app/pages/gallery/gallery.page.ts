@@ -22,15 +22,19 @@ export class GalleryPage implements OnInit {
   ];
   user = JSON.parse(localStorage.getItem('ANuser'));
   local;
-  self = true;
+  self = false;
   local_id;
   data;
 
   constructor(public action: ActionSheetController, public loading: LoadingController, public alert: AlertController, public nav: NavController, public api: ApiService, public navparams: NavparamsService,
     private camera: Camera, private transfer: FileTransfer, public toast: ToastController, public events: EventsService, public modal: ModalController, public route: ActivatedRoute) {
+    
     if (this.route.snapshot.params.id) {
-      this.self = false;
-      this.user = this.navparams.getParam();
+      this.self = true;
+      if (this.navparams.getParam()) {
+        this.self = false;
+        this.user = this.navparams.getParam();
+      }
     }else{
       this.data = this.navparams.getParam();
       if (this.data && this.data.type && this.data.type == 'local' ) {
@@ -42,11 +46,15 @@ export class GalleryPage implements OnInit {
   }
 
   ngOnInit() {
+    this.loadGallery();
+  }
+  loadGallery()
+  {
     if (this.data && this.data.type && this.data.type == 'local' ) {
-    	this.api.getLocalGallery(this.local_id).subscribe((data:any)=>{
-    		this.local = data[0];
+      this.api.getLocalGallery(this.local_id).subscribe((data:any)=>{
+        this.local = data[0];
         this.images = data[1];
-    	})
+      })
     }else{
       this.api.getGallery(this.user.id).subscribe((data:any)=>{
         this.images = data;
@@ -74,7 +82,7 @@ export class GalleryPage implements OnInit {
     const options: CameraOptions = {
       quality: 100,
       sourceType: type,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true
@@ -116,7 +124,9 @@ export class GalleryPage implements OnInit {
     fileTransfer.upload(uri, this.api.url+'/uploadToGallery', options)
      .then((data) => {
 
-  		this.images = JSON.parse(data['response'])[0]
+      this.loadGallery();
+
+  		// this.images = JSON.parse(data['response'])[0]
 
      }, (err) => {
        // error
@@ -144,7 +154,9 @@ export class GalleryPage implements OnInit {
     fileTransfer.upload(uri, this.api.url+'/uploadToLocalGallery', options)
      .then((data) => {
 
-      this.images = JSON.parse(data['response'])[0]
+       this.loadGallery();
+
+      // this.images = JSON.parse(data['response'])[0]
 
      }, (err) => {
        // error

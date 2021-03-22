@@ -11,6 +11,8 @@
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
+		<ion-icon style="margin-left:8px;" [routerLink]="['/qr-scanner']" slot="icon-only" name="qr-code-outline"></ion-icon>
+
 	</h4>
 
 	<h3>Perfil Business</h3>
@@ -41,7 +43,7 @@
 	    		</label>
 	    	</ion-item>
 
-	    	<ion-item class="ion-no-padding">
+	    	<ion-item class="ion-no-padding" [routerLink]="['/local/perfil/membership']">
 	    		<label>
 		    		Mi membresía
 	    		</label>
@@ -53,13 +55,13 @@
 	    		</label>
 	    	</ion-item>
 
-	    	<ion-item class="ion-no-padding">
+	    	<ion-item class="ion-no-padding" [routerLink]="['/local/ofertas']">
 	    		<label>
 		    		Promociones
 	    		</label>
 	    	</ion-item>
 
-	    	<ion-item class="ion-no-padding">
+	    	<ion-item class="ion-no-padding" (click)="openReservas()">
 	    		<label>
 		    		Reservados
 	    		</label>

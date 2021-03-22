@@ -6,10 +6,13 @@ import { CartTotalPipe } from './cart-total.pipe';
 import { PedidosPipe } from './pedidos.pipe';
 import { SecurePipe } from './secure.pipe';
 import { PercentPipe } from './percent.pipe';
+import { StarPipe } from './star.pipe';
+import { PreferencesPipe } from './preferences.pipe';
+import { DistancePipe } from './distance.pipe';
 
 @NgModule({
-	declarations: [SearchPipe, GuestsPipe, ExpiredPipe, CartTotalPipe, PedidosPipe, SecurePipe, PercentPipe],
+	declarations: [SearchPipe, GuestsPipe, ExpiredPipe, CartTotalPipe, PedidosPipe, SecurePipe, PercentPipe, StarPipe, PreferencesPipe, DistancePipe],
 	imports: [],
-	exports: [SearchPipe, GuestsPipe, ExpiredPipe, CartTotalPipe, PedidosPipe, SecurePipe, PercentPipe]
+	exports: [SearchPipe, GuestsPipe, ExpiredPipe, CartTotalPipe, PedidosPipe, SecurePipe, PercentPipe, StarPipe, PreferencesPipe, DistancePipe]
 })
 export class PipesModule {}

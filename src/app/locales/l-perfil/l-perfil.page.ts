@@ -53,6 +53,32 @@ export class LPerfilPage implements OnInit {
     })
   }
 
+  openReservas()
+  {
+    let inputs = [];
+
+    for (let i in this.locals)
+    {
+      inputs.push({name:'local',type:'radio',label:this.locals[i].title,value:this.locals[i].id})
+    }
+
+    this.alert.create({message:"Elija el local donde ver las reservas", inputs: inputs, buttons: [{
+      text:"Siguiente",
+      handler: (a)=>{
+        console.log(a);
+        
+        localStorage.setItem('actualRestaurant',JSON.stringify(this.locals.find(x=>x.id==a)));
+
+        this.nav.navigateForward('local/perfil/reservas/'+a);
+
+      }
+    },{
+      text:"Cancelar"
+    }]}).then(a=>{
+      a.present();
+    })
+  }
+
   openGallery()
   {
     let inputs = [];

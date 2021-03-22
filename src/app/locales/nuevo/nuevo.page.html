@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -21,22 +21,6 @@
 		<ion-list *ngIf="step == 1">
 
 			<form class="form" [formGroup]="validations_form1">
-
-				<ion-item class="ion-no-padding">
-					<ion-label position="stacked">NOMBRE DEL LOCAL</ion-label>
-					<ion-input formControlName="name" type="text" ></ion-input>
-
-					<span slot="end">
-						<!-- <ion-icon name="checkmark"></ion-icon> -->
-					</span>
-				</ion-item>
-					<div class="validation-errors">
-			          <ng-container *ngFor="let validation of validation_messages1.name">
-			            <div class="error-message" *ngIf="validations_form1.get('name').hasError(validation.type) && (validations_form1.get('name').dirty || validations_form1.get('name').touched)">
-			              {{ validation.message }}
-			            </div>
-			          </ng-container>
-			        </div>
 
 				<ion-item class="ion-no-padding">
 					<ion-label position="stacked">DIRECCIÓN</ion-label>
@@ -54,6 +38,54 @@
 			            </div>
 			          </ng-container>
 			        </div>
+
+				<ion-item class="ion-no-padding">
+					<ion-label position="stacked">NOMBRE DEL LOCAL</ion-label>
+					<ion-input formControlName="name" type="text" ></ion-input>
+
+					<span slot="end">
+						<!-- <ion-icon name="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.name">
+			            <div class="error-message" *ngIf="validations_form1.get('name').hasError(validation.type) && (validations_form1.get('name').dirty || validations_form1.get('name').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+			    <ion-item class="ion-no-padding">
+					<ion-label position="stacked">PLACE ID de GOOGLE</ion-label>
+					<ion-input formControlName="place_id" type="text" ></ion-input>
+
+					<span slot="end">
+						<!-- <ion-icon place_id="checkmark"></ion-icon> -->
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.place_id">
+			            <div class="error-message" *ngIf="validations_form1.get('place_id').hasError(validation.type) && (validations_form1.get('place_id').dirty || validations_form1.get('place_id').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+			    <!-- <ion-item class="ion-no-padding">
+					<ion-label position="stacked">INDICE DE RRPP</ion-label>
+					<ion-input formControlName="rrpp" type="number" ></ion-input>
+
+					<span slot="end">
+						
+					</span>
+				</ion-item> -->
+					<!-- <div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages1.place_id">
+			            <div class="error-message" *ngIf="validations_form1.get('place_id').hasError(validation.type) && (validations_form1.get('place_id').dirty || validations_form1.get('place_id').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div> -->
 
 				<ion-item class="ion-no-padding" style="margin: none;">
 					<ion-label position="stacked">DESCRIPCIÓN</ion-label>
@@ -77,7 +109,7 @@
 
 				<br>
 
-				<ion-button (click)="nextStep()" [disabled]="!validations_form1.valid" class="an-button" routerDirection="root">Siguiente</ion-button>
+				<ion-button (click)="nextStep()" [disabled]="!validations_form1.valid" class="an-button">Siguiente</ion-button>
 
 			</form>
 
@@ -174,7 +206,9 @@
 
 				<br>
 
-				<ion-button (click)="nextStep()" [disabled]="!validations_form2.valid" class="an-button" routerDirection="root">Siguiente</ion-button>
+				<ion-button (click)="prevStep()" class="an-button prev">Anterior</ion-button>
+
+				<ion-button (click)="nextStep()" [disabled]="!validations_form2.valid" class="an-button">Siguiente</ion-button>
 
 			</form>
 
@@ -228,6 +262,8 @@
 				</span> -->
 			</ion-item>
 
+			<ion-button (click)="prevStep()" class="an-button prev">Anterior</ion-button>
+
 			<ion-button (click)="nextStep(1)" [disabled]="days.length == 0" class="an-button" routerDirection="root">Siguiente</ion-button>
 
 		</ion-list>
@@ -249,8 +285,24 @@
 				</span> -->
 			</ion-item>
 
+
 			<ion-item class="ion-no-padding" lines="none">
-				<ion-label position="stacked">LOGOTIPO</ion-label>
+				<ion-label position="stacked">MARCADOR</ion-label>
+				
+				<span class="adicional-info">Carga el marcador de tu local haciendo clic en el icono. Este marcador aparecerá en el mapa y se utiliza para diferenciar tu local del resto.</span>
+
+				<div class="logotipo" (click)="loadImage('marker')">
+					<div class="uploaded" [ngStyle]="{'background-image':'url('+marker+')'}">
+					</div>
+				</div>
+
+				<!-- <span slot="end">
+					<ion-icon name="checkmark"></ion-icon>
+				</span> -->
+			</ion-item>
+
+			<ion-item class="ion-no-padding" lines="none">
+				<ion-label position="stacked">IMAGEN PRINCIPAL</ion-label>
 				
 				<span class="adicional-info">Carga la imagen principal de tu local haciendo clic en la imagen de ejemplo. <br> La imagen quedara genial si eliges una fotografia en formato vertical!!</span>
 
@@ -263,6 +315,8 @@
 					<ion-icon name="checkmark"></ion-icon>
 				</span> -->
 			</ion-item>
+
+			<ion-button (click)="prevStep()" class="an-button prev">Anterior</ion-button>
 
 			<ion-button (click)="nextStep(1)" [disabled]="!logo && !main" class="an-button">Terminar</ion-button>
 

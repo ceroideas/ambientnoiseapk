@@ -46,7 +46,7 @@ export class CrearSalasPage implements OnInit {
     const options: CameraOptions = {
       quality: 100,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true
@@ -63,6 +63,11 @@ export class CrearSalasPage implements OnInit {
     });
   }
 
+  deleteParams()
+  {
+    this.navparams.setParam(null);
+  }
+
   uploadImage(uri)
   {
     this.toast.create({message: "Subiendo imagen, espere un momento", duration: 4000}).then(t=>{
@@ -77,6 +82,7 @@ export class CrearSalasPage implements OnInit {
         chunkedMode: false,
         mimeType: "image/form-data",
         httpMethod: 'POST',
+        params: { id: this.local.id },
         headers: {}
     }
 
@@ -87,6 +93,7 @@ export class CrearSalasPage implements OnInit {
 
      }, (err) => {
        // error
+       console.log('error',err)
      })
   }
 

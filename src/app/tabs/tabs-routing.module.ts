@@ -76,9 +76,15 @@ const routes: Routes = [
             path: 'pedidos',
             loadChildren: ()=> import('../pages/pedidos/pedidos.module').then(m=>m.PedidosPageModule)
           },{
-            path: 'galeria',
+            path: 'bloqueados',
+            loadChildren: ()=> import('../pages/blockeds/blockeds.module').then(m=>m.BlockedsPageModule)
+          },{
+            path: 'galeria/:id',
             loadChildren: ()=> import('../pages/gallery/gallery.module').then(m=>m.GalleryPageModule)
-          }
+          },{
+            path: 'reservas/:id',
+            loadChildren: () => import('../pages/my-reserves/my-reserves.module').then( m => m.MyReservesPageModule)
+          },
         ]
       },{
         path: 'ofertas',

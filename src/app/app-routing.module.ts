@@ -155,6 +155,18 @@ const routes: Routes = [
     path: 'comment',
     loadChildren: () => import('./pages/comment/comment.module').then( m => m.CommentPageModule)
   },
+  {
+    path: 'recover',
+    loadChildren: () => import('./recover/recover.module').then( m => m.RecoverPageModule)
+  },
+  {
+    path: 'packages',
+    loadChildren: () => import('./locales/packages/packages.module').then( m => m.PackagesPageModule)
+  },
+  {
+    path: 'blockeds',
+    loadChildren: () => import('./pages/blockeds/blockeds.module').then( m => m.BlockedsPageModule)
+  },
 ];
 
 @NgModule({

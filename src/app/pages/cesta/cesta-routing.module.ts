@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: CestaPage
+  },
+  {
+    path: 'pagar/:id',
+    loadChildren: () => import('./pagar/pagar.module').then( m => m.PagarPageModule)
   }
 ];
 

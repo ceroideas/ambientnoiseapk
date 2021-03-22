@@ -39,7 +39,15 @@ export class ReservasPage implements OnInit {
 
   deleteReserve(r)
   {
-    
+     this.alertCtrl.create({message:"Borrar reserva?",buttons:[
+       {text:"Si", handler:()=>{
+         this.api.deleteReserve(r.id).subscribe(data=>{
+           this.reserves = data;
+         })
+     }},{
+       text: "No"
+     }
+     ]}).then(a=>a.present());
   }
 
 }

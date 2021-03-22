@@ -24,7 +24,7 @@
 				</div>
 			</ion-col>
 			<ion-col size="8">
-				<h5>{{user.name+' '+user.last_name}} <br> <small>Miembro desde: {{user.created_at | expired:'created_at'}}</small></h5>
+				<h5>{{user.name+' '+user.last_name}} <br> <small>Miembro desde: {{user | expired:'created_at'}}</small></h5>
 			</ion-col>
 		</ion-row>
 
@@ -55,9 +55,9 @@
 		    		</label>
 		    	</ion-item>
 
-		    	<ion-item class="ion-no-padding">
+		    	<ion-item class="ion-no-padding" [routerLink]="['/tabs/perfil/reservas/'+user.id]">
 		    		<label>
-			    		Promociones
+			    		Mis reservas
 		    		</label>
 		    	</ion-item>
 
@@ -67,9 +67,15 @@
 		    		</label>
 		    	</ion-item>
 
-		    	<ion-item class="ion-no-padding" lines="none" [routerLink]="['/tabs/perfil/galeria']">
+		    	<ion-item class="ion-no-padding" [routerLink]="['/tabs/perfil/galeria/'+user.id]" (click)="verGaleria()">
 		    		<label>
 			    		Galeria
+		    		</label>
+		    	</ion-item>
+
+		    	<ion-item class="ion-no-padding" lines="none" [routerLink]="['/tabs/perfil/bloqueados']">
+		    		<label>
+			    		Usuarios bloqueados
 		    		</label>
 		    	</ion-item>
 
@@ -83,6 +89,6 @@
 
 	<br>
 
-	<ion-button class="an-button" [routerLink]="['/tabs/perfil/ajustes']">Ajustes</ion-button>
+	<ion-button class="an-button" *ngIf="!fake" [routerLink]="['/tabs/perfil/ajustes']">Ajustes</ion-button>
 
 </ion-content>

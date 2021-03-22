@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ReservarPage
+  },
+  {
+    path: 'pagar-res/:res_id/:price/:room_id',
+    loadChildren: () => import('./pagar-res/pagar-res.module').then( m => m.PagarResPageModule)
   }
 ];
 

@@ -74,7 +74,7 @@ const routes: Routes = [
             path: 'nuevo',
             loadChildren: ()=> import('../locales/nuevo/nuevo.module').then(m=>m.NuevoPageModule)
           },{
-            path: 'ropero',
+            path: 'ropero/:id',
             loadChildren: ()=> import('../locales/l-ropero/l-ropero.module').then(m=>m.LRoperoPageModule)
           },{
             path: 'salas/:id',
@@ -127,6 +127,33 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: ()=> import('../politica/politica.module').then(m=>m.PoliticaPageModule)
+          }
+        ]
+      }/*,{
+        path: 'qr-scanner',
+        children: [
+          {
+            path: '',
+            loadChildren: '../locales/qr-scanner/qr-scanner.module#QrScannerPageModule',
+            data: {
+              preload: true
+            },
+          }
+        ]
+      }*/,{
+        path: 'packages',
+        children: [
+          {
+            path: '',
+            loadChildren: ()=> import('../locales/packages/packages.module').then(m=>m.PackagesPageModule)
+          }
+        ]
+      },{
+        path: 'contacto',
+        children: [
+          {
+            path: '',
+            loadChildren: ()=> import('../contact/contact.module').then(m=>m.ContactPageModule)
           }
         ]
       },{

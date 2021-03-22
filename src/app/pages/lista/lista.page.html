@@ -9,7 +9,7 @@
 	<div class="ion-padding" style="background-image: url(assets/fondo-02.png); background-size: cover; background-position: center; height: fit-content; min-height: 100%;">
 		
 
-	<h4> <ion-icon (click)="nav.back()" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.pop()" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -27,13 +27,18 @@
 		
 		<ion-card-content>
 			<ion-row>
-				<ion-col size="2" style="display: flex;" >
+				<ion-col size="2" style="display: flex;" *ngIf="!(list.users | guests:user.id:'users')?.status">
 					<div style="display: flex;" *ngIf="(list | percent) != 100 || ((list | percent) == 100 && (list | guests:user.id:'guest'))" (click)="addGuess(list,i)">
 						<ion-icon *ngIf="list | guests:user.id:'guest'" name="checkbox" style="color: lightgreen;"></ion-icon>
 						<ion-icon *ngIf="!(list | guests:user.id:'guest')" name="square-outline"></ion-icon>
 					</div>
 					<div style="display: flex;" *ngIf="(list | percent) == 100 && !(list | guests:user.id:'guest')">
 						<ion-icon name="close-circle-outline" style="color: crimson;"></ion-icon>
+					</div>
+				</ion-col>
+				<ion-col size="2" style="display: flex;" *ngIf="(list.users | guests:user.id:'users')?.status">
+					<div style="display: flex;">
+						<ion-icon name="checkmark-done-outline" style="color: lightgreen;"></ion-icon>
 					</div>
 				</ion-col>
 				<ion-col size="8">
@@ -43,6 +48,12 @@
 						<span *ngIf="(list | percent) != 100">La lista está al:</span>
 						<span *ngIf="(list | percent) == 100">La lista está llena:</span>
 						<span>{{list | percent}}%</span>
+					</h6>
+
+					<h6 *ngIf="(list.guests | guests:user.id:'lists').length" style="text-align: left;">
+						<small><b>Tus invitados</b>
+						<li *ngFor="let g of (list.guests | guests:user.id:'lists')">{{g.name}}</li>
+						</small>
 					</h6>
 				</ion-col>
 				<ion-col size="2" style="display: flex;" *ngIf="(list | percent) > 50">

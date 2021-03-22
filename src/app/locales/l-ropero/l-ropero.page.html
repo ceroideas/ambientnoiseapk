@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -19,7 +19,7 @@
 	<ion-list class="ion-no-padding">
 		<ion-item>
 			<ion-label stacked>Local</ion-label>
-			<ion-select [(ngModel)]="local_id" (ionChange)="retrieveClosets()">
+			<ion-select [(ngModel)]="local_id" [value]="local_id" (ionChange)="retrieveClosets()">
 				<ion-select-option *ngFor="let l of locals" [value]="l.id">{{l.title}}</ion-select-option>	
 			</ion-select>
 		</ion-item>

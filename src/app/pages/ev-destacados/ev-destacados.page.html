@@ -39,6 +39,8 @@
 									<!-- <ion-icon name="trash" class="delete-icon" (click)="deleteEvent(e.id)"></ion-icon> -->
 									<label class="title">{{e.establishment.title}}</label>
 
+									<span style="position: absolute; right: 0px; top: 0px; color: #ccc; font-size: 10px;">{{e.ordering}}</span>
+
 									<small>{{e.title}}</small>
 
 									<span class="date"> <span style="text-transform: capitalize;">{{e | expired:'local'}}</span> <br> de {{e.hour_from}} a {{e.hour_to}} H</span>
@@ -46,12 +48,16 @@
 							</ion-col>
 						</ion-row>
 
-						<div class="bottom-information-E" [id]="'bi-'+i">
-							<hr>
-							<h4>{{e.title}}</h4>
-							<p [innerHtml]="e.description"></p>
+						<div class="bottom-information-EE" [id]="'bi-EE'+i">
+							<div [id]="'inner-EE'+i">
+								<hr>
+								<h4>{{e.title}}</h4>
+								
+								<span class="date"> Final del evento: <span style="text-transform: capitalize;">{{e | expired:'local2'}}</span></span>
+								<p [innerHtml]="e.description"></p>
 
-							<span style="margin-top: 8px;" *ngIf="e.list" (click)="addGuess(e.list,i)">{{ e.list | guests:user.id:'list' }}</span>
+								<span style="margin-top: 8px;" *ngIf="e.list && !fake && e.list.status == 1" (click)="addGuess(e.list,i)">{{ e.list | guests:user.id:'list' }}</span>
+							</div>
 
 						</div>
 					</div>

@@ -231,6 +231,13 @@
   }
 // }
 
+ion-app.cameraView2, ion-app.cameraView2 ion-content {
+  background: #121212;
+  // .tabbar.show-tabbar{
+  //   opacity: 0;
+  // }
+}
+
 @font-face {
   font-family: 'sfpro';
   src: url('../assets/sfpro.ttf');
@@ -296,7 +303,7 @@
       margin-right: 10px;
     }
   }
-  [name*="star"] {
+  [ng-reflect-name*="star"],[aria-label*="star"] {
     color: #e9a12f;
     font-size: 26px;
     position: relative;
@@ -392,6 +399,7 @@
   float: left;
   text-align: center;
   font-weight: 100;
+  color: #fff;
 }
 
 .actual {
@@ -467,23 +475,31 @@
   }
 }
 
-.ios {
-  .bottom-informationH, .bottom-information1, .bottom-information, .bottom-informationD {
-    margin-bottom: 51px;
+// .ios {
+  // {
+  //   // margin-bottom: 81px !important;
+  // }
+  .bottom-informationH, .bottom-information1, .bottom-information, .bottom-informationD, .bottom-informationT {
+    // margin-bottom: 51px;
+    position: absolute;
+
+    label {
+      color: #fff;
+    }
   }
 
   #if-ios {
-    height: calc(100% - 51px) !important;
+    // height: calc(100% - 51px) !important;
   }
 
-  .ion-page {
-    position: fixed !important;
-  }
+  // .ion-page {
+  //   position: fixed !important;
+  // }
 
   ion-content {
-    --offset-bottom: -51px !important;
+    // --offset-bottom: -51px !important;
   }
-}
+// }
 
 .chat-image {
   width: 200px;
@@ -492,4 +508,355 @@
   background-position: center;
   border: 1px solid #acacac;
   border-radius: 6px;
+}
+
+.button-infowindow {
+  margin-top: 8px;
+  padding: 6px 20px;
+  background-color: #a365b8;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 6px;
+}
+.button-goTo {
+  margin-top: 8px;
+  padding: 6px 20px;
+  background-color: #f2f4f8;
+  color: #333;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.logo-restaurante-map {
+  position: relative;
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid #acacac;
+  background-color: #acacac;
+  margin: auto;
+}
+
+.tactic {
+  border: 8px solid #a365b8;
+}
+
+/* ----------- iPhone X ----------- */
+
+/* Portrait and Landscape */
+// @media only screen 
+//   and (min-device-width: 375px) 
+//   and (max-device-width: 812px) 
+//   and (-webkit-min-device-pixel-ratio: 3) { 
+//     .ios {
+//       .footer-chat {margin-bottom: 81px !important;}
+//       ion-tab-button {position:relative; top: 3px;}
+//       .bottom-informationH, .bottom-information1, .bottom-information, .bottom-informationD, .bottom-informationT {
+//         margin-bottom: 81px;
+//       }
+
+//       #if-ios {
+//         height: calc(100% - 81px) !important;
+//       }
+
+//       .ion-page {
+//         position: fixed !important;
+//       }
+
+//       ion-content {
+//         --offset-bottom: -81px !important;
+//       }
+//     }
+
+// }
+// 
+// /* Portrait */
+// @media only screen 
+//   and (min-device-width: 375px) 
+//   and (max-device-width: 812px) 
+//   and (-webkit-min-device-pixel-ratio: 3)
+//   and (orientation: portrait) { 
+//     .ios {
+//       .footer-chat {margin-bottom: 81px !important;}
+//       ion-tab-button {position:relative; top: 3px;}
+//       .bottom-informationH, .bottom-information1, .bottom-information, .bottom-informationD, .bottom-informationT {
+//         margin-bottom: 81px;
+//       }
+
+//       #if-ios {
+//         height: calc(100% - 81px) !important;
+//       }
+
+//       .ion-page {
+//         position: fixed !important;
+//       }
+
+//       ion-content {
+//         --offset-bottom: -81px !important;
+//       }
+//     }
+// }
+
+// /* Landscape */
+// @media only screen 
+//   and (min-device-width: 375px) 
+//   and (max-device-width: 812px) 
+//   and (-webkit-min-device-pixel-ratio: 3)
+//   and (orientation: landscape) { 
+//     .ios {
+//       .footer-chat {margin-bottom: 81px !important;}
+//       ion-tab-button {position:relative; top: 3px;}
+//         .bottom-informationH, .bottom-information1, .bottom-information, .bottom-informationD, .bottom-informationT {
+//           margin-bottom: 81px;
+//         }
+
+//         #if-ios {
+//           height: calc(100% - 81px) !important;
+//         }
+
+//         .ion-page {
+//           position: fixed !important;
+//         }
+
+//         ion-content {
+//           --offset-bottom: -81px !important;
+//         }
+//       }
+// }
+
+
+
+// /* 2532x1170 pixels at 460ppi */
+// @media only screen 
+//   and (device-width: 390px) 
+//   and (device-height: 844px) 
+//   and (-webkit-device-pixel-ratio: 3) {
+//     .ios {
+//       .footer-chat {margin-bottom: 81px !important;}
+//       ion-tab-button {position:relative; top: 3px;}
+//       .bottom-informationH, .bottom-information1, .bottom-information, .bottom-informationD, .bottom-informationT {
+//         margin-bottom: 81px;
+//       }
+
+//       #if-ios {
+//         height: calc(100% - 81px) !important;
+//       }
+
+//       .ion-page {
+//         position: fixed !important;
+//       }
+
+//       ion-content {
+//         --offset-bottom: -81px !important;
+//       }
+//     }
+// }
+
+// /* 2778x1284 pixels at 458ppi */
+// @media only screen 
+//   and (device-width: 428px) 
+//   and (device-height: 926px) 
+//   and (-webkit-device-pixel-ratio: 3) {
+//     .ios {
+//       .footer-chat {margin-bottom: 81px !important;}
+//       ion-tab-button {position:relative; top: 3px;}
+//       .bottom-informationH, .bottom-information1, .bottom-information, .bottom-informationD, .bottom-informationT {
+//         margin-bottom: 81px;
+//       }
+
+//       #if-ios {
+//         height: calc(100% - 81px) !important;
+//       }
+
+//       .ion-page {
+//         position: fixed !important;
+//       }
+
+//       ion-content {
+//         --offset-bottom: -81px !important;
+//       }
+//     }
+// }
+
+// /* 1792x828px at 326ppi */
+// @media only screen 
+//   and (device-width: 414px) 
+//   and (device-height: 896px) 
+//   and (-webkit-device-pixel-ratio: 2) {
+//     .ios {
+//       .footer-chat {margin-bottom: 81px !important;}
+//       ion-tab-button {position:relative; top: 3px;}
+//       .bottom-informationH, .bottom-information1, .bottom-information, .bottom-informationD, .bottom-informationT {
+//         margin-bottom: 81px;
+//       }
+
+//       #if-ios {
+//         height: calc(100% - 81px) !important;
+//       }
+
+//       .ion-page {
+//         position: fixed !important;
+//       }
+
+//       ion-content {
+//         --offset-bottom: -81px !important;
+//       }
+//     }
+// }
+
+// /* 2436x1125px at 458ppi */
+// @media only screen 
+//   and (device-width: 375px) 
+//   and (device-height: 812px) 
+//   and (-webkit-device-pixel-ratio: 3) {
+//     .ios {
+//       .footer-chat {margin-bottom: 81px !important;}
+//       ion-tab-button {position:relative; top: 3px;}
+//       .bottom-informationH, .bottom-information1, .bottom-information, .bottom-informationD, .bottom-informationT {
+//         margin-bottom: 81px;
+//       }
+
+//       #if-ios {
+//         height: calc(100% - 81px) !important;
+//       }
+
+//       .ion-page {
+//         position: fixed !important;
+//       }
+
+//       ion-content {
+//         --offset-bottom: -81px !important;
+//       }
+//     }
+// }
+
+// /* 2688x1242px at 458ppi */
+// @media only screen 
+//   and (device-width: 414px) 
+//   and (device-height: 896px) 
+//   and (-webkit-device-pixel-ratio: 3) {
+//     .ios {
+//       .footer-chat {margin-bottom: 81px !important;}
+//       ion-tab-button {position:relative; top: 3px;}
+//       .bottom-informationH, .bottom-information1, .bottom-information, .bottom-informationD, .bottom-informationT {
+//         margin-bottom: 81px;
+//       }
+
+//       #if-ios {
+//         height: calc(100% - 81px) !important;
+//       }
+
+//       .ion-page {
+//         position: fixed !important;
+//       }
+
+//       ion-content {
+//         --offset-bottom: -81px !important;
+//       }
+//     }
+// }
+
+.contextual {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+}
+
+// qrScanner
+ion-app.cameraView, ion-app.cameraView ion-content, ion-app.cameraView .nav-decor {
+  background: transparent none !important;
+  .tabbar.show-tabbar{
+    opacity: 0;
+  }
+}
+[app-viewport],
+[overlay-portal],
+[nav-viewport],
+[tab-portal],
+.nav-decor {
+  display: none !important;
+  background: none transparent !important;
+}
+html,
+
+body.transparent-body,
+
+.transparent-body,
+
+.transparent-body ion-app,
+
+.transparent-body .app-root,
+
+.transparent-body ion-nav,
+
+.transparent-body .ion-page,
+
+.transparent-body .nav-decor,
+
+.transparent-body ion-content,
+
+.transparent-body .viewscan,
+
+.transparent-body .fixed-content,
+
+.transparent-body .scroll-content {
+
+  background-color: transparent !important;
+
+  background: transparent none!important;
+}
+
+// .tabs-inner {
+//   .bottom-informationH {
+//     position: absolute;
+//   }
+// }
+
+.alt {
+  --background: transparent;
+  border: 1px solid;
+  border-radius: 22px;
+  color: #fff !important;
+  ion-icon {
+    color: crimson;
+    font-size: 24px;
+  }
+}
+
+.alt-2 {
+  --background: transparent !important;
+  border: none;
+  color: #fff !important;
+  ion-icon {
+    color: crimson;
+    font-size: 24px;
+  }
+}
+
+.view-cards {
+  display: inline-block;
+  font-size: 12px;
+  padding: 8px 16px;
+  border-radius: 16px;
+  background-color: #a365b8;
+  border: 1px solid #f1f1f1;
+  color: #f1f1f1;
+}
+
+.view-cards:active {
+  opacity: .7;
+}
+
+*::-webkit-media-controls-panel {
+  display: none!important;
+  -webkit-appearance: none;
+}
+
+.ios {
+  #tabs-tutorial {
+    bottom: 1.5px !important;
+  }
 }

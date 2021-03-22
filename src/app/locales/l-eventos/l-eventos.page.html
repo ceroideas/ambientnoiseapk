@@ -7,11 +7,13 @@
 <ion-content class="ion-padding">
 
 	<h4>
-		<!-- <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon> -->
+		<!-- <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon> -->
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
-		<ion-button class="an-button" [routerLink]="['/local/eventos/nuevo-evento']" routerDirection="root">Nuevo evento</ion-button>
+		<ion-icon style="margin-left:8px;" [routerLink]="['/qr-scanner']" slot="icon-only" name="qr-code-outline"></ion-icon>
+
+		<ion-button class="an-button" [routerLink]="['/local/eventos/nuevo-evento']">Nuevo evento</ion-button>
 
 	</h4>
 
@@ -51,15 +53,11 @@
 						</ion-col>
 					</ion-row>
 
-					<div class="bottom-information" [id]="'bi-'+i">
+					<!-- <div class="bottom-information" [id]="'bi-'+i">
 						<hr>
 						<h4>{{e.title}}</h4>
 						<p [innerHtml]="e.description"></p>
-
-						<!-- <span [routerLink]="['/tabs/home/lista']">Ver lista</span> -->
-						<!-- <span>Ver lista</span> -->
-
-					</div>
+					</div> -->
 				</div>
 			</ion-col>
 			<!-- <ion-col size="3">
@@ -69,12 +67,12 @@
 			</ion-col> -->
 		</ion-row>
 
-		<ion-infinite-scroll threshold="100px" (ionInfinite)="getMoreEvents($event)">
+		<!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="getMoreEvents($event)">
 		    <ion-infinite-scroll-content
 		      loadingSpinner="bubbles"
 		      loadingText="Cargando eventos...">
 		    </ion-infinite-scroll-content>
-		</ion-infinite-scroll>
+		</ion-infinite-scroll> -->
 
 		<!-- <ion-row style="margin-bottom: 12px;">
 			<ion-col size="12">

@@ -1,8 +1,8 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay" swipe-gesture="false">
-      <ion-content>
-        <ion-list id="inbox-list">
+      <ion-content id="myMenu">
+        <ion-list [id]="type == 'client' ? 'inbox-list' : 'inbox-list-2'">
           <!-- <ion-list-header>Inbox</ion-list-header>
           <ion-note>hi@ionicframework.com</ion-note> -->
 
@@ -12,6 +12,13 @@
              <!-- [class.selected]="selectedIndex == i" -->
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false" *ngIf="type == 'client'">
+            <ion-item (click)="share()" lines="none" detail="false">
+              <ion-icon slot="start" ios="share-social-outline" md="share-social-sharp"></ion-icon>
+              <ion-label>COMPARTIR</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
@@ -25,6 +32,14 @@
             <ion-item (click)="logout()" lines="none" detail="false">
               <ion-icon slot="start" name="log-out-outline"></ion-icon>
               <ion-label style="color: #ddd; font-size: 13px;">Logout</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false" *ngIf="type == 'local'">
+            <ion-item lines="none" detail="false">
+              <ion-button class="an-button" [routerLink]="['/local/packages']" style="border: 3px solid gold; border-radius: 50px;">
+                Comprar Paquetes
+              </ion-button>
             </ion-item>
           </ion-menu-toggle>
 

@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="back" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="back" name="chevron-back"></ion-icon>
 
 	</h4>
 
@@ -32,7 +32,8 @@
 	  <ion-card-header style="padding-bottom: 0; color: #fff;">
 	    PERSONAL
 	  </ion-card-header>
-	
+
+
 	  <ion-card-content>
 	    <!-- Add card content here! -->
 	    <form class="form" [formGroup]="validations_form">
@@ -60,6 +61,27 @@
 		    		<div class="validation-errors">
 			          <ng-container *ngFor="let validation of validation_messages.last_name">
 			            <div class="error-message" *ngIf="validations_form.get('last_name').hasError(validation.type) && (validations_form.get('last_name').dirty || validations_form.get('last_name').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+			    <ion-item class="ion-no-padding">
+					<ion-label position="floating">Fecha de nacimiento</ion-label>
+					<!-- <ion-input  type="text" ></ion-input> -->
+					<ion-datetime formControlName="birthday" displayFormat="DD MMM, YYYY" 
+					monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic"
+					cancelText="Cancelar"
+					doneText="Ok"
+					></ion-datetime>
+
+					<span slot="end" *ngIf="validation_messages.birthday.length == 0">
+						<ion-icon name="checkmark"></ion-icon>
+					</span>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.birthday">
+			            <div class="error-message" *ngIf="validations_form.get('birthday').hasError(validation.type) && (validations_form.get('birthday').dirty || validations_form.get('birthday').touched)">
 			              {{ validation.message }}
 			            </div>
 			          </ng-container>
@@ -111,6 +133,47 @@
 		</form>
 	  </ion-card-content>
 	
+	</ion-card>
+
+
+
+	<ion-card class="ion-no-margin card-profile" style="border-radius: 18px;" *ngIf="user.role != 3">
+
+	  <ion-card-header style="padding-bottom: 0; color: #fff;">
+	    PREFERENCIAS
+	  </ion-card-header>
+
+	  <ion-card-content>
+	  	
+	  	<div>
+			<h5>AMBIENTES</h5>
+
+			<div [ngClass]="(preferences?.categories | preferences:a.id) ? 'type actual' : 'type'" *ngFor="let a of categories" (click)="addAmbiente(a.id)">{{a.title}}</div>
+			<div style="clear: both"></div>
+		</div>
+
+
+		<div>
+			<h5>TIPO DE MÚSICA</h5>
+
+			<div [ngClass]="(preferences?.musics | preferences:m.id) ? 'type actual' : 'type'" *ngFor="let m of music" (click)="addMusica(m.id)">{{m.title}}</div>
+			<div style="clear: both"></div>
+		</div>
+
+		<div>
+			<h5>NIVEL DE OCUPACIÓN</h5>
+
+			<ion-item class="ion-no-padding" lines="none">
+				<span style="width: 28px; font-size: 16px; text-align: left;" slot="start">{{ocupation.lower || 0}}</span>
+				<ion-range style="width: calc(100vw - 56px)" min="0" max="100" [(ngModel)]="ocupation" (ionChange)="updateOcupation()" color="primary" pin="false" dualKnobs="true"></ion-range>
+				<span style="width: 28px; font-size: 16px; text-align: right" slot="end">{{ocupation.upper || 0}}</span>
+			</ion-item>
+
+		</div>
+
+
+	  </ion-card-content>
+		
 	</ion-card>
 
 	<br>

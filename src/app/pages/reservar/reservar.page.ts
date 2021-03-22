@@ -27,7 +27,19 @@ export class ReservarPage implements OnInit {
   }
 
   ngOnInit() {
+    this.events.destroy('alertSalas');
+    this.events.subscribe('alertSalas',(data)=>{
 
+      let room = this.rooms.find(x=>x.id == data.room_id);
+      let reserve = room.reserves.find(x=>x.id == data.res_id);
+
+      this.alertCtrl.create({message:'Se ha reservado la sala '+room.title+'. Consulte sus reservas.'}).then(a=>{a.present(); setTimeout(()=>{a.dismiss()},3000)});
+
+      this.api.getRooms(this.route.snapshot.params.id).subscribe(data=>{
+        this.rooms = data;
+      });
+
+    })
   }
 
   reservar(r,s)
@@ -37,15 +49,17 @@ export class ReservarPage implements OnInit {
       text:"Si",
       handler:()=>{
 
-        this.api.reservar({id:r.id,user_id:this.user.id}).subscribe(data=>{
-          
-          this.alertCtrl.create({message:'Se ha reservado la sala '+s.title+'. Consulte sus reservas.'}).then(a=>a.present());
+        this.nav.navigateForward('tabs/home/reservar/'+this.route.snapshot.params.id+'/pagar-res/'+r.id+'/'+r.price+'/'+s.id);
 
-          this.api.getRooms(this.route.snapshot.params.id).subscribe(data=>{
-            this.rooms = data;
-          });
+        // this.api.reservar({id:r.id,user_id:this.user.id}).subscribe(data=>{
           
-        })
+        //   this.alertCtrl.create({message:'Se ha reservado la sala '+s.title+'. Consulte sus reservas.'}).then(a=>a.present());
+
+        //   this.api.getRooms(this.route.snapshot.params.id).subscribe(data=>{
+        //     this.rooms = data;
+        //   });
+
+        // })
       }
     },{
       text:"No"

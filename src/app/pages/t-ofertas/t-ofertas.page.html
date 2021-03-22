@@ -8,7 +8,7 @@
 
 	<div class="ion-padding" style="background-image: url(assets/fondo-01.png); background-size: cover; background-position: center; height: fit-content; min-height: 100%;">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -52,8 +52,8 @@
 					</ion-row>
 				</div>
 			</ion-col>
-			<ion-col size="3">
-				<div class="right-side-off">
+			<ion-col size="3" style="height: auto;">
+				<div class="right-side-off" style="height: 100%">
 					<h1>{{o.type == 1 ? o.quantity : o.quantity+'x1'}}</h1>
 				</div>
 			</ion-col>

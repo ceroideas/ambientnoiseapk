@@ -6,13 +6,13 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
 	</h4>
 
-	<h3>Nuevo plato</h3>
+	<h3>Nuevo producto</h3>
 
 	<!-- <br *ngIf="step < 4"> -->
 
@@ -22,7 +22,7 @@
 			<form class="form" [formGroup]="validations_form">
 
 				<ion-item class="ion-no-padding">
-					<ion-label position="floating">TITULO DEL PLATO</ion-label>
+					<ion-label position="floating">TITULO DEL PRODUCTO</ion-label>
 					<ion-input formControlName="title" type="text" ></ion-input>
 
 					<!-- <span slot="end">
@@ -39,7 +39,7 @@
 
 
 			    <ion-item class="ion-no-padding">
-					<ion-label position="floating">DESCRIPCIÓN DEL PLATO</ion-label>
+					<ion-label position="floating">DESCRIPCIÓN DEL PRODUCTO</ion-label>
 					<ion-textarea formControlName="description" rows="4"></ion-textarea>
 
 					<!-- <span slot="end">
@@ -74,9 +74,9 @@
 
 
 					<ion-item class="ion-no-padding" lines="none">
-						<ion-label position="stacked">IMAGEN DEL PLATO</ion-label>
+						<ion-label position="stacked">IMAGEN DEL PRODUCTO</ion-label>
 						
-						<span class="adicional-info">Carga la imagen del plato haciendo clic en el icono</span>
+						<span class="adicional-info">Carga la imagen del producto haciendo clic en el icono</span>
 
 						<!-- <div class="logotipo" (click)="loadImage()">
 							<div class="uploaded" [ngStyle]="{'background-image':'url('+validations_form.value.image+')'}">
@@ -94,7 +94,7 @@
 							</div>
 
 							<div style="position: relative; z-index: 9999;">
-								<ion-button (click)="savePlate()" [disabled]="!validations_form.valid" class="an-button">Añadir plato</ion-button>
+								<ion-button (click)="savePlate()" [disabled]="!validations_form.valid" class="an-button">Añadir producto</ion-button>
 							</div>
 
 						</div>

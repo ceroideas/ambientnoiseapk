@@ -38,7 +38,7 @@ export class FiltrosPage implements OnInit {
   musica;
   ocupacion;
 
-  range = {lower:20,upper:80};
+  range = {lower:null,upper:null};
 
   constructor(public nav: NavController, public navparams: NavparamsService, public events: EventsService) { }
 
@@ -58,7 +58,7 @@ export class FiltrosPage implements OnInit {
 
   back()
   {
-  	this.nav.back();
+  	this.nav.pop();
   }
 
   clear()
@@ -66,7 +66,7 @@ export class FiltrosPage implements OnInit {
 	this.ambiente = null;
 	this.musica = null;
 	this.ocupacion = null;
-	this.range = {lower:20,upper:80};
+	this.range = {lower:null,upper:null};
 
   this.filtrar();
   }

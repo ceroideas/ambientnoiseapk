@@ -50,8 +50,8 @@ export class ChatPage implements OnInit {
   {
 
     if (!localStorage.getItem('actualChat')) {
-      this.alertCtrl.create({message:"Debes seleccionar un chat en la vista táctica de un local!"}).then(a=>a.present());
-      this.nav.back();
+      this.alertCtrl.create({message:"Debes seleccionar un chat en la vista táctica de un local!"}).then(a=>{a.present(); setTimeout(()=>{a.dismiss()},3000);});
+      this.nav.pop();
     }
 
     this.actualChat = this.route.snapshot.params.id;
@@ -119,7 +119,7 @@ export class ChatPage implements OnInit {
     const options: CameraOptions = {
       quality: 100,
       sourceType: type,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true

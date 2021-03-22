@@ -74,15 +74,15 @@ export class NuevaReservaPage implements OnInit {
         l.present();
         this.api.saveReserve(data).subscribe(data=>{
           l.dismiss();
-          this.nav.back();
+          this.nav.pop();
           this.events.publish('reloadReserves');
           this.alert.create({message:"La reserva ha sido creada"}).then(a=>{
-            a.present();
+            a.present(); setTimeout(()=>{a.dismiss()},2000);
           })
         },e=>{
           l.dismiss();
           this.alert.create({message:"Ha ocurrido un error al intentar publicar la reserva"}).then(a=>{
-            a.present();
+            a.present(); setTimeout(()=>{a.dismiss()},2000);
           })
         })
       })

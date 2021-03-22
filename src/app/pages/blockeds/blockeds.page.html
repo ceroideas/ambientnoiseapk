@@ -1,0 +1,51 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3>Usuarios bloqueados</h3>
+
+	<br>
+
+	<div *ngIf="!blockeds.length">
+		<h6>No hay usuarios bloqueados.</h6>
+	</div>
+
+	<section>
+
+		<ion-list class="ion-no-padding">
+			<ion-item class="ion-no-padding space" *ngFor="let u of blockeds">
+				
+				<span slot="start">
+					
+					<div class="bg-user" [ngStyle]="{'background-image':'url('+u.blocked.avatar+')'}">
+						
+					</div>
+
+				</span>
+
+				<ion-label>{{u.blocked.name}}</ion-label>
+
+				<span slot="end">
+					<ion-buttons slot="end">
+				      <ionic-context-menu icon="ellipsis-horizontal-outline">
+				        <ionic-context-menu-item icon="lock-open-outline" (click)="unblock(u.id,u.blocked.name)">Desbloquear</ionic-context-menu-item>
+				      </ionic-context-menu>
+				    </ion-buttons>
+				</span>
+
+			</ion-item>
+		</ion-list>
+		
+	</section>
+
+</ion-content>

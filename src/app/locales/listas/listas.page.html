@@ -7,11 +7,11 @@
 <ion-content class="ion-padding">
 
 	<h4>
-		<!-- <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon> -->
+		<!-- <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon> -->
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
-		<ion-button class="an-button" [routerLink]="['/local/listas/nueva-lista']" routerDirection="root">Nueva Lista</ion-button>
+		<ion-button class="an-button" [routerLink]="['/local/listas/nueva-lista']">Nueva Lista</ion-button>
 
 	</h4>
 
@@ -32,12 +32,17 @@
 					<div class="rest-info">
 						<label class="title" (click)="getList(l)">{{l.title}}</label>
 
-						<small>{{l.establishment.title}}</small>
+						<small>
+							<span style="margin-bottom: 6px; display: block;">{{l.establishment.title}}</span>
+							{{l.users.length}}/{{l.participations}}
+						</small>
 
 						<div class="opciones">
+							<small style="float: left; position: relative; top: 8px;" *ngIf="l.status == 0"><i>Inactiva</i></small>
 							<img src="assets/locales/borrar.svg" alt="" (click)="deleteList(l.id)">
 							<!-- <img src="assets/locales/editar.svg" alt=""> -->
-							<ion-icon name="checkbox-outline" ></ion-icon>
+							<ion-icon *ngIf="l.status == 1" name="checkbox-outline" ></ion-icon>
+							<ion-icon style="color: gray" *ngIf="l.status == 0" name="warning-outline"></ion-icon>
 						</div>
 
 						<!-- <label class="label-1">4.3</label>

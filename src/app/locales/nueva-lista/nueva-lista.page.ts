@@ -52,7 +52,7 @@ export class NuevaListaPage implements OnInit {
       name: new FormControl(null, Validators.compose([
         Validators.required
       ])),
-      image: new FormControl("https://www.marketingdirecto.com/wp-content/uploads/2019/04/Eventos.jpg", Validators.compose([
+      image: new FormControl(null, Validators.compose([
         Validators.required
       ])),
       participations: new FormControl(null),
@@ -74,7 +74,7 @@ export class NuevaListaPage implements OnInit {
         l.present();
         this.api.saveList(this.validations_form.value).subscribe(data=>{
           l.dismiss();
-          // this.nav.back();
+          // this.nav.pop();
           this.events.publish('reloadLists');
           
           // localStorage.setItem('listName',this.validations_form.value.name);
@@ -82,12 +82,12 @@ export class NuevaListaPage implements OnInit {
           this.nav.navigateForward('local/listas/lista-detalles');
 
           this.alert.create({message:"La lista ha sido creada, ahora añada invitados"}).then(a=>{
-            a.present();
+            a.present(); setTimeout(()=>{a.dismiss()},2000);
           })
         },e=>{
           l.dismiss();
           this.alert.create({message:"Ha ocurrido un error al intentar publicar la lista"}).then(a=>{
-            a.present();
+            a.present(); setTimeout(()=>{a.dismiss()},2000);
           })
         })
       })
@@ -99,7 +99,7 @@ export class NuevaListaPage implements OnInit {
     const options: CameraOptions = {
       quality: 100,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true

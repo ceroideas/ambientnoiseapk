@@ -1,0 +1,104 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="navCtrl.back()" routerDirection="back" name="chevron-back"></ion-icon> </h4>
+
+	<h3>Pagar reserva</h3>
+
+	<span style="margin-top: 20px; display: block; position: relative;">
+		<span class="view-cards" *ngIf="cards?.length" (click)="viewCards()">Mis tarjetas</span>
+	</span>
+
+	<div class="central-block">
+
+		<form class="form" [formGroup]="validations_form" (ngSubmit)="pagar(validations_form.value)">
+		
+			<ion-list>
+
+				<ion-item class="ion-no-padding">
+					<ion-label position="floating">NUMERO DE LA TARJETA</ion-label>
+					<ion-input formControlName="card" type="number" ></ion-input>
+
+					<!-- <span slot="end" *ngIf="validation_messages.card.length == 0">
+						<ion-icon name="checkmark"></ion-icon>
+					</span> -->
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.card">
+			            <div class="error-message" *ngIf="validations_form.get('card').hasError(validation.type) && (validations_form.get('card').dirty || validations_form.get('card').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+				<ion-item class="ion-no-padding">
+					<ion-label position="floating">CVC</ion-label>
+					<ion-input formControlName="cvc" [attr.maxlength]="3" type="number" ></ion-input>
+
+					<!-- <span slot="end" *ngIf="validation_messages.cvc.length == 0">
+						<ion-icon name="checkmark"></ion-icon>
+					</span> -->
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.cvc">
+			            <div class="error-message" *ngIf="validations_form.get('cvc').hasError(validation.type) && (validations_form.get('cvc').dirty || validations_form.get('cvc').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+				<ion-item class="ion-no-padding">
+					<ion-label position="floating">MES DE EXPIRACIÓN</ion-label>
+					<ion-select formControlName="exp_m">
+						<ion-select-option>01</ion-select-option>
+						<ion-select-option>02</ion-select-option>
+						<ion-select-option>03</ion-select-option>
+						<ion-select-option>04</ion-select-option>
+						<ion-select-option>05</ion-select-option>
+						<ion-select-option>06</ion-select-option>
+						<ion-select-option>07</ion-select-option>
+						<ion-select-option>08</ion-select-option>
+						<ion-select-option>09</ion-select-option>
+						<ion-select-option>10</ion-select-option>
+						<ion-select-option>11</ion-select-option>
+						<ion-select-option>12</ion-select-option>
+					</ion-select>
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.exp_m">
+			            <div class="error-message" *ngIf="validations_form.get('exp_m').hasError(validation.type) && (validations_form.get('exp_m').dirty || validations_form.get('exp_m').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+				<ion-item class="ion-no-padding">
+					<ion-label position="floating">AÑO DE EXPIRACIÓN</ion-label>
+					<ion-input formControlName="exp_y" [attr.maxlength]="4" type="number" ></ion-input>
+
+					<!-- <span slot="end">
+						<ion-icon *ngIf="validation_messages.exp_y.length == 0" name="checkmark"></ion-icon>
+					</span> -->
+				</ion-item>
+					<div class="validation-errors">
+			          <ng-container *ngFor="let validation of validation_messages.exp_y">
+			            <div class="error-message" *ngIf="validations_form.get('exp_y').hasError(validation.type) && (validations_form.get('exp_y').dirty || validations_form.get('exp_y').touched)">
+			              {{ validation.message }}
+			            </div>
+			          </ng-container>
+			        </div>
+
+			</ion-list>
+
+			<ion-button type="submit" [disabled]="!validations_form.valid" class="an-button">PAGAR {{precio}}€</ion-button>
+
+		</form>
+
+	</div>
+
+</ion-content>

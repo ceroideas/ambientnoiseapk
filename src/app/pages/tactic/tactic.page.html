@@ -6,72 +6,199 @@
 
 <ion-content>
 
-	<div class="ion-padding" style="background-image: url(assets/fondo-01.png); background-size: cover; background-position: center; height: fit-content; min-height: 100%;">
-		
-	<h4> <ion-icon (click)="nav.back()" routerDirection="back" name="chevron-back"></ion-icon>
-
-		<!-- <img src="assets/pin.svg" alt="" [routerLink]="['/tabs/home/map']" style="height: 28px;"> -->
-
-	</h4>
-
-	<ion-row class="mt-20">
-		<ion-col size="4">
-			<span [ngStyle]="{'background-image': 'url('+local.avatar+')'}" class="logo-restaurante"></span>
-		</ion-col>
-		<ion-col size="8">
-			<h2 class="title-tactic">{{local.title}}</h2>
-		</ion-col>
-	</ion-row>
-
-	<img src="../assets/logo.svg" alt="" class="mt-def" style="margin: auto; margin-top: -30px; margin-bottom: -20px; width: 90%; display: block;">
-
-	<div style="padding: 0 40px 10px">
-
-		<ion-row>
-			<ion-col size="6" class="ion-no-padding" [routerLink]="['/tabs/home/sala']">
-				<div class="tactic-icon">
-					<img src="assets/user-2.svg" alt="">
-				</div>
-			</ion-col>
-
-			<ion-col size="6" class="ion-no-padding">
-				<div class="tactic-icon" style="float: right">
-					<img src="assets/send.svg" alt="">
-				</div>
-			</ion-col>
-
-			<ion-col size="6" class="ion-no-padding">
-				<div class="tactic-icon" [routerLink]="['/tabs/home/t-ofertas']">
-					<img src="assets/price-tag.svg" alt="">
-				</div>
-			</ion-col>
-
-			<ion-col size="6" class="ion-no-padding">
-				<div class="tactic-icon" style="float: right" [routerLink]="['/tabs/home/ropero']">
-					<img src="assets/clothes-hanger.svg" alt="">
-				</div>
-			</ion-col>
-		</ion-row>
-
-		<div class="clip-path" (click)="openCart()">
+	<div>
+		<div class="ion-padding" style="background-image: url(assets/fondo-01.png); background-size: cover; background-position: center; height: fit-content; min-height: 100vh;">
 			
-			<ion-row>
-				<ion-col>
-					<div class="icon" style="float: right">
-						<img src="assets/alcoholic-drink.svg" alt="">
-					</div>
+			<h4> <ion-icon (click)="nav.pop()" routerDirection="back" name="chevron-back"></ion-icon>
+
+				<!-- <img src="assets/pin.svg" alt="" [routerLink]="['/tabs/home/map']" style="height: 28px;"> -->
+
+			</h4>
+
+			<ion-row class="mt-20">
+				<ion-col size="4">
+					<span [ngStyle]="{'background-image': 'url('+local.avatar+')'}" class="logo-restaurante"></span>
 				</ion-col>
-				<ion-col>
-					<div class="icon" style="float: left">
-						<img src="assets/fork.svg" alt="">
-					</div>
+				<ion-col size="8">
+					<h2 class="title-tactic">{{local.title}}</h2>
 				</ion-col>
 			</ion-row>
 
+			<img src="../assets/logo.svg" alt="" class="mt-def" style="margin: auto; margin-top: -30px; margin-bottom: -20px; width: 90%; display: block;">
+
+			<div style="padding: 0 40px 10px">
+
+				<ion-row>
+					<ion-col size="6" class="ion-no-padding" [routerLink]="['/tabs/home/sala']">
+						<div class="tactic-icon">
+							<img src="assets/user-2.svg" alt="">
+						</div>
+					</ion-col>
+
+					<ion-col size="6" class="ion-no-padding">
+						<div class="tactic-icon" style="float: right">
+							<img src="assets/send.svg" alt="">
+						</div>
+					</ion-col>
+
+					<ion-col size="6" class="ion-no-padding">
+						<div class="tactic-icon" [routerLink]="['/tabs/home/t-ofertas']">
+							<img src="assets/price-tag.svg" alt="">
+						</div>
+					</ion-col>
+
+					<ion-col size="6" class="ion-no-padding">
+						<div class="tactic-icon" style="float: right" [routerLink]="['/tabs/home/ropero']">
+							<img src="assets/clothes-hanger.svg" alt="">
+						</div>
+					</ion-col>
+				</ion-row>
+
+				<!-- <div class="clip-path" (click)="openCart()"> -->
+				<div class="clip-path" (click)="changeBottom()">
+					
+					<ion-row>
+						<ion-col>
+							<div class="icon" style="float: right">
+								<img src="assets/alcoholic-drink.svg" alt="">
+							</div>
+						</ion-col>
+						<ion-col>
+							<div class="icon" style="float: left">
+								<img src="assets/fork.svg" alt="">
+							</div>
+						</ion-col>
+					</ion-row>
+
+				</div>
+
+			</div>
+
+
+		</div>
+
+
+	</div>
+
+</ion-content>
+
+<div class="bottom-informationT" style="height: 28px;">
+		
+	<div class="handlerT" (click)="changeBottom()">
+		<ion-icon name="chevron-up"></ion-icon>
+	</div>
+	<div class="information-box">
+		
+		<ion-row>
+			<ion-col *ngFor="let t of types">
+				<div [ngClass]="type == t ? 'type actual' : 'type'" (click)="type = t">{{t}}</div>
+			</ion-col>
+		</ion-row>
+
+
+		<div style="margin-bottom: 51px;" *ngIf="type == 'Menú'">
+			<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
+				
+			  <ion-card-content>
+			    <!-- Add card content here! -->
+			    <ion-list class="ion-no-padding">
+			    	<ion-item lines="none" *ngFor="let mm of menus; let i = index">
+			    		<label class="no-p-b">
+				    		<span class="menu-type" (click)="collapse(i)">{{mm.title}} <small>{{mm.plates.length}}</small></span>
+				    		<div class="menu-items" [id]="'items-t-'+i">
+				    			<div class="menu-item" *ngFor="let pl of mm.plates">
+				    				<div class="loquesea">
+					    				<div (click)="openDetails(pl)" class="mini-image" [ngStyle]="{'background-image':'url('+pl.avatar+')'}">
+					    				</div>
+					    				<div> <span (click)="openDetails(pl)">{{pl.title}} <br> <span>{{pl.price}}€</span></span>
+					    					<ion-icon name="add" (click)="addToCart(pl)"></ion-icon>
+					    				</div>
+				    					<div style="clear: both;"></div>
+				    				</div>
+				    			</div>
+				    		</div>
+			    		</label>
+			    	</ion-item>
+			    </ion-list>
+			  </ion-card-content>
+				
+			</ion-card>
+		</div>
+		<div style="margin-bottom: 51px;" *ngIf="type == 'Información'">
+			<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
+				
+			  <ion-card-content>
+			    <!-- Add card content here! -->
+			    <ion-list class="ion-no-padding">
+			    	<ion-item>
+			    		<label>
+				    		Compra Mínima
+				    		<span>{{local.min_buy}}€</span>
+			    		</label>
+			    	</ion-item>
+
+			    	<ion-item>
+			    		<label>
+				    		Tiempo Medio
+				    		<span>{{local.min_time}} min</span>
+			    		</label>
+			    	</ion-item>
+
+			    	<ion-item>
+			    		<label>
+				    		Capacidad
+				    		<span>{{local.capacity}} PAX</span>
+			    		</label>
+			    	</ion-item>
+
+			    	<ion-item lines="none">
+			    		<label>
+				    		Horario
+
+				    		<div *ngFor="let sc of schedule">
+				    			<div>{{dias[sc.day]}}: {{ sc.hour_from+':'+sc.minutes_from }} - {{sc.hour_to+':'+sc.minutes_to}}</div>
+				    		</div>
+				    		<!-- <span>10:00 - 23:00</span> -->
+			    		</label>
+			    	</ion-item>
+			    </ion-list>
+			  </ion-card-content>
+				
+			</ion-card>
+		</div>
+		<div style="margin-bottom: 51px;" *ngIf="type == 'Comentarios'">
+
+			<ion-button class="an-button" (click)="openComment()" style="height: 36px;margin-bottom: 12px;">
+    			Escribe una opinión
+    		</ion-button>
+
+
+			<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
+				
+			  <ion-card-content>
+			    <!-- Add card content here! -->
+			    <ion-list class="ion-no-padding">
+			    	<ion-item *ngFor="let comment of comments">
+			    		<label class="comment">
+				    		{{comment.user.name+' '+comment.user.last_name}} <br> <small>{{comment.created_at | expired:'hour'}}</small>
+				    		<p [innerHtml]="comment.comment">
+				    		</p>
+				    		<ion-icon [name]="comment.stars > 0 ? 'star' : 'star-outline'"></ion-icon>
+						    <ion-icon [name]="comment.stars > 1 ? 'star' : 'star-outline'"></ion-icon>
+						    <ion-icon [name]="comment.stars > 2 ? 'star' : 'star-outline'"></ion-icon>
+						    <ion-icon [name]="comment.stars > 3 ? 'star' : 'star-outline'"></ion-icon>
+						    <ion-icon [name]="comment.stars > 4 ? 'star' : 'star-outline'"></ion-icon>
+						    <!-- <ion-icon name="star-half"></ion-icon> -->
+						    <!-- <ion-icon name="star-outline"></ion-icon> -->
+			    		</label>
+			    	</ion-item>
+
+			    </ion-list>
+			  </ion-card-content>
+				
+			</ion-card>
 		</div>
 
 	</div>
 
 </div>
-
-</ion-content>

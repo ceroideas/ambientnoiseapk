@@ -8,8 +8,8 @@
 
 	<app-detalles-tutorial *ngIf="tutorialValue < 14"></app-detalles-tutorial>
 
-	<div *ngIf="tutorialValue >= 14">
-		<div class="ion-padding" [ngStyle]="{'background-image': 'url('+local.main+')', 'background-size': 'cover', 'background-position': 'center', 'height': 'fit-content', 'min-height': '100%', 'position': 'relative'}">
+	<div *ngIf="tutorialValue >= 14" style="min-height: 100vh">
+		<div class="ion-padding" [ngStyle]="{'background-image': 'url('+local.main+')', 'background-size': 'cover', 'background-position': 'center', 'height': 'fit-content', 'min-height': '100vh', 'position': 'relative'}">
 			<div style="background: rgba(0,0,0,.3); position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: 1">
 				
 			</div>
@@ -18,6 +18,8 @@
 		<h4> <ion-icon (click)="back()" name="chevron-back"></ion-icon>
 
 			<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+			<ion-icon (click)="changeBottom()" src="assets/restaurant-menu.svg"></ion-icon>
 
 			<!-- <img src="assets/pin.svg" alt="" [routerLink]="['/tabs/home/map']" style="height: 28px;"> -->
 
@@ -31,26 +33,25 @@
 		<div id="title-restaurant">
 			
 			<h2 style="width: calc(100% - 50px); float: left;">
-				{{local.title}} (50 m)
+				{{local.title}} ({{local.distance | distance}})
 			</h2>
 			<span style="width: 50px; float: right; font-size: 40px; color: #fff; text-align: right; top: 6px; position: relative;" (click)="addFavorite()">
 				<ion-icon [name]="'heart'+(favorite ? '' : '-outline')"></ion-icon>
 			</span>
 			<div>
 			    <span>
-			    	4.3
+			    	{{local.stars ? (local.stars | number:'1.2-2') : '0.00'}}
 			    </span>
 
-			    <ion-icon name="star"></ion-icon>
-			    <ion-icon name="star"></ion-icon>
-			    <ion-icon name="star"></ion-icon>
-			    <ion-icon name="star-half"></ion-icon>
-			    <ion-icon name="star-outline"></ion-icon>
+			    <ion-icon [name]="local.stars | star:'0'"></ion-icon>
+			    <ion-icon [name]="local.stars | star:'1'"></ion-icon>
+			    <ion-icon [name]="local.stars | star:'2'"></ion-icon>
+			    <ion-icon [name]="local.stars | star:'3'"></ion-icon>
+			    <ion-icon [name]="local.stars | star:'4'"></ion-icon>
 		    </div>
 
-		    <p style="min-height: 100px">
-		    	{{local.description}}
-		    </p>
+		    <div style="min-height: 100px" [innerHtml]="local.description">
+		    </div>
 
 		</div>
 
@@ -63,13 +64,13 @@
 	    		<div>
 	    			
 		    		Ocupación ahora: <br>
-		    		<span>{{local.ocupation}}%</span>
+		    		<span>{{local.real_ocupation}}%</span>
 	    		
 	    		</div>
 	    	</div>
 
 	    	<div class="fire">
-	    		<img src="assets/fire.svg" alt="">
+	    		<img [src]="'assets/fire'+(local.real_ocupation < 80 ? '-l' : '')+'.svg'" alt="">
 	    	</div>
 	    	
 	    </div>
@@ -86,7 +87,7 @@
 	    	</ion-col>
 
 	    	<ion-col size="6">
-	    		<ion-button class="an-button" (click)="verListas()" [routerLink]="['/tabs/home/lista/'+local?.id]">
+	    		<ion-button class="an-button" (click)="verListas()">
 	    			Inscribirse en Lista
 	    		</ion-button>
 	    	</ion-col>
@@ -118,127 +119,128 @@
 	    </ion-row>
 
 		</div>
-
-		<div class="bottom-informationD" style="height: 28px;">
-			
-			<div class="handlerD" (click)="changeBottom()">
-				<ion-icon name="chevron-up"></ion-icon>
-			</div>
-			<div class="information-box">
-				
-				<ion-row>
-					<ion-col *ngFor="let t of types">
-						<div [ngClass]="type == t ? 'type actual' : 'type'" (click)="type = t">{{t}}</div>
-					</ion-col>
-				</ion-row>
-
-
-				<div style="margin-bottom: 51px;" *ngIf="type == 'Menú'">
-					<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
-						
-					  <ion-card-content>
-					    <!-- Add card content here! -->
-					    <ion-list class="ion-no-padding">
-					    	<ion-item lines="none" *ngFor="let mm of menus; let i = index">
-					    		<label class="no-p-b">
-						    		<span class="menu-type" (click)="collapse(i)">{{mm.title}} <small>{{mm.plates.length}}</small></span>
-						    		<div class="menu-items" [id]="'items-'+i">
-						    			<div class="menu-item" *ngFor="let pl of mm.plates">
-						    				<div class="loquesea">
-							    				<div (click)="openDetails(pl)" class="mini-image" [ngStyle]="{'background-image':'url('+pl.avatar+')'}">
-							    				</div>
-							    				<div> <span (click)="openDetails(pl)">{{pl.title}} <br> <span>{{pl.price}}€</span></span>
-							    					<ion-icon name="add" (click)="addToCart(pl)"></ion-icon>
-							    				</div>
-						    					<div style="clear: both;"></div>
-						    				</div>
-						    			</div>
-						    		</div>
-					    		</label>
-					    	</ion-item>
-					    </ion-list>
-					  </ion-card-content>
-						
-					</ion-card>
-				</div>
-				<div style="margin-bottom: 51px;" *ngIf="type == 'Información'">
-					<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
-						
-					  <ion-card-content>
-					    <!-- Add card content here! -->
-					    <ion-list class="ion-no-padding">
-					    	<ion-item>
-					    		<label>
-						    		Compra Mínima
-						    		<span>{{local.min_buy}}€</span>
-					    		</label>
-					    	</ion-item>
-
-					    	<ion-item>
-					    		<label>
-						    		Tiempo Medio
-						    		<span>{{local.min_time}} min</span>
-					    		</label>
-					    	</ion-item>
-
-					    	<ion-item>
-					    		<label>
-						    		Capacidad
-						    		<span>{{local.capacity}} PAX</span>
-					    		</label>
-					    	</ion-item>
-
-					    	<ion-item lines="none">
-					    		<label>
-						    		Horario
-
-						    		<div *ngFor="let sc of schedule">
-						    			<div>{{dias[sc.day]}}: {{ sc.hour_from+':'+sc.minutes_from }} - {{sc.hour_to+':'+sc.minutes_to}}</div>
-						    		</div>
-						    		<!-- <span>10:00 - 23:00</span> -->
-					    		</label>
-					    	</ion-item>
-					    </ion-list>
-					  </ion-card-content>
-						
-					</ion-card>
-				</div>
-				<div style="margin-bottom: 51px;" *ngIf="type == 'Comentarios'">
-
-					<ion-button class="an-button" (click)="openComment()" style="height: 36px;margin-bottom: 12px;">
-		    			Escribe una opinión
-		    		</ion-button>
-
-
-					<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
-						
-					  <ion-card-content>
-					    <!-- Add card content here! -->
-					    <ion-list class="ion-no-padding">
-					    	<ion-item *ngFor="let comment of comments">
-					    		<label class="comment">
-						    		{{comment.user.name+' '+comment.user.last_name}} <br> <small>{{comment.modified_at | expired:'hour'}}</small>
-						    		<p [innerHtml]="comment.comment">
-						    		</p>
-						    		<ion-icon [name]="comment.stars > 0 ? 'star' : 'star-outline'"></ion-icon>
-								    <ion-icon [name]="comment.stars > 1 ? 'star' : 'star-outline'"></ion-icon>
-								    <ion-icon [name]="comment.stars > 2 ? 'star' : 'star-outline'"></ion-icon>
-								    <ion-icon [name]="comment.stars > 3 ? 'star' : 'star-outline'"></ion-icon>
-								    <ion-icon [name]="comment.stars > 4 ? 'star' : 'star-outline'"></ion-icon>
-								    <!-- <ion-icon name="star-half"></ion-icon> -->
-								    <!-- <ion-icon name="star-outline"></ion-icon> -->
-					    		</label>
-					    	</ion-item>
-
-					    </ion-list>
-					  </ion-card-content>
-						
-					</ion-card>
-				</div>
-
-			</div>
-
-		</div>
 	</div>
 
+
 </ion-content>
+
+<div class="bottom-informationD" style="height: 28px;">
+		
+	<div class="handlerD" (click)="changeBottom()">
+		<ion-icon name="chevron-up"></ion-icon>
+	</div>
+	<div class="information-box">
+		
+		<ion-row>
+			<ion-col *ngFor="let t of types">
+				<div [ngClass]="type == t ? 'type actual' : 'type'" (click)="type = t">{{t}}</div>
+			</ion-col>
+		</ion-row>
+
+
+		<div style="margin-bottom: 51px;" *ngIf="type == 'Menú'">
+			<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
+				
+			  <ion-card-content>
+			    <!-- Add card content here! -->
+			    <ion-list class="ion-no-padding">
+			    	<ion-item lines="none" *ngFor="let mm of menus; let i = index">
+			    		<label class="no-p-b">
+				    		<span class="menu-type" (click)="collapse(i)">{{mm.title}} <small>{{mm.plates.length}}</small></span>
+				    		<div class="menu-items" [id]="'items-'+i">
+				    			<div class="menu-item" *ngFor="let pl of mm.plates">
+				    				<div class="loquesea">
+					    				<div (click)="openDetails(pl)" class="mini-image" [ngStyle]="{'background-image':'url('+pl.avatar+')'}">
+					    				</div>
+					    				<div> <span (click)="openDetails(pl)">{{pl.title}} <br> <span>{{pl.price}}€</span></span>
+					    					<ion-icon *ngIf="!fake" name="add" (click)="addToCart(pl)"></ion-icon>
+					    				</div>
+				    					<div style="clear: both;"></div>
+				    				</div>
+				    			</div>
+				    		</div>
+			    		</label>
+			    	</ion-item>
+			    </ion-list>
+			  </ion-card-content>
+				
+			</ion-card>
+		</div>
+		<div style="margin-bottom: 51px;" *ngIf="type == 'Información'">
+			<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
+				
+			  <ion-card-content>
+			    <!-- Add card content here! -->
+			    <ion-list class="ion-no-padding">
+			    	<ion-item>
+			    		<label>
+				    		Compra Mínima
+				    		<span>{{local.min_buy}}€</span>
+			    		</label>
+			    	</ion-item>
+
+			    	<ion-item>
+			    		<label>
+				    		Tiempo Medio
+				    		<span>{{local.min_time}} min</span>
+			    		</label>
+			    	</ion-item>
+
+			    	<ion-item>
+			    		<label>
+				    		Capacidad
+				    		<span>{{local.capacity}} PAX</span>
+			    		</label>
+			    	</ion-item>
+
+			    	<ion-item lines="none">
+			    		<label>
+				    		Horario
+
+				    		<div *ngFor="let sc of schedule">
+				    			<div>{{dias[sc.day]}}: {{ sc.hour_from+':'+sc.minutes_from }} - {{sc.hour_to+':'+sc.minutes_to}}</div>
+				    		</div>
+				    		<!-- <span>10:00 - 23:00</span> -->
+			    		</label>
+			    	</ion-item>
+			    </ion-list>
+			  </ion-card-content>
+				
+			</ion-card>
+		</div>
+		<div style="margin-bottom: 51px;" *ngIf="type == 'Comentarios'">
+
+			<ion-button class="an-button" (click)="openComment()" style="height: 36px;margin-bottom: 12px;">
+    			Escribe una opinión
+    		</ion-button>
+
+
+			<ion-card class="ion-no-margin card-detalle" style="border-radius: 18px;">
+				
+			  <ion-card-content>
+			    <!-- Add card content here! -->
+			    <ion-list class="ion-no-padding">
+			    	<ion-item *ngFor="let comment of comments">
+			    		<label class="comment">
+				    		{{comment.user.name+' '+comment.user.last_name}} <br> <small>{{comment.created_at | expired:'hour'}}</small>
+				    		<p [innerHtml]="comment.comment">
+				    		</p>
+				    		<ion-icon [name]="comment.stars > 0 ? 'star' : 'star-outline'"></ion-icon>
+						    <ion-icon [name]="comment.stars > 1 ? 'star' : 'star-outline'"></ion-icon>
+						    <ion-icon [name]="comment.stars > 2 ? 'star' : 'star-outline'"></ion-icon>
+						    <ion-icon [name]="comment.stars > 3 ? 'star' : 'star-outline'"></ion-icon>
+						    <ion-icon [name]="comment.stars > 4 ? 'star' : 'star-outline'"></ion-icon>
+						    <!-- <ion-icon name="star-half"></ion-icon> -->
+						    <!-- <ion-icon name="star-outline"></ion-icon> -->
+			    		</label>
+			    	</ion-item>
+
+			    </ion-list>
+			  </ion-card-content>
+				
+			</ion-card>
+		</div>
+
+	</div>
+
+</div>

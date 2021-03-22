@@ -14,6 +14,8 @@ export class EvDestacadosPage implements OnInit {
   user = JSON.parse(localStorage.getItem('ANuser'));
   eventos:any;
 
+  fake = localStorage.getItem('fakeUser');
+
   constructor(public api: ApiService, public events: EventsService, public alertCtrl: AlertController, public loadingCtrl: LoadingController) { }
 
   ngOnInit() {
@@ -29,17 +31,15 @@ export class EvDestacadosPage implements OnInit {
 
   openInformation(id)
   {
-  	if ((document.getElementById('bi-'+id) as HTMLElement).offsetHeight > 0) {
-  		return (document.getElementById('bi-'+id) as HTMLElement).style.height = "0px";
-  	}
-  	(document.getElementById('bi-'+id) as HTMLElement).style.height = 'fit-content';
-  	let h = (document.getElementById('bi-'+id) as HTMLElement).offsetHeight;
+  	if ((document.getElementById('bi-EE'+id) as HTMLElement).offsetHeight > 0) {
+      return (document.getElementById('bi-EE'+id) as HTMLElement).style.height = "0px";
+    }
 
-  	(document.getElementById('bi-'+id) as HTMLElement).style.height = "0px";
+    let h = (document.getElementById('inner-EE'+id) as HTMLElement).offsetHeight;
 
-  	setTimeout(()=>{
-  		(document.getElementById('bi-'+id) as HTMLElement).style.height = h+"px";
-  	},10)
+    setTimeout(()=>{
+      (document.getElementById('bi-EE'+id) as HTMLElement).style.height = (h + 12)+"px";
+    },10)
 
   }
 
@@ -57,14 +57,14 @@ export class EvDestacadosPage implements OnInit {
               this.eventos[i].list = data;
 
               let mess = list.users.findIndex(x=>x.user_id == this.user.id) != -1 ? 'Has abandonado la lista' : 'Te has añadido a la lista';
-              this.alertCtrl.create({message:mess}).then(a=>{a.present()});
+              this.alertCtrl.create({message:mess}).then(a=>{a.present();setTimeout(()=>{a.dismiss()},3000);});
 
               l.dismiss();
             },e => {
 
               l.dismiss();
 
-              this.alertCtrl.create({message:"La lista está llena!"}).then(a=>{a.present()});
+              this.alertCtrl.create({message:"La lista está llena!"}).then(a=>{a.present();setTimeout(()=>{a.dismiss()},3000);});
             })
           })
         }

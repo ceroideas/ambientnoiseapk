@@ -11,6 +11,8 @@ export class VerPage implements OnInit {
 
   @Input() plato:any;
 
+  fake = localStorage.getItem('fakeUser');
+
   constructor(public events: EventsService, public modal: ModalController) { }
 
   ngOnInit() {

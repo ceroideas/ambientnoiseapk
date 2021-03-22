@@ -52,7 +52,7 @@ export class NuevoPlatoPage implements OnInit {
       price: new FormControl(null, Validators.compose([
         Validators.required
       ])),
-      image: new FormControl("https://m.media-amazon.com/images/I/41br4ayjw4L._AC_SS350_.jpg", Validators.compose([
+      image: new FormControl(/*"https://m.media-amazon.com/images/I/41br4ayjw4L._AC_SS350_.jpg"*/null, Validators.compose([
         Validators.required
       ])),
       menu_id: new FormControl(this.menu_id),
@@ -67,7 +67,7 @@ export class NuevoPlatoPage implements OnInit {
   		this.api.addMenuPlate(this.validations_form.value).subscribe(data=>{
 			l.dismiss();
 			this.events.publish('loadMenus');
-			this.nav.back();
+			this.nav.pop();
 		})
   	})
   }
@@ -77,7 +77,7 @@ export class NuevoPlatoPage implements OnInit {
     const options: CameraOptions = {
       quality: 100,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true

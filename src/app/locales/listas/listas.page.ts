@@ -24,6 +24,8 @@ export class ListasPage implements OnInit {
 
     this.events.destroy('reloadLists');
     this.events.subscribe('reloadLists',()=>{
+      console.log('reloadLists')
+      this.lists = [];
       this.page = 1;
       this.getLists();
     });
@@ -68,6 +70,11 @@ export class ListasPage implements OnInit {
 
   getList(l)
   {
+    localStorage.setItem('listLogo',l.establishment.avatar);
+    if (l.status == 0) {
+      this.alert.create({message:"La lista se encuentra desactivada",buttons: [{text:"Ok"}]}).then(a=>a.present());
+      return false;
+    }
     this.navparams.setParam(l);
     this.nav.navigateForward('local/listas/lista-detalles');
   }

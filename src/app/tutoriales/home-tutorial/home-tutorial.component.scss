@@ -60,40 +60,40 @@ h5 {
 	margin-top: 50%;
 }
 
-.bottom-informationH{
+// .bottom-informationH{
 
-	position: fixed;
-	width: 100%;
-	// bottom: -500px;
-	transition: all 300ms;
-	z-index: 2;
-	left: 0;
+// 	position: fixed;
+// 	width: 100%;
+// 	// bottom: -500px;
+// 	transition: all 300ms;
+// 	z-index: 2;
+// 	left: 0;
 
-	.handlerH {
-		width: 100px;
-		background-color: #312f2f;
-		color: #a365b8;
-		border-radius: 12px 12px 0 0;
-		text-align: center;
-		padding: 4px;
-		margin: auto;
-	}
-	.information-boxH {
-		background-color: #312f2f;
-		height: fit-content;
-		border-radius: 30px 30px 0 0;
-		padding: 32px 24px;
+// 	.handlerH {
+// 		width: 100px;
+// 		background-color: #312f2f;
+// 		color: #a365b8;
+// 		border-radius: 12px 12px 0 0;
+// 		text-align: center;
+// 		padding: 4px;
+// 		margin: auto;
+// 	}
+// 	.information-boxH {
+// 		background-color: #312f2f;
+// 		height: fit-content;
+// 		border-radius: 30px 30px 0 0;
+// 		padding: 32px 24px;
 
-		label {
-			width: 100%;
-			display: block;
-			font-size: 12px;
-			small {
-				float: right;
-			}
-		}
-	}
-}
+// 		label {
+// 			width: 100%;
+// 			display: block;
+// 			font-size: 12px;
+// 			small {
+// 				float: right;
+// 			}
+// 		}
+// 	}
+// }
 
 ion-list{
 	background: transparent !important;

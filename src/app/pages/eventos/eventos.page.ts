@@ -14,24 +14,27 @@ export class EventosPage implements OnInit {
 
   allEvents:any;
 
+  fake = localStorage.getItem('fakeUser');
+
   constructor(public nav: NavController, public api: ApiService, public alertCtrl: AlertController, public loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.api.getEvents(this.local.id).subscribe(data=>{
       this.allEvents = data;
+      console.log(data);
     })
   }
 
   openInformation(id)
   {
-  	if ((document.getElementById('bi-'+id) as HTMLElement).offsetHeight > 0) {
-  		return (document.getElementById('bi-'+id) as HTMLElement).style.height = "0px";
+  	if ((document.getElementById('bi-E'+id) as HTMLElement).offsetHeight > 0) {
+  		return (document.getElementById('bi-E'+id) as HTMLElement).style.height = "0px";
   	}
 
-  	let h = (document.getElementById('inner-'+id) as HTMLElement).offsetHeight;
+  	let h = (document.getElementById('inner-E'+id) as HTMLElement).offsetHeight;
 
   	setTimeout(()=>{
-  		(document.getElementById('bi-'+id) as HTMLElement).style.height = (h + 6)+"px";
+  		(document.getElementById('bi-E'+id) as HTMLElement).style.height = (h + 12)+"px";
   	},10)
 
   }
@@ -50,14 +53,14 @@ export class EventosPage implements OnInit {
               this.allEvents[i].list = data;
 
               let mess = list.users.findIndex(x=>x.user_id == this.user.id) != -1 ? 'Has abandonado la lista' : 'Te has añadido a la lista';
-              this.alertCtrl.create({message:mess}).then(a=>{a.present()});
+              this.alertCtrl.create({message:mess}).then(a=>{a.present(); setTimeout(()=>{a.dismiss()},3000);});
 
               l.dismiss();
             },e => {
 
               l.dismiss();
 
-              this.alertCtrl.create({message:"La lista está llena!"}).then(a=>{a.present()});
+              this.alertCtrl.create({message:"La lista está llena!"}).then(a=>{a.present();setTimeout(()=>{a.dismiss()},3000);});
             })
           })
         }

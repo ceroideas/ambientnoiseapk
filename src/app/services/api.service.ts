@@ -123,20 +123,48 @@ export class ApiService {
 
   getOffers(id)
   {
-    return this.http.get(this.url+'/getOffers/'+id);
+    let user = JSON.parse(localStorage.getItem('ANuser'));
+    let user_id = null;
+    if (user) {
+      user_id = user['id'];
+    }
+    let lt = localStorage.getItem('lat');
+    let ln = localStorage.getItem('lon');
+    return this.http.get(this.url+'/getOffers/'+id+'/'+user_id+`/${lt}/${ln}`);
   }
   getEvents(id)
   {
-    return this.http.get(this.url+'/getEvents/'+id);
+    let user = JSON.parse(localStorage.getItem('ANuser'));
+    let user_id = null;
+    if (user) {
+      user_id = user['id'];
+    }
+    let lt = localStorage.getItem('lat');
+    let ln = localStorage.getItem('lon');
+    return this.http.get(this.url+'/getEvents/'+id+'/'+user_id+`/${lt}/${ln}`);
   }
 
   getFeaturedOffers()
   {
-    return this.http.get(this.url+'/getFeaturedOffers');
+    let user = JSON.parse(localStorage.getItem('ANuser'));
+    let id = null;
+    if (user) {
+      id = user['id'];
+    }
+    let lt = localStorage.getItem('lat');
+    let ln = localStorage.getItem('lon');
+    return this.http.get(this.url+'/getFeaturedOffers/'+id+`/${lt}/${ln}`);
   }
   getFeaturedEvents()
   {
-    return this.http.get(this.url+'/getFeaturedEvents');
+    let user = JSON.parse(localStorage.getItem('ANuser'));
+    let id = null;
+    if (user) {
+      id = user['id'];
+    }
+    let lt = localStorage.getItem('lat');
+    let ln = localStorage.getItem('lon');
+    return this.http.get(this.url+'/getFeaturedEvents/'+id+`/${lt}/${ln}`);
   }
   addRemoveFavorite(data)
   {
@@ -302,9 +330,24 @@ export class ApiService {
   {
     return this.http.post(this.url+'/saveRosterUser',data);
   }
+
+  saveStatusAssist(data)
+  {
+    return this.http.post(this.url+'/saveStatusAssist',data);
+  }
+  saveStatusAssistG(data)
+  {
+    return this.http.post(this.url+'/saveStatusAssistG',data);
+  }
+
+
   addGuess(data)
   {
     return this.http.post(this.url+'/addGuess',data);
+  }
+  saveGuest(data)
+  {
+    return this.http.post(this.url+'/saveGuest',data);
   }
   saveOneSignalId(data)
   {
@@ -341,6 +384,131 @@ export class ApiService {
   contact(data)
   {
     return this.http.post(this.url+'/contact',data);
+  }
+
+  getPage()
+  {
+    return this.http.get(this.url+'/getPage');
+  }
+
+  deleteReserve(id)
+  {
+    return this.http.get(this.url+'/deleteReserve/'+id);
+  }
+
+  getPackages()
+  {
+    return this.http.get(this.url+'/getPackages');
+  }
+  
+  exampleStripe(data)
+  {
+    return this.http.post(this.url+'/exampleStripe',data);
+  }
+
+  sendCode(data)
+  {
+    return this.http.post(this.url+'/sendCode',data);
+  }
+
+  changePassword(data)
+  {
+    return this.http.post(this.url+'/changePassword',data);
+  }
+
+  loginWithFb(data)
+  {
+    return this.http.post(this.url+'/loginWithFb',data);
+  }
+
+  addRecord(data)
+  {
+    return this.http.post(this.url+'/addRecord',data);
+  }
+
+  payPackage(data)
+  {
+    return this.http.post(this.url+'/payPackage',data);
+  }
+  checkPackage(data)
+  {
+    return this.http.post(this.url+'/checkPackage',data);
+  }
+  getMyMembership(id)
+  {
+    return this.http.get(this.url+'/getMyMembership/'+id);
+  }
+  realOcupation(id)
+  {
+    return this.http.get(this.url+'/realOcupation/'+id);
+  }
+  applyOffer(data)
+  {
+    return this.http.post(this.url+'/applyOffer',data);
+  }
+  myRooms(data)
+  {
+    return this.http.post(this.url+'/myRooms',data);
+  }
+  llegada(data)
+  {
+    return this.http.post(this.url+'/llegada',data);
+  }
+
+  block(data)
+  {
+    return this.http.post(this.url+'/block',data);
+  }
+
+  report(data)
+  {
+    return this.http.post(this.url+'/report',data);
+  }
+
+  unblock(data)
+  {
+    return this.http.post(this.url+'/unblock',data);
+  }
+
+  deleteMatch(data)
+  {
+    return this.http.post(this.url+'/deleteMatch',data);
+  }
+  deleteChat(data)
+  {
+    return this.http.post(this.url+'/deleteChat',data);
+  }
+
+  getBlocked(id)
+  {
+    return this.http.get(this.url+'/getBlocked/'+id);
+  }
+
+  getUrl()
+  {
+    return this.http.get(this.url+'/getUrl');
+  }
+
+  getCards(id)
+  {
+    return this.http.get(this.url+'/getCards/'+id);
+  }
+
+  deleteCard(id)
+  {
+    return this.http.get(this.url+'/deleteCard/'+id);
+  }
+
+  getDisclaimers()
+  {
+    return this.http.get(this.url+'/getDisclaimers');
+  }
+
+  /**/
+
+  checkCarrito(id)
+  {
+    return this.http.get(this.url+'/checkCarrito/'+id);
   }
 
 }

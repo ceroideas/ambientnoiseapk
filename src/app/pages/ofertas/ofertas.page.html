@@ -37,6 +37,8 @@
 							<div class="rest-info">
 								<label class="title">{{o.title}}</label>
 
+								<span style="position: absolute; right: 0px; top: 0px; color: #ccc; font-size: 10px;">{{o.ordering}}</span>
+
 								<small>{{o.establishment.title}}</small>
 
 								<label class="label-1">{{o.type == 1 ? 'Descuento' : 'Promoción'}}</label>
@@ -46,8 +48,8 @@
 					</ion-row>
 				</div>
 			</ion-col>
-			<ion-col size="3">
-				<div class="right-side-off">
+			<ion-col size="3" style="height: auto;">
+				<div class="right-side-off" style="height: 100%">
 					<h1>{{o.type == 1 ? o.quantity : o.quantity+'x1'}}</h1>
 				</div>
 			</ion-col>

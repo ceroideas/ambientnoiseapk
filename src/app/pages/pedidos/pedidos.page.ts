@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from '@ionic/angular';
 import { ApiService } from '../../services/api.service';
+import { EventsService } from '../../services/events.service';
 import { QrPage } from '../qr/qr.page';
 
 @Component({
@@ -15,9 +16,18 @@ export class PedidosPage implements OnInit {
 
   user = JSON.parse(localStorage.getItem('ANuser'));
 
-  constructor(public nav: NavController, public modal: ModalController, public api: ApiService) { }
+  constructor(public nav: NavController, public modal: ModalController, public api: ApiService, public events: EventsService) { }
 
   ngOnInit() {
+    this.events.destroy('getOrders');
+    this.events.subscribe('getOrders',()=>{
+      this.getOrders();
+    });
+    this.getOrders();
+  }
+
+  getOrders()
+  {
     this.api.getOrders({user_id:this.user.id}).subscribe(data=>{
       this.pedidos = data[0];
       this.roperos = data[1];

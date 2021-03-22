@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -19,7 +19,7 @@
 	<div style="position: relative;">
 
 		<div *ngIf="!cards?.length">
-      		<h4>Ya has visto todas la fotos de {{name}}</h4>
+      		<h4>Ya has visto todas la fotos de los usuarios</h4>
       	</div>
 
 		<!-- <div class="profile-pic" [ngStyle]="{'background-image': 'url(assets/faces/'+data[0]+')'}">

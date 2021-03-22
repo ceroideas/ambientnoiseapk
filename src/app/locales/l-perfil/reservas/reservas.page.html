@@ -1,0 +1,79 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+		<!-- <ion-button class="an-button" (click)="newMenu()" routerDirection="root">Nuevo menú</ion-button> -->
+
+	</h4>
+
+	<h3>Reservados</h3>
+
+	<ion-row style="margin-top: 16px;">
+		<ion-col size="4">
+			<span [ngStyle]="{'background-image': 'url('+(local.avatar ? local.avatar : 'assets/logo.svg')+')'}" class="logo-restaurante"></span>
+		</ion-col>
+		<ion-col size="8">
+			<h2 class="title-tactic">{{local.title}}</h2>
+		</ion-col>
+	</ion-row>
+
+	<br>
+
+	<ion-label style="margin-bottom: 12px; display: block;">Reservas hechas</ion-label>
+
+	<div *ngFor="let room of rooms">
+		<div *ngIf="(room?.reservados | expired:'filter_reserve')?.length > 0">
+			
+			<label style="display: block; margin-bottom: 8px" for="">Reservas {{room.title}}</label>
+
+			<div *ngIf="room?.reservados?.length > 0">
+				
+				<ion-row style="margin-bottom: 12px;">
+					<ion-col size="12" class="all-rooms">
+						<div class="rooms" [ngClass]="{'only': room?.reservados?.length == 1,'expired': (r | expired:'reserve')}" *ngFor="let r of room?.reservados">
+							<ion-row>
+								<ion-col size="4">
+									<div class="rest-pic" [ngStyle]="{'background-image': 'url('+room.avatar+')'}">
+										
+									</div>
+								</ion-col>
+								<ion-col size="8">
+									<div class="rest-info" style="height: 60px;">
+										<label class="title">{{r.date | expired:'date'}}</label>
+
+										<small>De {{r.hour_from}}:{{r.minute_from}} a {{r.hour_to}}:{{r.minute_to}}</small>
+									</div>
+
+									<ion-row class="ion-no-padding">
+										<ion-col class="ion-no-padding" size="12" style="text-align: left; font-size: 12px">
+											<b>Reservado por:</b> <br>
+											{{r.user.name}}
+										</ion-col>
+										<!-- <ion-col size="2" style="text-align: right">
+										</ion-col> -->
+										<!-- <ion-col size="4" style="text-align: right">
+											<ion-icon (click)="verQr(r)" class="verQr" name="qr-code-outline"></ion-icon>
+										</ion-col> -->
+									</ion-row>	
+								</ion-col>
+							</ion-row>
+						</div>
+					</ion-col>
+				</ion-row>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- <ion-button class="an-button">Ajustes</ion-button> -->
+	<!-- <ion-button class="an-button" [routerLink]="['/local/perfil/ajustes']">Ajustes</ion-button> -->
+
+</ion-content>

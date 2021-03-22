@@ -10,10 +10,13 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  styleUrls: ['app.component.scss'],
+  providers: [SocialSharing]
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
@@ -22,6 +25,7 @@ export class AppComponent implements OnInit {
   public appPages = [];
   public extras = [];
   user;
+  type = null;
   // public labels = ['Política de privacidad', 'Soporte y FAQs'];
 
   constructor(
@@ -35,6 +39,7 @@ export class AppComponent implements OnInit {
     private api: ApiService,
     public alertCtrl: AlertController,
     public nav: NavController,
+    private socialSharing: SocialSharing
   ) {
     this.initializeApp();
   }
@@ -42,6 +47,11 @@ export class AppComponent implements OnInit {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
+      // this.statusBar.overlaysWebView(true);
+      this.statusBar.show();
+      this.statusBar.overlaysWebView(false);
+      this.statusBar.backgroundColorByHexString('#a365b8');
+      this.statusBar.styleLightContent();
       this.splashScreen.hide();
 
       if (localStorage.getItem('ANuser')) {
@@ -58,6 +68,9 @@ export class AppComponent implements OnInit {
        // data.coords.latitude
        // data.coords.longitude
 
+       localStorage.setItem('lat',data.coords.latitude.toString());
+       localStorage.setItem('lon',data.coords.longitude.toString());
+
        this.api.getCloser({lat:data.coords.latitude,lon:data.coords.longitude}).subscribe((data:any)=>{
          console.log(data);
          if (data) {
@@ -72,10 +85,17 @@ export class AppComponent implements OnInit {
       });
 
       this.initializeOnesignal();
+
+      this.api.getUrl().subscribe((data:string)=>{
+        // console.log(data);
+        localStorage.setItem('share_url',JSON.stringify(data[0]));
+      })
     });
   }
 
   ngOnInit() {
+
+    this.pay();
 
     this.geolocation.getCurrentPosition().then((resp) => {
       localStorage.setItem('lat',resp.coords.latitude.toString());
@@ -91,6 +111,7 @@ export class AppComponent implements OnInit {
     }
 
     this.events.subscribe('showClientMenu',()=>{
+      this.type = 'client';
       this.appPages = [
       {
         title: 'BUSCAR',
@@ -145,6 +166,7 @@ export class AppComponent implements OnInit {
     })
 
     this.events.subscribe('showLocalMenu',()=>{
+      this.type = 'local';
       this.appPages = [
       {
         title: 'PERFIL',
@@ -178,7 +200,7 @@ export class AppComponent implements OnInit {
       },
       {
         title: 'CONTACTO',
-        url: '/tabs/contacto',
+        url: '/local/contacto',
         icon: 'chatbox'
       },
       /*{
@@ -214,11 +236,26 @@ export class AppComponent implements OnInit {
     ]}).then(a=>a.present());
   }
 
+  pay()
+  {
+    // this.api.exampleStripe({
+    //   "price": "50",
+    //   "card": "4242424242424242",
+    //   "exp_m": "12",
+    //   "exp_y": "2022",
+    //   "cvc": "123",
+    // }).subscribe(data=>{
+    //   console.log(data);
+    // },e=>{
+    //   console.log(e);
+    // })
+  }
+
   initializeOnesignal()
   {
     this.oneSignal.startInit('e4495339-60e1-4a99-84a7-a2119469b570', '54999905802');
 
-    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
 
     this.oneSignal.handleNotificationReceived().subscribe(() => {
      // do something when notification is received saveOneSignalId
@@ -226,9 +263,51 @@ export class AppComponent implements OnInit {
 
     this.oneSignal.handleNotificationOpened().subscribe((jsondata) => {
       // do something when a notification is opened
-      // if (jsondata.notification.payload.additionalData.type == 1) {
-      //   // this.verGanadores();
-      // }
+      let data = jsondata.notification.payload.additionalData;
+
+      if (this.user.role == 2) {
+        switch (data.type) {
+
+          case "like":
+            this.nav.navigateForward('tabs/chat-room');
+            this.events.publish('getAprobedAll');
+            break;
+
+          case "chat":
+            this.nav.navigateForward('tabs/chat-room/'+data.from_id);
+            this.events.publish('getAprobedAll');
+            break;
+          case "reserve":
+            this.nav.navigateForward('tabs/mis-reservas/'+data.establishment_id);
+            break;
+
+          case "cart":
+            this.nav.navigateForward('tabs/perfil/carrito');
+            this.events.publish('getCart');
+            break;
+          case "order":
+            this.nav.navigateForward('tabs/perfil/pedidos');
+            this.events.publish('getOrders');
+            break;
+          case "closet":
+            this.nav.navigateForward('tabs/perfil/pedidos');
+            this.events.publish('getOrders');
+            break;
+
+          case "ocupation":
+            this.events.publish('realOcupation')
+            break;
+
+          case "local":
+            this.nav.navigateForward('tabs/home/detalles/'+data.establishment_id);
+            break;
+          
+          default:
+            // code...
+            console.log('notificación por defecto')
+            break;
+        }
+      }
     });
 
     this.oneSignal.endInit();
@@ -246,6 +325,24 @@ export class AppComponent implements OnInit {
         );
       }
 
+    });
+  }
+
+  share()
+  {
+    let m = JSON.parse(localStorage.getItem('share_url'));
+    let url;
+    if (this.platform.is('ios')) {
+      url = m.url_ios;
+    }else{
+      url = m.url_android;
+    }
+    this.socialSharing.share(m.message+url, m.subject).then(() => {
+      // Success!
+      console.log('success');
+    }).catch(() => {
+      // Error!
+      console.log('error');
     });
   }
 }

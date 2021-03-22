@@ -8,7 +8,7 @@
 
 	<div class="ion-padding" style="background-image: url(assets/fondo-02.png); background-size: cover; background-position: center; height: fit-content; min-height: 100%;">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -50,13 +50,15 @@
 						</ion-col>
 					</ion-row>
 
-					<div class="bottom-information-E" [id]="'bi-'+i">
-						<div [id]="'inner-'+i">
+					<div class="bottom-information-E" [id]="'bi-E'+i">
+						<div [id]="'inner-E'+i">
 							<hr>
 							<h4>{{e.title}}</h4>
+							
+							<span class="date"> Final del evento: <span style="text-transform: capitalize;">{{e | expired:'local2'}}</span></span>
 							<p [innerHtml]="e.description"></p>
 
-							<span style="margin-top: 8px;" *ngIf="e.list" (click)="addGuess(e.list,i)">{{ e.list | guests:user.id:'list' }}</span>
+							<span style="margin-top: 8px;" *ngIf="e.list && !fake && e.list.status == 1" (click)="addGuess(e.list,i)">{{ e.list | guests:user.id:'list' }}</span>
 						</div>
 
 					</div>

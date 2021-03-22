@@ -12,6 +12,8 @@ export class CestaPage implements OnInit {
 
   establishments:any = [];
 
+  user = JSON.parse(localStorage.getItem('ANuser'));
+
   constructor(public nav: NavController, public alertCtrl: AlertController, public api: ApiService, public events: EventsService, public loading: LoadingController, public cdr: ChangeDetectorRef) {
     if (localStorage.getItem('carrito')) {
       this.establishments = JSON.parse(localStorage.getItem('carrito'));
@@ -24,6 +26,10 @@ export class CestaPage implements OnInit {
   }
 
   ngOnInit() {
+    this.api.checkCarrito(this.user.id).subscribe(data=>{
+      localStorage.setItem('carrito',JSON.stringify(data));
+      this.establishments = JSON.parse(localStorage.getItem('carrito'));
+    })
   }
 
   subQ(i,j)
@@ -48,7 +54,7 @@ export class CestaPage implements OnInit {
 
           setTimeout(()=>{
             let arr = document.getElementById('cart_items-'+i).getElementsByClassName('menu-item');
-            let h = 75;
+            let h = 75+24+18;
             for( let i in arr){
               if ((arr[i] as HTMLElement).offsetHeight != undefined) {
                 h+=(arr[i] as HTMLElement).offsetHeight;
@@ -83,6 +89,7 @@ export class CestaPage implements OnInit {
 
     this.api.updateQuantity({id:this.establishments[i].products[j].id, quantity: this.establishments[i].products[j].quantity}).subscribe(data => {
       localStorage.setItem('carrito',JSON.stringify(data));
+      this.establishments = data;
     })
   }
 
@@ -96,7 +103,7 @@ export class CestaPage implements OnInit {
 
     }else{
       let arr = document.getElementById('cart_items-'+e).getElementsByClassName('menu-item');
-      let h = 75+24;
+      let h = 75+24+18;
       for( let i in arr){
         if ((arr[i] as HTMLElement).offsetHeight != undefined) {
           h+=(arr[i] as HTMLElement).offsetHeight;
@@ -107,26 +114,52 @@ export class CestaPage implements OnInit {
 
   }
 
+  selectOffer(o,id)
+  {
+    this.alertCtrl.create({message:"Desea aplicar la oferta seleccionada al pedido?",buttons:[
+
+      {
+        text:"Ok",handler:()=>{
+          this.loading.create().then(l=>{
+            l.present();
+
+            this.api.applyOffer({offer_id:o.id,order_id:id}).subscribe(data=>{
+              l.dismiss();
+              localStorage.setItem('carrito',JSON.stringify(data));
+              this.establishments = data;
+            },e=>{
+              l.dismiss();
+            })
+          });
+      }},{
+        text:"Cancelar"
+      }
+
+    ]}).then(a=>a.present());
+  }
+
   pagar(id)
   {
     this.alertCtrl.create({message:"Está por pagar el pedido numero #0000"+id+". \n ¿Desea continuar?", buttons: [
       {
         text:"Pagar",
         handler:()=>{
-          this.loading.create().then(l=>{
-            l.present();
-            this.api.payOrder({id:id}).subscribe(data=>{
 
-              localStorage.setItem('carrito',JSON.stringify(data));
-              this.establishments = data;
-              this.events.publish('reloadCarta');
+          this.nav.navigateForward('tabs/perfil/carrito/pagar/'+id)
+          // this.loading.create().then(l=>{
+          //   l.present();
+          //   this.api.payOrder({id:id}).subscribe(data=>{
 
-              this.alertCtrl.create({message:"Gracias por su compra! Se ha generado un código QR que deberá mostrar cuando le entreguen su pedido."}).then(a=>a.present());
+          //     localStorage.setItem('carrito',JSON.stringify(data));
+          //     this.establishments = data;
+          //     this.events.publish('reloadCarta');
 
-              l.dismiss();
+          //     this.alertCtrl.create({message:"Gracias por su compra! Se ha generado un código QR que deberá mostrar cuando le entreguen su pedido."}).then(a=>a.present());
 
-            })
-          })
+          //     l.dismiss();
+
+          //   })
+          // })
         }
       },{
         text: "Cancelar"

@@ -35,7 +35,8 @@ export class LEventosPage implements OnInit {
   getMyEvents(event = null)
   {
     this.api.getMyEvents(this.user.id,this.page).subscribe((data:any)=>{
-      this.allEvents = this.allEvents.concat(data.data);
+      // this.allEvents = this.allEvents.concat(data.data);
+      this.allEvents = data.data;
       
       if (event) {
         event.target.complete();

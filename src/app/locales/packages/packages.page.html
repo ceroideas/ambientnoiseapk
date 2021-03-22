@@ -1,0 +1,47 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4>
+		<!-- <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon> -->
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3>Paquetes</h3>
+
+	<!-- <br *ngIf="step < 4"> -->
+
+	<div class="central-block">
+
+		<h5 class="disclaimer">Seleccione el paquete que más se adapte a tus necesidades</h5>
+
+		<ion-row>
+			<ion-col size="6" *ngFor="let p of packages">
+				
+				<div class="package-div" (click)="payPackage(p)">
+					
+					<h6>{{p.title}}</h6>
+
+					<h4>{{p.price}}€</h4>
+
+					<small>Duración: {{p.validated_time+' '+(p.validated_info | expired:"translate")}}</small>
+
+					<small>Alcance: {{p.devices}} Disp...</small>
+
+				</div>
+
+			</ion-col>
+		</ion-row>
+
+	</div>
+
+	<!-- <ion-button (click)="publishEvent()" [disabled]="!validations_form1.valid" class="an-button" routerDirection="root">Guardar</ion-button> -->
+
+
+</ion-content>

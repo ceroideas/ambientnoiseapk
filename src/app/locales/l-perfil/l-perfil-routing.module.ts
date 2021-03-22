@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: LPerfilPage
+  },
+  {
+    path: 'membership',
+    loadChildren: () => import('./membership/membership.module').then( m => m.MembershipPageModule)
+  },
+  {
+    path: 'reservas/:id',
+    loadChildren: () => import('./reservas/reservas.module').then( m => m.ReservasPageModule)
   }
 ];
 

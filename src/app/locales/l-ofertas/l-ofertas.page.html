@@ -7,11 +7,13 @@
 <ion-content class="ion-padding">
 
 	<h4>
-		<!-- <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon> -->
+		<!-- <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon> -->
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
-		<ion-button class="an-button" [routerLink]="['/local/ofertas/nueva-oferta']" routerDirection="root">Nueva oferta</ion-button>
+		<ion-icon style="margin-left:8px;" [routerLink]="['/qr-scanner']" slot="icon-only" name="qr-code-outline"></ion-icon>
+
+		<ion-button class="an-button" [routerLink]="['/local/ofertas/nueva-oferta']">Nueva oferta</ion-button>
 
 	</h4>
 
@@ -55,17 +57,17 @@
 			<ion-col size="3">
 				<div class="right-side-off">
 					<ion-icon name="trash" class="delete-icon" (click)="deleteOffer(o.id)"></ion-icon>
-					<h1>{{o.type == 1 ? o.quantity : o.quantity+'x1'}}</h1>
+					<h1>{{o.type == 1 ? o.quantity : o.quantity+'x'+o.quantityOff}}</h1>
 				</div>
 			</ion-col>
 		</ion-row>
 
-		<ion-infinite-scroll threshold="100px" (ionInfinite)="getMoreOffers($event)">
+		<!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="getMoreOffers($event)">
 		    <ion-infinite-scroll-content
 		      loadingSpinner="bubbles"
 		      loadingText="Cargando ofertas...">
 		    </ion-infinite-scroll-content>
-		</ion-infinite-scroll>
+		</ion-infinite-scroll> -->
 
 		<!-- <ion-row style="margin-bottom: 12px;">
 			<ion-col size="9">

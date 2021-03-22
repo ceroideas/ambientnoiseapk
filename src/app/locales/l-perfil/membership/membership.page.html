@@ -1,0 +1,37 @@
+<!-- <ion-header hidden>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+	<h4>
+		<ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
+
+	</h4>
+
+	<h3>Mi membresía</h3>
+
+	<br>
+
+	<h6 *ngIf="!packages">Aún no ha has contratado ningún paquete.</h6>
+
+	<h4 *ngIf="packages">Paquetes contratados</h4>
+
+	<div *ngFor="let package of packages">
+		
+		<div style="border-bottom: 1px solid #f2f4f8;">
+			<h6 style="font-size: 12px;">Nombre del paquete: {{package?.pkg?.title}} </h6>
+			<h6 style="font-size: 12px;">Duración: Hasta {{package?.valid_to | expired:'date'}} </h6>
+			<h6 style="font-size: 12px;">Alcance: {{package?.pkg?.devices}} Dispositivos </h6>
+			<h6 style="font-size: 12px;">Has contratado éste paquete el día: {{package?.valid_from | expired:'date'}} </h6>
+		</div>
+		<br><br>
+	</div>
+
+	<ion-button (click)="nav.pop()" class="an-button">Aceptar</ion-button>
+
+</ion-content>

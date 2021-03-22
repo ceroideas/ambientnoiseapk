@@ -63,6 +63,19 @@
 
 		</form>
 
+		<div>
+			
+
+		<ion-button class="an-button apple" (click)="doAppleLogin()">
+			<img src="assets/apple.svg" alt="">
+		</ion-button>
+
+		<ion-button class="an-button fb" (click)="doFbLogin()">
+			<img src="assets/facebook.svg" alt="">
+		</ion-button>
+
+		</div>
+
 		<div style="clear: both;"></div>
 
 		<br>
@@ -70,13 +83,13 @@
 		<div style="text-align: center;">
 			
 		<small>¿Necesita una cuenta? <a [routerLink]="['/registro']">Sign up</a></small>
-		<small>¿Has perdido la contraseña? <a href="">Solicitar</a></small>
+		<small>¿Has perdido la contraseña? <a [routerLink]="['/recover']">Solicitar</a></small>
 
 		<span class="test mt-40">¿Quieres entrar como invitado?</span>
 
 		</div>
 
-		<ion-button class="an-button bg2 mt-20">Probar sin registrarse</ion-button>
+		<ion-button style="margin: 20px auto auto; float: none" class="an-button bg2 mt-20" (click)="createFakeUser()">Probar sin registrarse</ion-button>
 
 	</div>
 

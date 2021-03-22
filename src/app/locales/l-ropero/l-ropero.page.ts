@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, LoadingController, AlertController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { EventsService } from '../../services/events.service';
 
@@ -16,11 +17,13 @@ export class LRoperoPage implements OnInit {
   local_id;
   user = JSON.parse(localStorage.getItem('ANuser'));
 
-  constructor(public nav: NavController, public api: ApiService, public events: EventsService, public loading: LoadingController, public alertCtrl: AlertController) { }
+  constructor(public nav: NavController, public api: ApiService, public events: EventsService, public loading: LoadingController, public alertCtrl: AlertController, public route: ActivatedRoute) { }
 
   ngOnInit() {
     this.api.getMyStablishments(this.user.id,1).subscribe((data:any)=>{
       this.locals = data.data;
+      this.local_id = parseInt(this.route.snapshot.params.id);
+      this.retrieveClosets();
     })
   }
 

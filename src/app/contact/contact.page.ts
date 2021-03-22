@@ -63,7 +63,7 @@ export class ContactPage implements OnInit {
   		this.api.contact(value).subscribe(data=>{
   			l.dismiss();
 
-  			
+  			this.alertCtrl.create({message:"Contacto enviado, espere respuesta.",buttons:[{text: "Ok!"}]}).then(a=>a.present());
   			console.log('contacto enviado');
   		})
   	})

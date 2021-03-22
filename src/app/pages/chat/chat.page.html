@@ -7,7 +7,7 @@
 <ion-content class="ion-padding">
 
 	<h4>
-		<ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+		<ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -60,7 +60,7 @@
 
 </ion-content>
 
-<ion-footer>
+<ion-footer class="footer-chat">
 	<ion-row class="ion-no-padding" style="background-color: #fff;">
 		<ion-col size="1" class="ion-no-padding" style="display: flex;" (click)="openAction()">
 			<ion-icon id="icon-camera" name="camera"></ion-icon>

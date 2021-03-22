@@ -1,11 +1,11 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
-		<ion-button class="an-button" [routerLink]="['/local/locales/nueva-sala/'+local?.id]" routerDirection="forward">Crear sala</ion-button>
+		<ion-button class="an-button" [routerLink]="['/local/locales/nueva-sala/'+local?.id]" (click)="deleteParams()" routerDirection="forward">Crear sala</ion-button>
 
 	</h4>
 

@@ -74,6 +74,7 @@ export class NuevaOfertaPage implements OnInit {
       quantity: new FormControl(null, Validators.compose([
         Validators.required
       ])),
+      quantityOff: new FormControl(null),
       from: new FormControl(null, Validators.compose([
         Validators.required
       ])),
@@ -100,7 +101,7 @@ export class NuevaOfertaPage implements OnInit {
     const options: CameraOptions = {
       quality: 100,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true
@@ -159,15 +160,15 @@ export class NuevaOfertaPage implements OnInit {
         l.present();
         this.api.saveOffer(this.validations_form1.value).subscribe(data=>{
           l.dismiss();
-          this.nav.back();
+          this.nav.pop();
           this.events.publish('reloadOffers');
-          this.alert.create({message:"La nueva oferta ha sido creada, debe esperar a que un administrador la active"}).then(a=>{
-            a.present();
+          this.alert.create({message:"La nueva oferta ha sido creada."}).then(a=>{
+            a.present(); setTimeout(()=>{a.dismiss()},3000);
           })
         },e=>{
           l.dismiss();
           this.alert.create({message:"Ha ocurrido un error al intentar publicar la oferta"}).then(a=>{
-            a.present();
+            a.present(); setTimeout(()=>{a.dismiss()},3000);
           })
         })
     })

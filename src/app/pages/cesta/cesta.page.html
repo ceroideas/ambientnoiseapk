@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon (click)="nav.back()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -24,7 +24,8 @@
 
 		<div *ngIf="e.products.length > 0">
 			
-			<span class="menu-type" (click)="collapse(i)">{{e.establishment.title}} </span>
+			<span class="menu-type">{{e.establishment.title}} </span>
+			<!-- <span class="menu-type" (click)="collapse(i)">{{e.establishment.title}} </span> -->
 			<div class="menu-items" [id]="'cart_items-'+i">
 				<div class="menu-item" *ngFor="let plate of e.products; let j = index">
 					<ion-row style="background-color: #373333; border-radius: 20px; padding: 10px;">
@@ -38,13 +39,13 @@
 							<small [innerHtml]="plate.product.description"></small>
 
 							<div style="margin-top: 16px;">
-								<ion-icon fix-top [ngClass]="plate.quantity == 0 ? 'disabled' : '' " (click)="subQ(i,j)" name="remove-circle"></ion-icon>
+								<ion-icon *ngIf="e.offer?.type != 2" fix-top [ngClass]="plate.quantity == 0 ? 'disabled' : '' " (click)="subQ(i,j)" name="remove-circle"></ion-icon>
 
 								<span style="margin: 0 10px; font-size: 16px; display: inline-block; width: 20px; text-align: center; position: relative; top: -1px;">
 									{{plate.quantity}}
 								</span>
 
-								<ion-icon fix-top name="add-circle" (click)="addQ(i,j)"></ion-icon>
+								<ion-icon *ngIf="e.offer?.type != 2" fix-top name="add-circle" (click)="addQ(i,j)"></ion-icon>
 
 								<span style="font-size: 18px;position: absolute;right: 6px;bottom: 6px; color: #a365b8">{{plate.quantity*plate.price}}€</span>
 							</div>
@@ -52,11 +53,32 @@
 					</ion-row>
 				</div>
 
-				<span class="total">Total: <span>{{ e | cartTotal }}€</span></span>
+				<div *ngIf="e.offer" style="float: right;">
+					<span style="font-size: 12px" class="total">Antes: <s><span>{{ e | cartTotal }}€</span></s></span>
+					<br>
+					<span class="total">Total: <span>{{ e.new_price }}€</span></span>
+				</div>
 
-				<ion-button class="an-button" (click)="pagar(e.id)">
-					Pagar
-				</ion-button>
+				<div *ngIf="!e.offer" style="float: right;">
+					<span class="total">Total: <span>{{ e.new_price }}€</span></span>
+				</div>
+
+				<div style="clear: both;"></div>
+
+				<div style="padding: 0 16px;">
+					
+					<ion-button class="an-button" (click)="pagar(e.id)">
+						Pagar
+					</ion-button>
+
+					<div *ngIf="e.offers?.length > 0">	
+						<h5 style="margin-top: 12px; text-align: left;">Cupones que puedes aplicar!</h5>
+						<div *ngFor="let o of e.offers" style="padding: 3px 0">
+							<li (click)="selectOffer(o,e.id)">{{o.title}} - <small>{{o.type == 1 ? o.quantity : o.quantity+'x'+o.quantityOff}}</small></li>
+						</div>
+					</div>
+
+				</div>
 			</div>
 
 		</div>
