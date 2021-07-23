@@ -19,13 +19,16 @@ export class EvDestacadosPage implements OnInit {
   constructor(public api: ApiService, public events: EventsService, public alertCtrl: AlertController, public loadingCtrl: LoadingController) { }
 
   ngOnInit() {
-    this.api.getFeaturedEvents().subscribe(data=>{
-      this.eventos = data;
-    });
-
     this.events.destroy('restoreCourseEv');
     this.events.subscribe('restoreCourseEv',()=>{
       this.tutorialValue = parseInt(localStorage.getItem('tutorial')) || 0;
+    });
+  }
+
+  ionViewDidEnter()
+  {
+    this.api.getFeaturedEvents().subscribe(data=>{
+      this.eventos = data;
     });
   }
 

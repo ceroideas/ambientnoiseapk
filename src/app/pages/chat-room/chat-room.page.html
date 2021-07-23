@@ -7,7 +7,7 @@
 <ion-content class="ion-padding">
 
 	<h4>
-		<!-- <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon> -->
+		<ion-icon *ngIf="toTactic" [routerLink]="['/tabs/home/tactic']" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 
@@ -39,6 +39,7 @@
 		    </ion-buttons>
 			<ion-row style="background-color: #373333; border-radius: 20px; margin-bottom: 20px">
 				<ion-col size="3" (click)="openChat(u)">
+					<span class="badge" *ngIf="u.not_seen"></span>
 					<div class="profile-pic" [ngStyle]="{'background-image': 'url('+(u.avatar || 'assets/user.jpg')+')'}">
 					</div>
 				</ion-col>

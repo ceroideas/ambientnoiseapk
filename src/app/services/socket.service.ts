@@ -3,6 +3,9 @@ import { Socket } from 'ngx-socket-io';
 // import { Observable, Subscription } from 'rxjs';
 import { EventsService } from '../services/events.service';
 
+import { Router } from '@angular/router';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +15,7 @@ export class SocketService {
   peer;
   user = JSON.parse(localStorage.getItem('ANuser'));
 
-  constructor(private socket: Socket, public events: EventsService) {
+  constructor(private socket: Socket, public events: EventsService, public router: Router) {
   	this.startConnection();
   }
 
@@ -23,8 +26,19 @@ export class SocketService {
     })
 
     this.socket.on('newMessage',data=>{
-      if (data.to_id == this.user.id || data.from_id == this.user.id) {
+
+      console.log(data,data.to_id,this.user.id,data.to_id == this.user.id);
+      
+      this.user = JSON.parse(localStorage.getItem('ANuser'));
+
+      if (data.to_id == this.user.id) {
         this.events.publish('addNewMessage',data);
+        if (this.router.url.indexOf('chat-room/') === -1) {
+          this.events.publish('addDot',data.from_id);
+        }
+      }
+      if (data.from_id == this.user.id) {
+        this.events.publish('addNewMessage1',data);
       }
     })
   }
@@ -36,6 +50,7 @@ export class SocketService {
 
   sendMessage(data)
   {
+    console.log(data);
   	this.socket.emit('sendMessage',data);
   }
 

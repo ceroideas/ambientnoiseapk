@@ -14,8 +14,14 @@ export class TabsPage implements OnInit {
   }
 
   tutorial;
+  tutorial_text = JSON.parse(localStorage.getItem('tutorial_text'));
 
   ngOnInit() {
+    this.events.destroy('tutorial_text')
+    this.events.subscribe('tutorial_text',()=>{
+      this.tutorial_text = JSON.parse(localStorage.getItem('tutorial_text'));
+    });
+
   	if (!localStorage.getItem('tutorial')) {
   		this.tutorial = 1;
   		localStorage.setItem('tutorial','1');

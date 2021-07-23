@@ -170,6 +170,8 @@ export class AjustesPage implements OnInit {
   	});
 
      }, (err) => {
+
+       console.log(err);
        // error
      })
   }
@@ -210,6 +212,7 @@ export class AjustesPage implements OnInit {
 
         this.alert.create({message:msg}).then(a=>{
           a.present();
+          setTimeout(()=>{a.dismiss()},3000);
         })
 
       },err=>{

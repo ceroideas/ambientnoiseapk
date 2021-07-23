@@ -860,3 +860,21 @@ body.transparent-body,
     bottom: 1.5px !important;
   }
 }
+
+.kbClose {
+  height: calc(100vh - 260px);
+}
+
+.kbOpen {
+  height: calc(100vh - 204px);
+}
+
+.badge {
+  width: 12px;
+  height: 12px;
+  background-color: #a365b8;
+  border-radius: 12px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}

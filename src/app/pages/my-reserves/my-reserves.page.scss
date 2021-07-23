@@ -2,6 +2,7 @@ ion-content {
 	--background: url(../../../assets/fondo-02.png) 0 0/100% 100% no-repeat;
 }
 
+
 h3 {
 	color: #767070;
 	font-weight: 700;
@@ -11,11 +12,12 @@ h3 {
 }
 
 h4 {
-	color: #767676;
-	// margin-top: 30px;
-	margin-bottom: 12px;
-	font-size: 20px;
-	font-weight: bolder;
+	color: #fff;
+	margin-top: 30px;
+	margin-bottom: 0px;
+	font-size: 24px;
+	position: relative;
+	z-index: 1;
 }
 
 .an-button {

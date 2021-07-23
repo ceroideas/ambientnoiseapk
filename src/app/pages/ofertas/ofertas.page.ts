@@ -16,13 +16,16 @@ export class OfertasPage implements OnInit {
   constructor(public api: ApiService, public events: EventsService) { }
 
   ngOnInit() {
-  	this.api.getFeaturedOffers().subscribe(data=>{
-      this.ofertas = data;
-    });
-
     this.events.destroy('restoreCourseOf');
     this.events.subscribe('restoreCourseOf',()=>{
       this.tutorialValue = parseInt(localStorage.getItem('tutorial')) || 0;
+    });
+  }
+
+  ionViewDidEnter()
+  {
+    this.api.getFeaturedOffers().subscribe(data=>{
+      this.ofertas = data;
     });
   }
 

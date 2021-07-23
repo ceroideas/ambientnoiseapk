@@ -21,6 +21,8 @@
 
 			<ion-icon (click)="changeBottom()" src="assets/restaurant-menu.svg"></ion-icon>
 
+			<ion-icon style="margin-left: 8px;" (click)="reloadDistance()" name="reload-outline"></ion-icon>
+
 			<!-- <img src="assets/pin.svg" alt="" [routerLink]="['/tabs/home/map']" style="height: 28px;"> -->
 
 		</h4>
@@ -33,7 +35,7 @@
 		<div id="title-restaurant">
 			
 			<h2 style="width: calc(100% - 50px); float: left;">
-				{{local.title}} ({{local.distance | distance}})
+				{{local.title}} <br> ({{local.distance | distance}})
 			</h2>
 			<span style="width: 50px; float: right; font-size: 40px; color: #fff; text-align: right; top: 6px; position: relative;" (click)="addFavorite()">
 				<ion-icon [name]="'heart'+(favorite ? '' : '-outline')"></ion-icon>

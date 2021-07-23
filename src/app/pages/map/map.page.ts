@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { NavController, IonSlides, LoadingController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ApiService } from '../../services/api.service';
@@ -50,7 +50,7 @@ export class MapPage implements OnInit {
   places: any;
 
   ocupacion:any;
-  range = {lower:20,upper:80};
+  range = {lower:null,upper:null};
 
   province:any;
 
@@ -69,7 +69,9 @@ export class MapPage implements OnInit {
 
   infoWindow = new google.maps.InfoWindow;
 
-  constructor(private geolocation: Geolocation, public api: ApiService, private iab: InAppBrowser, public loading: LoadingController,
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private geolocation: Geolocation, public api: ApiService, private iab: InAppBrowser, public loading: LoadingController,
     public events: EventsService, public nav: NavController, public navparams: NavparamsService) {
   }
 
@@ -176,7 +178,9 @@ export class MapPage implements OnInit {
     // this.establishments = null;
     this.musica = null;
     this.ocupacion = null;
-    this.range = {lower:20,upper:80};
+    this.range = {lower:null,upper:null};
+
+    (document.querySelector('#searchM') as HTMLInputElement).value = "";
 
     this.filterEstablishment(true);
   }
@@ -601,7 +605,7 @@ export class MapPage implements OnInit {
   {
     this.page = 1;
     console.log('filter')
-    this.api.getEstablishments({id:this.user.id,province:this.province,city:this.city,ambient:this.ambiente,music:this.musica,lat:this.lat, lon:this.lon},this.page).subscribe((request:any)=>{
+    this.api.getEstablishments({id:this.user.id,province:this.province,city:this.city,ambient:this.ambiente,range:this.range,music:this.musica,lat:this.lat, lon:this.lon},this.page).subscribe((request:any)=>{
       
       let data = request.data;
 
@@ -638,6 +642,8 @@ export class MapPage implements OnInit {
       }
 
       this.establishments = data;
+
+      this.cdr.detectChanges();
 
       for(let i in this.markers) {
         this.markers[i].setMap(null);

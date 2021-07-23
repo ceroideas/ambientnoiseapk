@@ -18,9 +18,12 @@ export class LEventosPage implements OnInit {
 
   constructor(public nav: NavController, public api: ApiService, public events: EventsService, public loading: LoadingController, public alert: AlertController) { }
 
-  ngOnInit() {
+  ionViewDidEnter()
+  {
     this.getMyEvents();
+  }
 
+  ngOnInit() {
     this.events.destroy('reloadLocals');
     this.events.subscribe('reloadLocals',()=>{
       this.page = 1;

@@ -164,3 +164,14 @@ h4 {
 hr {
 	border-bottom: 1px solid #9d9d9d;
 }
+
+.left-side-off.past {
+	background-color: rgba(57,58,59,.9);
+	&:after {
+		background: linear-gradient(137deg, rgba(57,58,59,.9) 6px, transparent 0) 0 5px, linear-gradient(-320deg, rgba(57,58,59,.9) 5px, transparent 0) 0 5px;
+		background-position: right 6px;
+	    background-repeat: repeat-y;
+	    background-size: 10px 10px;
+	}
+
+}

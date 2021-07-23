@@ -17,6 +17,8 @@ export class ChatRoomPage implements OnInit {
   aprobedUsers:any;
   likes:any;
 
+  toTactic = false;
+
   constructor(public nav: NavController, public api: ApiService, public navparams: NavparamsService, public events: EventsService, public alert: AlertController, public loading: LoadingController) {
     // this.events.destroy('getLikes');
     // this.events.subscribe('getLikes',(data)=>{
@@ -27,6 +29,32 @@ export class ChatRoomPage implements OnInit {
     this.events.subscribe('getAprobedAll',(data)=>{
       this.getAprobedUsers();
     });
+
+    this.events.destroy('addDot');
+    this.events.subscribe('addDot',(id)=>{
+      let u = this.aprobedUsers.find(x=>x.id == id);
+      if (u) {
+        u.not_seen = 1;
+      }
+    });
+
+    this.events.destroy('removeDot');
+    this.events.subscribe('removeDot',(id)=>{
+      let u = this.aprobedUsers.find(x=>x.id == id);
+      if (u) {
+        u.not_seen = null;
+      }
+    });
+  }
+
+  ionViewDidEnter()
+  {
+    if (this.navparams.getParam() == 'back_to_tactic') {
+      this.toTactic = true;
+      this.navparams.setParam(null);
+    }else{
+      this.toTactic = false;
+    }
   }
 
   ngOnInit() {
@@ -46,6 +74,7 @@ export class ChatRoomPage implements OnInit {
 
   openChat(u)
   {
+    u.not_seen = 0;
     localStorage.setItem('actualChat',u.id);
     this.nav.navigateForward('tabs/chat-room/'+u.id);
     this.events.publish('reloadChat');

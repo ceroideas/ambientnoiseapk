@@ -160,7 +160,7 @@ export class QrScannerPage implements OnInit {
 	         	}
 
 	         	if (params) {
-	         		this.alertCtrl.create(params).then(a=>{a.present(); setTimeout(()=>{a.dismiss()},3000);})
+	         		this.alertCtrl.create(params).then(a=>{a.present();})
 	         	}else{
 	         		alert("No se ha conseguido información válida del QR");
 	         	}

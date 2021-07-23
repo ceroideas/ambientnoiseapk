@@ -13,6 +13,9 @@ export class ExpiredPipe implements PipeTransform {
   	if (type == 'diff') {
   		return moment(value.date_to).add(1,'day').diff(moment().startOf('day'),'days');
   	}
+    if (type == 'diffEv') {
+      return moment().diff(moment(value.fulldate),'seconds');
+    }
   	if (type == 'created_at') {
   		return moment(value.created_at).format('YYYY/MM')
   	}

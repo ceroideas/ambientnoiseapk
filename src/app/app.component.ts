@@ -12,6 +12,8 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -39,7 +41,8 @@ export class AppComponent implements OnInit {
     private api: ApiService,
     public alertCtrl: AlertController,
     public nav: NavController,
-    private socialSharing: SocialSharing
+    private socialSharing: SocialSharing,
+    public router: Router
   ) {
     this.initializeApp();
   }
@@ -50,9 +53,11 @@ export class AppComponent implements OnInit {
       // this.statusBar.overlaysWebView(true);
       this.statusBar.show();
       this.statusBar.overlaysWebView(false);
-      this.statusBar.backgroundColorByHexString('#a365b8');
       this.statusBar.styleLightContent();
+      this.statusBar.backgroundColorByHexString('#a365b8');
       this.splashScreen.hide();
+
+      localStorage.removeItem('closer');
 
       if (localStorage.getItem('ANuser')) {
 
@@ -62,26 +67,66 @@ export class AppComponent implements OnInit {
 
       }
 
-      let watch = this.geolocation.watchPosition();
+      let watch = this.geolocation.watchPosition(/*{maximumAge: 3000, timeout: 5000, enableHighAccuracy: true}*/);
       watch.subscribe((data:any) => {
+
+        //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
+        function calcCrow(lat1, lon1, lat2, lon2) 
+        {
+          var R = 6371*1000; // km
+          var dLat = toRad(lat2-lat1);
+          var dLon = toRad(lon2-lon1);
+          var lat1:any = toRad(lat1);
+          var lat2:any = toRad(lat2);
+
+          var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+          var d = R * c;
+          return d;
+        }
+
+        // Converts numeric degrees to radians
+        function toRad(Value) 
+        {
+            return Value * Math.PI / 180;
+        }
        // data can be a set of coordinates, or an error (if an error occurred).
        // data.coords.latitude
        // data.coords.longitude
 
-       localStorage.setItem('lat',data.coords.latitude.toString());
-       localStorage.setItem('lon',data.coords.longitude.toString());
+       let crow = calcCrow(localStorage.getItem('lat'),localStorage.getItem('lon'),data.coords.latitude.toString(),data.coords.longitude.toString());
+       // console.log('watchPosition',crow,data);
+       if ((crow) > 1) {
 
-       this.api.getCloser({lat:data.coords.latitude,lon:data.coords.longitude}).subscribe((data:any)=>{
-         console.log(data);
-         if (data) {
-           localStorage.setItem('closer',JSON.stringify(data.id));
+         localStorage.setItem('lat',data.coords.latitude.toString());
+         localStorage.setItem('lon',data.coords.longitude.toString());
 
-           this.events.publish('activateTactic',data.id);
-         }else{
-           localStorage.removeItem('closer');
+         this.api.getCloser({lat:data.coords.latitude,lon:data.coords.longitude}).subscribe((data:any)=>{
+           // console.log(data);
+           if (data) {
+             localStorage.setItem('closer',JSON.stringify(data.id));
 
-         }
-       })
+             this.events.publish('activateTactic',data.id);
+           }else{
+
+             this.events.publish('desactivateTactic');
+             localStorage.removeItem('closer');
+
+           }
+         })
+       }
+
+       if (localStorage.getItem('actualLocal')) {
+         let l = JSON.parse(localStorage.getItem('actualLocal'));
+
+         let localCrow = calcCrow(l.lt,l.ln,data.coords.latitude.toString(),data.coords.longitude.toString());
+
+         // console.log('localCrow',(localCrow/1000));
+
+         this.events.publish('updateDistance',(localCrow/1000));
+       }
+
       });
 
       this.initializeOnesignal();
@@ -89,6 +134,9 @@ export class AppComponent implements OnInit {
       this.api.getUrl().subscribe((data:string)=>{
         // console.log(data);
         localStorage.setItem('share_url',JSON.stringify(data[0]));
+        localStorage.setItem('tutorial_text',JSON.stringify(data[1]));
+
+        this.events.publish('tutorial_text');
       })
     });
   }
@@ -97,7 +145,24 @@ export class AppComponent implements OnInit {
 
     this.pay();
 
-    this.geolocation.getCurrentPosition().then((resp) => {
+    this.events.subscribe('getCloser',()=>{
+      this.api.getCloser({lat:localStorage.getItem('lat'),lon:localStorage.getItem('lon')}).subscribe((data:any)=>{
+       // console.log(data);
+       if (data) {
+         
+         localStorage.setItem('closer',JSON.stringify(data.id));
+
+         this.events.publish('activateTactic',data.id);
+       }else{
+         this.events.publish('desactivateTactic');
+         localStorage.removeItem('closer');
+        }
+      })
+
+      //
+    });
+
+    this.geolocation.getCurrentPosition({maximumAge: 3000, timeout: 5000, enableHighAccuracy: true}).then((resp) => {
       localStorage.setItem('lat',resp.coords.latitude.toString());
       localStorage.setItem('lon',resp.coords.longitude.toString());
     }).catch((error) => {
@@ -257,8 +322,64 @@ export class AppComponent implements OnInit {
 
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
 
-    this.oneSignal.handleNotificationReceived().subscribe(() => {
+    this.oneSignal.handleNotificationReceived().subscribe((jsondata) => {
      // do something when notification is received saveOneSignalId
+     // console.log('received',jsondata,jsondata.payload.additionalData)
+     let data = jsondata.payload.additionalData;
+
+      // this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+
+      if (this.user.role == 2) {
+        switch (data.type) {
+
+          case "like":
+            // this.nav.navigateForward('tabs/chat-room');
+            this.events.publish('getAprobedAll');
+            break;
+
+          case "chat":
+            // this.nav.navigateForward('tabs/chat-room/'+data.from_id);
+            this.events.publish('getAprobedAll');
+
+            console.log(data.from_id,this.router.url.indexOf('chat-room/'));
+
+            if (data.from_id == localStorage.getItem('actualChat') && this.router.url.indexOf('chat-room/') !== -1) {
+              this.oneSignal.clearOneSignalNotifications();
+              // .inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
+            }
+
+            break;
+          case "reserve":
+            this.nav.navigateForward('tabs/mis-reservas/'+data.establishment_id);
+            break;
+
+          case "cart":
+            // this.nav.navigateForward('tabs/perfil/carrito');
+            this.events.publish('getCart');
+            break;
+          case "order":
+            // this.nav.navigateForward('tabs/perfil/pedidos');
+            this.events.publish('getOrders');
+            break;
+          case "closet":
+            // this.nav.navigateForward('tabs/perfil/pedidos');
+            this.events.publish('getOrders');
+            break;
+
+          case "ocupation":
+            this.events.publish('realOcupation')
+            break;
+
+          case "local":
+            // this.nav.navigateForward('tabs/home/detalles/'+data.establishment_id);
+            break;
+          
+          default:
+            // code...
+            console.log('notificación por defecto')
+            break;
+        }
+      }
     });
 
     this.oneSignal.handleNotificationOpened().subscribe((jsondata) => {

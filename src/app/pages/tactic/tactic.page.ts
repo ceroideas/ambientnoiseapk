@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, AlertController, ToastController, ModalController } from '@ionic/angular';
 import { ApiService } from '../../services/api.service';
 import { EventsService } from '../../services/events.service';
+import { NavparamsService } from '../../services/navparams.service';
 import { VerPage } from '../detalles/ver/ver.page';
 
 @Component({
@@ -34,7 +35,9 @@ export class TacticPage implements OnInit, OnDestroy {
 
   canLeave = false;
 
-  constructor(public nav: NavController, public api: ApiService, public events: EventsService, public alertCtrl: AlertController, public toast: ToastController, public modalController: ModalController) { }
+  constructor(
+    public navparams: NavparamsService,
+    public nav: NavController, public api: ApiService, public events: EventsService, public alertCtrl: AlertController, public toast: ToastController, public modalController: ModalController) { }
 
   ngOnInit() {
     this.canLeave = false;
@@ -49,6 +52,11 @@ export class TacticPage implements OnInit, OnDestroy {
     if (localStorage.getItem('carrito')) {
       this.carrito = JSON.parse(localStorage.getItem('carrito'));
     }
+  }
+
+  addValue()
+  {
+    this.navparams.setParam('back_to_tactic');
   }
 
   ngOnDestroy() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, AlertController, LoadingController, ToastController, ModalController } from '@ionic/angular';
 import { EventsService } from '../../services/events.service';
@@ -46,14 +46,26 @@ export class DetallesPage implements OnInit {
 
   fake = localStorage.getItem('fakeUser');
 
-  constructor(public nav: NavController, public events: EventsService, private route: ActivatedRoute, public api: ApiService, public alertCtrl: AlertController,
-    public toast: ToastController, public modalController: ModalController, public navparams: NavparamsService) {
+  lat = localStorage.getItem('lat');
+  lon = localStorage.getItem('lon');
+
+  constructor(
+    public cdr: ChangeDetectorRef,
+    public nav: NavController, public events: EventsService, private route: ActivatedRoute, public api: ApiService, public alertCtrl: AlertController,
+    public toast: ToastController, public modalController: ModalController, public navparams: NavparamsService, public loading: LoadingController) {
 
     this.events.destroy('realOcupation');
     this.events.subscribe('realOcupation',()=>{
-      this.api.realOcupation(this.local.id).subscribe(data=>{
-        this.local.real_ocupation = data;
+      this.api.realOcupation(this.local.id).subscribe((data:any)=>{
+        this.local.real_ocupation = data.toFixed(2);
+        this.events.publish('updateLocal',this.local);
       })
+    });
+
+    this.events.destroy('updateDistance');
+    this.events.subscribe('updateDistance',(l)=>{
+      this.local.distance = l;
+      this.events.publish('updateLocal',this.local);
     });
 
     if (localStorage.getItem('carrito')) {
@@ -82,6 +94,20 @@ export class DetallesPage implements OnInit {
       this.events.subscribe('activateTactic',(id)=>{
         this.isTactic = (id == this.local.id);
       });
+
+      this.events.destroy('desactivateTactic');
+      this.events.subscribe('desactivateTactic',()=>{
+        this.isTactic = false;
+      });
+      //
+      this.api.getOcupation(this.local.id).subscribe((data:any)=>{
+        this.local.real_ocupation = data.toFixed(2);
+        this.events.publish('updateLocal',this.local);
+      });
+
+      this.reloadDistance(false);
+
+      this.events.publish('getCloser');
     }
   }
 
@@ -298,16 +324,46 @@ export class DetallesPage implements OnInit {
   canTactic()
   {
     if (this.fake) {return this.fakeAlert();}
-    this.api.addRecord({user_id:this.user.id,establishment_id:this.local.id,action:1}).subscribe(data=>{
-      console.log(data);
-    })
-    // if (this.isTactic) {
+    if (this.isTactic) {
+      this.api.addRecord({user_id:this.user.id,establishment_id:this.local.id,action:1}).subscribe(data=>{
+        console.log(data);
+      })
       this.nav.navigateForward('/tabs/home/tactic');
-    // }
+    }
   }
 
   fakeAlert() {
     this.alertCtrl.create({message:"Función solo válida para usuarios registrados!"}).then(a=>{a.present(); setTimeout(()=>{a.dismiss()},2000);});
   }
 
+  reloadDistance(l:any = false)
+  {
+    if (l) {
+      this.loading.create().then((l)=>{
+        l.present();
+        this.reloadDistance2(l);
+      })
+    }else{
+      this.reloadDistance2();
+    }
+  }
+
+  reloadDistance2(l:any = false)
+  {
+    this.api.reloadDistance({id:this.local.id,lt:this.lat,ln:this.lon}).subscribe((data:any)=>{
+      console.log(data);
+      this.local.distance = data.distance;
+      if ((data.distance*1000) < 100) {
+        localStorage.setItem('closer',this.local.id);
+        this.isTactic = true;
+      }else{
+        this.isTactic = false;
+        localStorage.removeItem('closer');
+      }
+      if (l) {
+        l.dismiss();
+      }
+      this.cdr.detectChanges();
+    })
+  }
 }

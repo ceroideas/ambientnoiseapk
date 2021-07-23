@@ -19,15 +19,19 @@ export class MyReservesPage implements OnInit {
 
   constructor(public api: ApiService, public navparams: NavparamsService, public nav: NavController, public alertCtrl: AlertController, public events: EventsService,
   	public loading: LoadingController, public toast: ToastController, public route: ActivatedRoute, public modal: ModalController) {
-  	this.api.getReservas(this.user.id,null).subscribe(data=>{
-  		this.reserves = data;
-  		this.local = this.navparams.getParam();
-  		console.log(this.navparams.getParam());
-  	});
+    this.getReservas();
   }
 
   ngOnInit() {
 
+  }
+
+  getReservas()
+  {
+    this.api.getReservas(this.user.id,null).subscribe(data=>{
+      this.reserves = data;
+      this.local = this.navparams.getParam();
+    });
   }
 
   async verQr(r)
@@ -43,6 +47,26 @@ export class MyReservesPage implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  borrar(r)
+  {
+    this.alertCtrl.create({message:"Borrar la reserva expirada de la lista?",buttons:[{
+      text:"Si",
+      handler:()=>{
+        this.loading.create().then(a=>{
+          a.present();
+
+          this.api.deleteReserve(r.id).subscribe(data=>{
+            a.dismiss();
+
+            this.getReservas();
+          })
+        })
+      }
+    },{
+      text:"No"
+    }]}).then(a=>a.present());
   }
 
 }

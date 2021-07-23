@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiService {
 
-  url = "https://tuwordpress.online/ambientnoice/public/api";
+  url = "https://admin.ambientnoise.es/api";
 
   constructor(public http: HttpClient) { }
 
@@ -109,6 +109,10 @@ export class ApiService {
   getAmbients()
   {
     return this.http.get(this.url+'/getAmbients');
+  }
+  getOcupation(id)
+  {
+    return this.http.get(this.url+'/getOcupation/'+id);
   }
   getEstablishments(data = {},page)
   {
@@ -365,6 +369,8 @@ export class ApiService {
 
   getCloser(data)
   {
+    data.user_id = JSON.parse(localStorage.getItem('ANuser'))['id'];
+
     return this.http.post(this.url+'/getCloser',data);
   }
 
@@ -442,6 +448,10 @@ export class ApiService {
   {
     return this.http.get(this.url+'/realOcupation/'+id);
   }
+  reloadDistance(data)
+  {
+    return this.http.post(this.url+'/reloadDistance',data);
+  }
   applyOffer(data)
   {
     return this.http.post(this.url+'/applyOffer',data);
@@ -509,6 +519,13 @@ export class ApiService {
   checkCarrito(id)
   {
     return this.http.get(this.url+'/checkCarrito/'+id);
+  }
+
+  /**/
+
+  setSeen(id)
+  {
+    return this.http.get(this.url+'/setSeen/'+id);
   }
 
 }

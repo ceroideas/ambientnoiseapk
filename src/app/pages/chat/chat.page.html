@@ -26,7 +26,8 @@
 
 	<br>
 
-	<div style="height: calc(100vh - 260px); overflow: auto;" id="messages">
+	<div style="height: calc(100% - 128px); overflow: auto;" id="messages">
+	<!-- <div style="overflow: auto;" id="messages" [ngClass]="keyboard.isVisible ? 'kbClose' : 'kbOpen'"> -->
 		
 		<div *ngFor="let m of myMessages; let i = index">
 			<div *ngIf="m.from_id == user.id">

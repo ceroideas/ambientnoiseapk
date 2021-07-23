@@ -34,7 +34,7 @@
 		
 		<ion-row style="margin-bottom: 12px;" *ngFor="let e of allEvents; let i = index">
 			<ion-col size="12">
-				<div class="left-side-off" (click)="openInformation(i)">
+					<div [ngClass]="(e | expired:'diff') <= 0 ? 'left-side-off past' : 'left-side-off'" (click)="openInformation(i)">
 					<ion-row>
 						<ion-col size="4">
 							<div class="rest-pic" [ngStyle]="{'background-image': 'url('+e.avatar+')'}">

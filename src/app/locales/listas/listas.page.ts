@@ -19,9 +19,12 @@ export class ListasPage implements OnInit {
 
   constructor(public nav: NavController, public api: ApiService, public events: EventsService, public loading: LoadingController, public alert: AlertController, public navparams: NavparamsService) { }
 
-  ngOnInit() {
-  	this.getLists();
+  ionViewDidEnter()
+  {
+    this.getLists();
+  }
 
+  ngOnInit() {
     this.events.destroy('reloadLists');
     this.events.subscribe('reloadLists',()=>{
       console.log('reloadLists')

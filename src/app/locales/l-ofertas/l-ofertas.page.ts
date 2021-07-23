@@ -21,9 +21,12 @@ export class LOfertasPage implements OnInit {
 
   constructor(public nav: NavController, public api: ApiService, public events: EventsService, public loading: LoadingController, public alert: AlertController) { }
 
-  ngOnInit() {
-  	this.getMyOffers();
+  ionViewDidEnter()
+  {
+    this.getMyOffers();
+  }
 
+  ngOnInit() {
   	this.events.destroy('reloadOffers');
   	this.events.subscribe('reloadOffers',()=>{
       this.page = 1;

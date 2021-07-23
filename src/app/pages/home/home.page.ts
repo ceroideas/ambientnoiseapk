@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { ApiService } from '../../services/api.service';
 import { EventsService } from '../../services/events.service';
@@ -77,9 +77,19 @@ export class HomePage implements OnInit {
 
   user = JSON.parse(localStorage.getItem('ANuser'));
 
-  constructor(private keyboard: Keyboard, public alert: AlertController, public loading: LoadingController, public api: ApiService, public events: EventsService, public navparams: NavparamsService, public nav: NavController) { }
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private keyboard: Keyboard, public alert: AlertController, public loading: LoadingController, public api: ApiService, public events: EventsService, public navparams: NavparamsService, public nav: NavController) { }
 
   ngOnInit() {
+
+    this.events.destroy('updateLocal');
+    this.events.subscribe('updateLocal',(local)=>{
+
+      let i = this.establishments.findIndex(x=>x.id == local.id);
+      this.establishments[i] = local;
+
+    });
 
     this.events.destroy('filterEstablishments');
     this.events.subscribe('filterEstablishments',()=>{
@@ -108,7 +118,7 @@ export class HomePage implements OnInit {
               {
                   if (request.type == 'desc') {
                       
-                      if(data[j][request.order] < data[j+1][request.order])
+                      if(parseInt(data[j][request.order]) < parseInt(data[j+1][request.order]))
                       {
                           let k = data[j+1];
 
@@ -119,7 +129,7 @@ export class HomePage implements OnInit {
 
                   }else{
 
-                      if(data[j][request.order] > data[j+1][request.order])
+                      if(parseInt(data[j][request.order]) > parseInt(data[j+1][request.order]))
                       {
                           let k = data[j+1];
 
@@ -132,7 +142,11 @@ export class HomePage implements OnInit {
           }
       }
 
+      console.log(request.order,data);
+
       this.establishments = data;
+
+      this.cdr.detectChanges();
     })
 
     this.api.getAll().subscribe((data:any)=>{
@@ -160,6 +174,7 @@ export class HomePage implements OnInit {
       this.ambiente = null;
       this.quickAmbient = null;
       this.buscar = null;
+      (document.querySelector('#searchH') as HTMLInputElement).value = "";
     }else{
       if (this.ambiente == id) {
         this.ambiente = null;
@@ -178,8 +193,12 @@ export class HomePage implements OnInit {
     this.ocupacion = null;
     this.range = {lower:null,upper:null};
 
+    this.loading.create().then(l=>l.present());
+
     this.api.getEstablishments({id:this.user.id,province:this.province,city:this.city,ambient:this.ambiente,range:this.range,music:this.musica, lat:this.lat, lon:this.lon},1).subscribe((request:any)=>{
       let data = request.data;
+
+      this.loading.dismiss();
 
       if (request._) {
 
@@ -213,7 +232,11 @@ export class HomePage implements OnInit {
           }
       }
 
+      console.log(request.order,data);
+
       this.establishments = data;
+
+      this.cdr.detectChanges();
 
       if (close) {
         this.changeBottom(null);
@@ -266,39 +289,43 @@ export class HomePage implements OnInit {
   					l.dismiss();
             let data = request.data;
 
-      if (request._) {
+            if (request._) {
 
-          for(let i = 1; i < data.length; i++)
-          {
-              for(let j = 0; j < data.length-i; j++)
-              {
-                  if (request.type == 'desc') {
-                      
-                      if(data[j][request.order] < data[j+1][request.order])
-                      {
-                          let k = data[j+1];
+                for(let i = 1; i < data.length; i++)
+                {
+                    for(let j = 0; j < data.length-i; j++)
+                    {
+                        if (request.type == 'desc') {
+                            
+                            if(parseInt(data[j][request.order]) < parseInt(data[j+1][request.order]))
+                            {
+                                let k = data[j+1];
 
-                          data[j+1] = data[j];
+                                data[j+1] = data[j];
 
-                          data[j] = k;
-                      }
+                                data[j] = k;
+                            }
 
-                  }else{
+                        }else{
 
-                      if(data[j][request.order] > data[j+1][request.order])
-                      {
-                          let k = data[j+1];
+                            if(parseInt(data[j][request.order]) > parseInt(data[j+1][request.order]))
+                            {
+                                let k = data[j+1];
 
-                          data[j+1] = data[j];
+                                data[j+1] = data[j];
 
-                          data[j] = k;
-                      }
-                  }
-              }
-          }
-      }
+                                data[j] = k;
+                            }
+                        }
+                    }
+                }
+            }
 
-      this.establishments = data;
+            console.log(request.order,data);
+
+            this.establishments = data;
+
+            this.cdr.detectChanges();
           })
   			})
   		}
@@ -402,6 +429,7 @@ export class HomePage implements OnInit {
 
   filterEstablishment(close = null)
   {
+    this.establishments = [];
     this.query = null;
     this.quickAmbient = null;
     this.page = 1;
@@ -416,7 +444,7 @@ export class HomePage implements OnInit {
               {
                   if (request.type == 'desc') {
                       
-                      if(data[j][request.order] < data[j+1][request.order])
+                      if(parseInt(data[j][request.order]) < parseInt(data[j+1][request.order]))
                       {
                           let k = data[j+1];
 
@@ -427,7 +455,7 @@ export class HomePage implements OnInit {
 
                   }else{
 
-                      if(data[j][request.order] > data[j+1][request.order])
+                      if(parseInt(data[j][request.order]) > parseInt(data[j+1][request.order]))
                       {
                           let k = data[j+1];
 
@@ -441,6 +469,8 @@ export class HomePage implements OnInit {
       }
 
       this.establishments = data;
+
+      this.cdr.detectChanges();
 
       if (close) {
         this.changeBottom(null);
@@ -472,10 +502,10 @@ export class HomePage implements OnInit {
 
   closeKeyboard(event) {
     if (event.key === "Enter") 
-      this.keyupEnter(event);
+      this.keyupEnter();
   }
 
-  keyupEnter(event) {
+  keyupEnter() {
     this.keyboard.hide();
   }
 

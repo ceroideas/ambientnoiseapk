@@ -53,7 +53,7 @@
   </div>
 
 <div *ngIf="tutorial == 1" class="myTutorial">
-  <p style="left: 20px;">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  <p style="left: 20px;">{{tutorial_text.home}}</p>
   <svg width="360" height="360" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; z-index: 9998;">
     <circle cx="90" cy="250" fill="none" r="150" stroke="#a365b8" stroke-width="8">
       <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
@@ -74,7 +74,7 @@
     right: 0;
     margin: auto;
     text-align: center;
-  ">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  ">{{tutorial_text.detalles}}</p>
 
   <div style="text-align: center; position: absolute; top: 330px; z-index: 10000; left: 0; right: 0;">
     <ion-icon (click)="nextTutorial(2+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
@@ -100,7 +100,7 @@
     /*right: 50%;*/
     margin: auto;
     text-align: left;
-  ">Reserva la mesa que mas te guste</p>
+  ">{{tutorial_text.reservas}}</p>
 
   <div style="text-align: center; position: absolute; bottom: 390px; z-index: 10000; left: 0; right: 50%;">
     <ion-icon (click)="nextTutorial(3+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
@@ -126,7 +126,7 @@
     right: 20px;
     margin: auto;
     text-align: right;
-  ">Apuntate a las listas privadas del local</p>
+  ">{{tutorial_text.inscribirse}}</p>
 
   <div style="text-align: center; position: absolute; bottom: 390px; z-index: 10000; left: 50%; right: 0;">
     <ion-icon (click)="nextTutorial(4+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
@@ -151,7 +151,7 @@
     /*right: 50%;*/
     margin: auto;
     text-align: left;
-  ">Reserva Online el reservado que mas te guste</p>
+  ">{{tutorial_text.reservados}}</p>
 
   <div style="text-align: center; position: absolute; bottom: 300px; z-index: 10000; left: 0; right: 50%;">
     <ion-icon (click)="nextTutorial(5+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
@@ -176,7 +176,7 @@
     right: 20px;
     margin: auto;
     text-align: right;
-  ">Mira las fotos de los participantes de las salas</p>
+  ">{{tutorial_text.galeria}}</p>
 
   <div style="text-align: center; position: absolute; bottom: 300px; z-index: 10000; left: 50%; right: 0;">
     <ion-icon (click)="nextTutorial(6+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
@@ -201,7 +201,7 @@
     /*right: 50%;*/
     margin: auto;
     text-align: left;
-  ">Grandes ofertas personificadas solo para ti</p>
+  ">{{tutorial_text.ofertas}}</p>
 
   <div style="text-align: center; position: absolute; bottom: 230px; z-index: 10000; left: 0; right: 50%;">
     <ion-icon (click)="nextTutorial(7+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
@@ -226,7 +226,7 @@
     right: 20px;
     margin: auto;
     text-align: right;
-  ">Enterate de los eventos mas divertidos</p>
+  ">{{tutorial_text.eventos}}</p>
 
   <div style="text-align: center; position: absolute; bottom: 230px; z-index: 10000; left: 50%; right: 0;">
     <ion-icon (click)="nextTutorial(8+1)" style="color: #fff;" name="arrow-down-outline"></ion-icon>
@@ -244,7 +244,7 @@
 </div>
 
 <div *ngIf="tutorial == 9" class="myTutorial">
-  <p style="left: 30px;">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  <p style="left: 30px;">{{tutorial_text.ofertas_destacados}}</p>
   <svg width="360" height="360" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; z-index: 9998;">
       <circle cx="100" cy="250" fill="none" r="10" stroke="#a365b8" stroke-width="8">
         <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
@@ -257,7 +257,7 @@
 </div>
 
 <div *ngIf="tutorial == 10" class="myTutorial">
-  <p style="left: 15vw;">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  <p style="left: 15vw;">{{tutorial_text.eventos_destacados}}</p>
   <svg width="100%" height="360" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; z-index: 9998;left:0; right: 0; margin: auto;">
       <circle cx="40%" cy="250" fill="none" r="10" stroke="#a365b8" stroke-width="8">
         <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
@@ -270,7 +270,7 @@
 </div>
 
 <div *ngIf="tutorial == 11" class="myTutorial">
-  <p style="right: 40px; text-align: right;">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  <p style="right: 40px; text-align: right;">{{tutorial_text.favoritos}}</p>
   <svg width="100%" height="360" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; z-index: 9998;left:0; right: 0; margin: auto;">
       <circle cx="60%" cy="250" fill="none" r="10" stroke="#a365b8" stroke-width="8">
         <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
@@ -283,7 +283,7 @@
 </div>
 
 <div *ngIf="tutorial == 12" class="myTutorial">
-  <p style="right: 30px; text-align: right;">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  <p style="right: 30px; text-align: right;">{{tutorial_text.chat}}</p>
   <svg width="360" height="360" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; z-index: 9998; right: 0">
       <circle cx="260" cy="250" fill="none" r="10" stroke="#a365b8" stroke-width="8">
         <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>
@@ -296,7 +296,7 @@
 </div>
 
 <div *ngIf="tutorial == 13" class="myTutorial">
-  <p style="right: 20px; text-align: right">Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Ex nostrum rerum veritatis.</p>
+  <p style="right: 20px; text-align: right">{{tutorial_text.perfil}}</p>
   <svg width="360" height="360" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; z-index: 9998; right: 0">
       <circle cx="280" cy="250" fill="none" r="10" stroke="#a365b8" stroke-width="8">
         <animate attributeName="r" from="150" to="250" dur="1s" begin="0s" repeatCount="indefinite"/>

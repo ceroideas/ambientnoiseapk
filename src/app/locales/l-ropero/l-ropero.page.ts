@@ -74,6 +74,10 @@ export class LRoperoPage implements OnInit {
       text: "Aceptar",
       handler: (a)=>{
 
+        if (!a.percha) {
+          return false;
+        }
+
         this.loading.create().then(l=>{
           l.present();
 
