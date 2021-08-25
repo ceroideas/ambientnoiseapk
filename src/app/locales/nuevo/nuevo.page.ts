@@ -47,9 +47,9 @@ export class NuevoPage implements OnInit {
 
   // https://i.ytimg.com/vi/AXdKckpQf_E/maxresdefault.jpg
 
-  logo = "";
+  logo = "https://www.cursosgastronomia.com.mx/wp-content/uploads/2014/03/723939-300x225.jpg";
   marker = "";
-  main = "";
+  main = "https://www.cursosgastronomia.com.mx/wp-content/uploads/2014/03/723939-300x225.jpg";
 
   user = JSON.parse(localStorage.getItem('ANuser'));
 
@@ -434,7 +434,7 @@ export class NuevoPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
      // imageData is either a base64 encoded string or a file URI
      // If it's base64 (DATA_URL):
-
+     this.api.fixMargin();
      this.uploadImage(imageData,type);
 
     }, (err) => {

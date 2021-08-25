@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Platform } from '@ionic/angular'
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +8,16 @@ import { HttpClient } from '@angular/common/http';
 export class ApiService {
 
   url = "https://admin.ambientnoise.es/api";
+  baseUrl = "https://admin.ambientnoise.es/";
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, public platform: Platform) { }
+
+  fixMargin(){
+    if (this.platform.is('ios')) {
+      localStorage.setItem('fixMargin','1');
+     (document.querySelector('.tabs-inner') as any).style.marginTop = "44px";
+    }
+  }
 
   login(email, password){
     return this.http.post(this.url+'/login',{email:email, password: password});
@@ -99,6 +108,10 @@ export class ApiService {
     return this.http.get(this.url+'/deleteLocal/'+id);
   }
 
+  uploadPassport(data){
+    return this.http.post(this.url+'/uploadPassport',data);
+  }
+
 
   /**/
   getAll()
@@ -179,9 +192,9 @@ export class ApiService {
     return this.http.get(this.url+'/getFavorite/'+id+'/'+e_id);
   }
 
-  getFavorites(id)
+  getFavorites(data)
   {
-    return this.http.get(this.url+'/getFavorites/'+id);
+    return this.http.post(this.url+'/getFavorites',data);
   }
 
   /**/

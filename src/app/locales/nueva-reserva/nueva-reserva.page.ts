@@ -27,6 +27,8 @@ export class NuevaReservaPage implements OnInit {
     public toast: ToastController, public events: EventsService, public route: ActivatedRoute) { }
 
   ngOnInit() {
+
+    console.log(this.route.snapshot.params.id);
   	this.validation_messages1 = {
       'date': [
         { type: 'required', message: 'Indique la fecha de la reserve' },
@@ -77,12 +79,12 @@ export class NuevaReservaPage implements OnInit {
           this.nav.pop();
           this.events.publish('reloadReserves');
           this.alert.create({message:"La reserva ha sido creada"}).then(a=>{
-            a.present(); setTimeout(()=>{a.dismiss()},2000);
+            a.present(); setTimeout(()=>{a.dismiss()},3000);
           })
         },e=>{
           l.dismiss();
           this.alert.create({message:"Ha ocurrido un error al intentar publicar la reserva"}).then(a=>{
-            a.present(); setTimeout(()=>{a.dismiss()},2000);
+            a.present(); setTimeout(()=>{a.dismiss()},3000);
           })
         })
       })

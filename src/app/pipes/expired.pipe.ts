@@ -11,6 +11,7 @@ export class ExpiredPipe implements PipeTransform {
     moment.locale('es');
 
   	if (type == 'diff') {
+      console.log(moment().startOf('day'),value.date_to)
   		return moment(value.date_to).add(1,'day').diff(moment().startOf('day'),'days');
   	}
     if (type == 'diffEv') {

@@ -27,9 +27,8 @@ export class SocketService {
 
     this.socket.on('newMessage',data=>{
 
-      console.log(data,data.to_id,this.user.id,data.to_id == this.user.id);
-      
       this.user = JSON.parse(localStorage.getItem('ANuser'));
+      console.log(data,data.to_id,this.user.id,data.to_id == this.user.id);
 
       if (data.to_id == this.user.id) {
         this.events.publish('addNewMessage',data);

@@ -6,7 +6,11 @@
 
 <ion-content class="ion-padding">
 
-	<h4> <ion-icon (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
+	<h4>
+
+		<ion-icon *ngIf="!forceBack" (click)="nav.pop()" routerDirection="root" name="chevron-back"></ion-icon>
+
+		<ion-icon *ngIf="forceBack" (click)="forceClick()" routerDirection="root" name="chevron-back"></ion-icon>
 
 		<ion-menu-toggle><ion-icon name="ellipsis-vertical"></ion-icon></ion-menu-toggle>
 

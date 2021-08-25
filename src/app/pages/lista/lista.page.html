@@ -52,7 +52,19 @@
 
 					<h6 *ngIf="(list.guests | guests:user.id:'lists').length" style="text-align: left;">
 						<small><b>Tus invitados</b>
-						<li *ngFor="let g of (list.guests | guests:user.id:'lists')">{{g.name}}</li>
+						<li *ngFor="let g of (list.guests | guests:user.id:'lists')">{{g.name}}
+
+							<b *ngIf="g.covid_passport" (click)="covidPassport(g.id,g)">
+								(Ver pasaporte COVID)
+							</b>
+
+							<b *ngIf="!g.covid_passport">
+								<label (click)="covidPassport(g.id,g)">
+									(Subir pasaporte COVID)
+								</label>
+								<input type="file" accept="application/pdf" style="opacity: 0; height: 0; position: absolute;" (change)="uploadFile($event,g.id)" [id]="'passport-'+g.id">
+							</b>
+						</li>
 						</small>
 					</h6>
 				</ion-col>

@@ -23,20 +23,20 @@
 		
 		<div *ngIf="favoritos && favoritos.length > 0">
 			
-			<div class="favorito" *ngFor="let l of favoritos" (click)="getLocal(l.establishment)" [routerLink]="['/tabs/home/detalles/'+l.establishment.id]">
+			<div class="favorito" *ngFor="let l of favoritos" (click)="getLocal(l)" [routerLink]="['/tabs/home/detalles/'+l.id]">
 				<ion-row>
 					<ion-col size="3">
-						<div class="rest-pic" [ngStyle]="{'background-image': 'url('+l.establishment.avatar+')'}">
+						<div class="rest-pic" [ngStyle]="{'background-image': 'url('+l.avatar+')'}">
 							
 						</div>
 					</ion-col>
 					<ion-col size="9">
 						<div class="rest-info">
-							<label class="title">{{l.establishment.title}}</label>
+							<label class="title">{{l.title}}</label>
 
-							<small>{{l.establishment.locality.title}}</small>
+							<small>{{l.locality.title}}</small>
 
-							<label class="label-1">{{l.establishment.stars ? (l.establishment.stars | number:'1.2-2') : '0.00'}}</label>
+							<label class="label-1">{{l.stars ? (l.stars | number:'1.2-2') : '0.00'}}</label>
 
 							<ion-icon name="heart-outline"></ion-icon>
 						</div>

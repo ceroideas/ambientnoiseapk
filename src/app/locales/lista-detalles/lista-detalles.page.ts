@@ -4,10 +4,13 @@ import { ApiService } from '../../services/api.service';
 import { EventsService } from '../../services/events.service';
 import { NavparamsService } from '../../services/navparams.service';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 @Component({
   selector: 'app-lista-detalles',
   templateUrl: './lista-detalles.page.html',
   styleUrls: ['./lista-detalles.page.scss'],
+  providers: [InAppBrowser]
 })
 export class ListaDetallesPage implements OnInit {
 
@@ -28,12 +31,18 @@ export class ListaDetallesPage implements OnInit {
 
   listLogo = localStorage.getItem('listLogo');
 
-  constructor(public nav: NavController, public cdr: ChangeDetectorRef, public api: ApiService, public navparams: NavparamsService, public alertCtrl: AlertController, public events: EventsService) {
+  constructor(public nav: NavController, public cdr: ChangeDetectorRef, public api: ApiService, public navparams: NavparamsService, public alertCtrl: AlertController, public events: EventsService, private iab: InAppBrowser) {
     this.list = this.navparams.getParam();
   }
 
   ngOnInit() {
     this.getListUsers();
+  }
+
+  viewPassport(passport)
+  {
+    // this.iab.create(this.api.baseUrl+'uploads/passports/'+passport);
+    window.open(this.api.baseUrl+'uploads/passports/'+passport,'_blank');
   }
 
   getListUsers()

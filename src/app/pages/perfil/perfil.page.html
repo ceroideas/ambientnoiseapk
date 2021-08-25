@@ -15,12 +15,19 @@
 
 	<h3>Perfil</h3>
 
+	<input type="file" id="passport" accept="application/pdf" style="opacity: 0; height: 0; position: absolute;" (change)="uploadFile($event)">
+
 	<div>
 		
 		<ion-row>
 			<ion-col size="4">
 				<div class="profile-pic" [ngStyle]="{'background-image': 'url('+(user.avatar ? user.avatar : 'assets/user.jpg')+')'}">
-					
+					<label *ngIf="user.covid_passport"
+					style="position: absolute; bottom: 5px; left: 70px;">
+						
+						<img src="assets/verified.svg" alt="" style="width: 20px;">
+
+					</label>
 				</div>
 			</ion-col>
 			<ion-col size="8">
@@ -42,6 +49,13 @@
 			    		Más información
 		    		</label>
 		    	</ion-item> -->
+
+		    	<ion-item class="ion-no-padding" (click)="covidPassport()">
+		    		<label>
+			    		Mi Pasaporte COVID-19
+
+		    		</label>
+		    	</ion-item>
 
 		    	<ion-item class="ion-no-padding" [routerLink]="['/tabs/perfil/carrito']">
 		    		<label>

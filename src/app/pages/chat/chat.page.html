@@ -34,7 +34,7 @@
 				<h6>{{m.created_at}}</h6>
 				<div class="chat-me" no-lines text-wrap>
 					<div class="text">
-						<span><b>{{m?.user?.name}}:</b> <label [innerHtml]="m.message | secure"></label></span>
+						<span><!-- <b>{{m?.user?.name}}:</b> --> <label [innerHtml]="m.message | secure"></label></span>
 					</div>
 					<div class="pic">
 						<div [ngStyle]="{'background-image':'url('+m?.user?.avatar+')'}"></div>
@@ -47,7 +47,7 @@
 				<h6>{{m.created_at}}</h6>
 				<div class="chat-not-me" no-lines text-wrap>
 					<div class="text">
-						<span><b>{{m?.user?.name}}:</b> <label [innerHtml]="m.message | secure"></label></span>
+						<span><!-- <b>{{m?.user?.name}}:</b> --> <label [innerHtml]="m.message | secure"></label></span>
 					</div>
 					<div class="pic">
 						<div [ngStyle]="{'background-image':'url('+m?.user?.avatar+')'}"></div>

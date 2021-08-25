@@ -5,10 +5,13 @@ import { ActivatedRoute } from '@angular/router'
 import { ApiService } from '../../../services/api.service';
 import { EventsService } from '../../../services/events.service';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 @Component({
   selector: 'app-reservas',
   templateUrl: './reservas.page.html',
   styleUrls: ['./reservas.page.scss'],
+  providers: [InAppBrowser]
 })
 export class ReservasPage implements OnInit {
 
@@ -23,6 +26,7 @@ export class ReservasPage implements OnInit {
 	public api:ApiService,
 	public events:EventsService,
 	public route:ActivatedRoute,
+  private iab: InAppBrowser
   	) { }
 
   ngOnInit() {
@@ -31,6 +35,12 @@ export class ReservasPage implements OnInit {
   		this.rooms = data;
   		console.log(data);
   	})
+  }
+
+  viewPassport(passport)
+  {
+    // this.iab.create(this.api.baseUrl+'uploads/passports/'+passport);
+    window.open(this.api.baseUrl+'uploads/passports/'+passport,'_blank');
   }
 
 }

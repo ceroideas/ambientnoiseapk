@@ -91,9 +91,11 @@
 				</ion-item>
 
 				<ion-item class="ion-no-padding" lines="none">
-					<ion-label position="floating">Día del Evento</ion-label>
+					<ion-label position="floating">Inicio del Evento</ion-label>
 					<ion-datetime
-					formControlName="date"
+					doneText="Ok"
+					cancelText="Cancelar"
+					formControlName="date_from"
 					monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, oct, Nov, Dec"
 					displayFormat="D MMM, YYYY"></ion-datetime>
 
@@ -102,14 +104,29 @@
 				<ion-item class="ion-no-padding" lines="none">
 					<ion-label position="floating">Hora Desde</ion-label>
 					<ion-datetime
+					doneText="Ok"
+					cancelText="Cancelar"
 					formControlName="from"
 					displayFormat="HH:mm"></ion-datetime>
 
 				</ion-item>
 
 				<ion-item class="ion-no-padding" lines="none">
+					<ion-label position="floating">Fin del evento</ion-label>
+					<ion-datetime
+					doneText="Ok"
+					cancelText="Cancelar"
+					formControlName="date_to"
+					monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, oct, Nov, Dec"
+					displayFormat="D MMM, YYYY"></ion-datetime>
+
+				</ion-item>
+
+				<ion-item class="ion-no-padding" lines="none">
 					<ion-label position="floating">Hora Hasta</ion-label>
 					<ion-datetime
+					doneText="Ok"
+					cancelText="Cancelar"
 					formControlName="to"
 					displayFormat="HH:mm"></ion-datetime>
 

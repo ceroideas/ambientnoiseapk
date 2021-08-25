@@ -14,9 +14,23 @@ export class PedidosPage implements OnInit {
   pedidos:any;
   roperos:any;
 
+  forceBack:any;
+
   user = JSON.parse(localStorage.getItem('ANuser'));
 
-  constructor(public nav: NavController, public modal: ModalController, public api: ApiService, public events: EventsService) { }
+  constructor(public nav: NavController, public modal: ModalController, public api: ApiService, public events: EventsService) {
+    if (localStorage.getItem('returnToBck')) {
+      this.forceBack = true;
+      localStorage.removeItem('returnToBck');
+    }else{
+      this.forceBack = null;
+    }
+  }
+
+  forceClick()
+  {
+    (document.querySelector('[tab="perfil"]') as any).click();
+  }
 
   ngOnInit() {
     this.events.destroy('getOrders');

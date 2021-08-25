@@ -4,10 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { NavparamsService } from '../../services/navparams.service';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.page.html',
   styleUrls: ['./lista.page.scss'],
+  providers: [InAppBrowser]
 })
 export class ListaPage implements OnInit {
 
@@ -15,7 +18,8 @@ export class ListaPage implements OnInit {
   local;
   user = JSON.parse(localStorage.getItem('ANuser'));
 
-  constructor(public nav: NavController, public api: ApiService, public route: ActivatedRoute, public navparams: NavparamsService, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+  constructor(public nav: NavController, public api: ApiService, public route: ActivatedRoute, public navparams: NavparamsService, public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController, private iab: InAppBrowser) {
   	this.local = this.navparams.getParam();
   }
 
@@ -93,4 +97,52 @@ export class ListaPage implements OnInit {
     ]}).then(a=>a.present());
   }
 
+  covidPassport(id,guess)
+  {
+    if (guess.covid_passport) {
+      this.alertCtrl.create({message:"¿Qué desea hacer?", buttons: [{
+        text:"Ver pasaporte COVID de invitado",
+        handler: ()=>{
+          this.iab.create(this.api.baseUrl+'uploads/passports/'+guess.covid_passport);
+        }
+      },{
+        text:"Subir nuevo pasaporte COVID",
+        handler: ()=>{
+          document.getElementById('passport-'+id).click();
+        }
+      },{
+        text:"Cancelar"
+      }]}).then(a=>a.present());
+    }else{
+      document.getElementById('passport-'+id).click();
+    }
+  }
+
+  uploadFile(e,id)
+  {
+    console.log(e.target.files[0]);
+    this.loadingCtrl.create({message:"Subiendo archivo!"}).then(l=>{
+      l.present();
+
+      let file = e.target.files[0];
+
+      let formData = new FormData();
+
+      formData.append("file", file);
+      formData.append("id", id);
+      formData.append("guest", "1");
+
+      console.log(formData);
+
+      this.api.uploadPassport(formData).subscribe((data:any)=>{
+        this.api.getListsFront(this.route.snapshot.params.id).subscribe(data=>{
+          this.lists = data;
+        });
+        l.dismiss();
+
+        this.alertCtrl.create({message:"El archivo ha sido subido"}).then(al=>{al.present(); setTimeout(()=>{al.dismiss()},3000)});
+      });
+
+    })
+  }
 }

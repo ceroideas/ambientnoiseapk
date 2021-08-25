@@ -83,6 +83,10 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
 
+    if (localStorage.getItem('fixMargin')) {
+      this.api.fixMargin();
+    }
+
     this.events.destroy('updateLocal');
     this.events.subscribe('updateLocal',(local)=>{
 
@@ -118,7 +122,7 @@ export class HomePage implements OnInit {
               {
                   if (request.type == 'desc') {
                       
-                      if(parseInt(data[j][request.order]) < parseInt(data[j+1][request.order]))
+                      if(/*parseInt*/(data[j][request.order]) < /*parseInt*/(data[j+1][request.order]))
                       {
                           let k = data[j+1];
 
@@ -129,7 +133,7 @@ export class HomePage implements OnInit {
 
                   }else{
 
-                      if(parseInt(data[j][request.order]) > parseInt(data[j+1][request.order]))
+                      if(/*parseInt*/(data[j][request.order]) > /*parseInt*/(data[j+1][request.order]))
                       {
                           let k = data[j+1];
 
@@ -287,6 +291,8 @@ export class HomePage implements OnInit {
   				l.present();
           this.api.getEstablishments({id:this.user.id,province:this.province,city:this.city,ambient:this.ambiente,range:this.range,music:this.musica, lat:this.lat, lon:this.lon, quick:data},1).subscribe((request:any)=>{
   					l.dismiss();
+
+            console.log(request.type,request.order)
             let data = request.data;
 
             if (request._) {
@@ -296,8 +302,10 @@ export class HomePage implements OnInit {
                     for(let j = 0; j < data.length-i; j++)
                     {
                         if (request.type == 'desc') {
+
+                          console.log((data[j][request.order]),(data[j+1][request.order]))
                             
-                            if(parseInt(data[j][request.order]) < parseInt(data[j+1][request.order]))
+                            if((data[j][request.order]) < (data[j+1][request.order]))
                             {
                                 let k = data[j+1];
 
@@ -308,7 +316,7 @@ export class HomePage implements OnInit {
 
                         }else{
 
-                            if(parseInt(data[j][request.order]) > parseInt(data[j+1][request.order]))
+                            if((data[j][request.order]) > (data[j+1][request.order]))
                             {
                                 let k = data[j+1];
 
@@ -321,7 +329,7 @@ export class HomePage implements OnInit {
                 }
             }
 
-            console.log(request.order,data);
+            console.log(data);
 
             this.establishments = data;
 

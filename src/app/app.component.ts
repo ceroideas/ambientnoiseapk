@@ -141,6 +141,11 @@ export class AppComponent implements OnInit {
     });
   }
 
+  addStorage()
+  {
+    localStorage.setItem('returnToBck','1');
+  }
+
   ngOnInit() {
 
     this.pay();
@@ -201,13 +206,14 @@ export class AppComponent implements OnInit {
       {
         title: 'MIS PEDIDOS',
         url: '/tabs/perfil/pedidos',
-        icon: 'clipboard'
+        icon: 'clipboard',
+        storage: 'true'
       },
-      {
-        title: 'AJUSTES',
-        url: '/tabs/perfil/ajustes',
-        icon: 'settings'
-      },
+      // {
+      //   title: 'AJUSTES',
+      //   url: '/tabs/perfil/ajustes',
+      //   icon: 'settings'
+      // },
       {
         title: 'CONTACTO',
         url: '/tabs/contacto',

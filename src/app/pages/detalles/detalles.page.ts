@@ -161,7 +161,12 @@ export class DetallesPage implements OnInit {
 
   back()
   {
-    this.nav.pop();
+    if (localStorage.getItem('goBackDetails')) {
+      (document.querySelector('[tab="home"]') as any).click()
+      localStorage.removeItem('goBackDetails')
+    }else{
+      this.nav.pop();
+    }
   }
 
   collapse(e)

@@ -12,6 +12,8 @@ export class SplashPage implements OnInit {
 
   ngOnInit() {
 
+    localStorage.removeItem('fixMargin');
+
   	this.to = setTimeout(()=>{
   		if (localStorage.getItem('ANuser')) {
   			let role = JSON.parse(localStorage.getItem('ANuser'))['role'];
@@ -23,7 +25,7 @@ export class SplashPage implements OnInit {
   			}
   		}
   		this.nav.navigateRoot('welcome');
-  	},8000)
+  	},7000)
   }
 
   saltar()

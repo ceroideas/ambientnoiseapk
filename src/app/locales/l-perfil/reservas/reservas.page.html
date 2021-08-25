@@ -55,7 +55,7 @@
 									<ion-row class="ion-no-padding">
 										<ion-col class="ion-no-padding" size="12" style="text-align: left; font-size: 12px">
 											<b>Reservado por:</b> <br>
-											{{r.user.name}}
+											{{r.user.name}} <span *ngIf="r.user.covid_passport" style="color: #ccc;" (click)="viewPassport(r.user.covid_passport)">(Ver pasaporte COVID)</span>
 										</ion-col>
 										<!-- <ion-col size="2" style="text-align: right">
 										</ion-col> -->

@@ -21,6 +21,7 @@ export class ListasPage implements OnInit {
 
   ionViewDidEnter()
   {
+    this.lists = [];
     this.getLists();
   }
 

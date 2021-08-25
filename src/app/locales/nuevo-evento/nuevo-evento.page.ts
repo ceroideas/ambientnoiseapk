@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { LoadingController, NavController, AlertController, ToastController } from '@ionic/angular'
+import { LoadingController, NavController, AlertController, ToastController} from '@ionic/angular'
 
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -44,8 +44,11 @@ export class NuevoEventoPage implements OnInit {
       'description': [
         { type: 'required', message: 'El campo descripción es requerido' },
       ],
-      'date': [
+      'date_from': [
         { type: 'required', message: 'Seleccione el día del evento' },
+      ],
+      'date_to': [
+        { type: 'required', message: 'Seleccione el día que termina el evento' },
       ],
       'from': [
         { type: 'required', message: 'Debe indicar la validez del evento' },
@@ -68,7 +71,10 @@ export class NuevoEventoPage implements OnInit {
       description: new FormControl(null, Validators.compose([
         Validators.required
       ])),
-      date: new FormControl(null, Validators.compose([
+      date_from: new FormControl(null, Validators.compose([
+        Validators.required
+      ])),
+      date_to: new FormControl(null, Validators.compose([
         Validators.required
       ])),
       from: new FormControl(null, Validators.compose([
@@ -105,7 +111,7 @@ export class NuevoEventoPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
      // imageData is either a base64 encoded string or a file URI
      // If it's base64 (DATA_URL):
-
+     this.api.fixMargin();
      this.uploadImage(imageData);
 
     }, (err) => {

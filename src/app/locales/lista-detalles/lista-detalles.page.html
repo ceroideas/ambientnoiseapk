@@ -53,10 +53,14 @@
 				<ion-col size="8" style="display: flex">
 					<h5 style="width: 100%; vertical-align: middle; text-align: center;">
 
-						{{guest.name+' '+guest.last_name}}
+						{{guest.name+' '+guest.last_name}} <img src="assets/verified.svg" *ngIf="guest.covid_passport" alt="" style="width: 20px; height: 20px; position: relative; top: 4px; ">
 
 						<div *ngIf="!guest.lists[0]?.status && guest.lists.length">
 							
+							<span style="font-size: 14px; color: #ccc; display: block; margin-bottom: 0;" *ngIf="guest.covid_passport" (click)="viewPassport(guest.covid_passport)">
+							<br>
+								Ver pasaporte COVID
+							</span>
 							<br>
 
 							<small style="display: block; width: 100%; text-align: center; position: relative; margin-bottom: -20px;" (click)="markAssist(guest.lists[0],i)">
@@ -99,10 +103,16 @@
 				<ion-col size="8" style="display: flex">
 					<h5 style="width: 100%; vertical-align: middle; text-align: center;">
 
-						{{guest.name}} <span style="color:silver; font-size: 12px;">(Invitado por: {{guest.host.name+' '+guest.host.last_name}})</span>
+						{{guest.name}}
+						<img src="assets/verified.svg" *ngIf="guest.covid_passport" alt="" style="width: 20px; height: 20px; position: relative; top: 4px; ">
+						<br> <span style="color:silver; font-size: 12px;">(Invitado por: {{guest.host.name+' '+guest.host.last_name}})</span>
 
 						<div *ngIf="!guest.status">
 							
+							<span style="font-size: 14px; color: #ccc; display: block; margin-bottom: 0;" *ngIf="guest.covid_passport" (click)="viewPassport(guest.covid_passport)">
+							<br>
+								Ver pasaporte COVID
+							</span>
 							<br>
 
 							<small style="display: block; width: 100%; text-align: center; position: relative; margin-bottom: -20px;" (click)="markAssistG(guest,i)">

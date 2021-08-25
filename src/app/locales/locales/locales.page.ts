@@ -22,6 +22,11 @@ export class LocalesPage implements OnInit {
     public loading: LoadingController, public navparams: NavparamsService) { }
 
   ngOnInit() {
+
+    if (localStorage.getItem('fixMargin')) {
+      this.api.fixMargin();
+    }
+    
     this.getMyStablishments();
 
     this.events.destroy('reloadLocals');
