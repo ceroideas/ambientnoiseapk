@@ -47,7 +47,9 @@ export class PerfilPage implements OnInit {
         text:"Ver mi pasaporte COVID",
         handler: ()=>{
           // this.iab.create(this.api.baseUrl+'uploads/passports/'+this.user.covid_passport);
-          window.open(this.api.baseUrl+'uploads/passports/'+this.user.covid_passport,'_blank');
+          // window.open(this.api.baseUrl+'uploads/passports/'+this.user.covid_passport,'_blank');
+
+          this.api.openFile(this.api.baseUrl+'uploads/passports/'+this.user.covid_passport);
         }
       },{
         text:"Subir nuevo pasaporte COVID",

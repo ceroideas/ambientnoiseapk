@@ -541,4 +541,15 @@ export class ApiService {
     return this.http.get(this.url+'/setSeen/'+id);
   }
 
+  /**/
+
+  openFile(url)
+  {
+    var link = document.createElement('a');
+        // link.download = name+'.pdf';
+        link.href = url;
+        link.target = '_blank';
+        link.click();
+  }
+
 }

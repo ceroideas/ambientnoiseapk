@@ -42,7 +42,9 @@ export class ListaDetallesPage implements OnInit {
   viewPassport(passport)
   {
     // this.iab.create(this.api.baseUrl+'uploads/passports/'+passport);
-    window.open(this.api.baseUrl+'uploads/passports/'+passport,'_blank');
+    // window.open(this.api.baseUrl+'uploads/passports/'+passport,'_blank');
+
+    this.api.openFile(this.api.baseUrl+'uploads/passports/'+passport);
   }
 
   getListUsers()
