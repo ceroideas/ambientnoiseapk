@@ -17,7 +17,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 
-const config: SocketIoConfig = { url: 'https://bulldogames.com:9000', options: {secure:true} };
+const config: SocketIoConfig = { url: 'https://server.ambientnoise.es:9000', options: {secure:true} };
 
 @NgModule({
   declarations: [AppComponent],

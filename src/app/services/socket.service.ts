@@ -13,6 +13,7 @@ export class SocketService {
 
   conn;
   peer;
+  ip = "3.23.98.39";
   user = JSON.parse(localStorage.getItem('ANuser'));
 
   constructor(private socket: Socket, public events: EventsService, public router: Router) {
@@ -22,13 +23,14 @@ export class SocketService {
   startConnection()
   {
   	this.socket.on('conectado',data=>{
-      // console.log(data.msg);
+      console.log(data);
     })
 
     this.socket.on('newMessage',data=>{
 
       this.user = JSON.parse(localStorage.getItem('ANuser'));
-      console.log(data,data.to_id,this.user.id,data.to_id == this.user.id);
+
+      console.log(data,data.to_id,this.user.id,data.to_id == this.user.id, this.ip);
 
       if (data.to_id == this.user.id) {
         this.events.publish('addNewMessage',data);
@@ -49,7 +51,7 @@ export class SocketService {
 
   sendMessage(data)
   {
-    console.log(data);
+    console.log(data,this.ip);
   	this.socket.emit('sendMessage',data);
   }
 
